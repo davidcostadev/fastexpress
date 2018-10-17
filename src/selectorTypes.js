@@ -1,85 +1,104 @@
-import Moment from 'moment';
-import * as validate from './validate.js';
-import * as convert from './convert.js';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.pageSelType = exports.limitSelType = exports.updatedAtSelType = exports.createdAtSelType = exports.batchSelType = exports.isPaidSelType = exports.transactionDateSelType = exports.transferDateSelType = exports.accountToIdSelType = exports.typeSelType = exports.accountFromIdSelType = exports.categoryIdSelType = exports.accountIdSelType = exports.userIdSelType = exports.valueSelType = exports.enabledSelType = exports.passwordSelType = exports.emailSelType = exports.nameSelType = exports.orderType = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _validate = require('./validate.js');
+
+var validate = _interopRequireWildcard(_validate);
+
+var _convert = require('./convert.js');
+
+var convert = _interopRequireWildcard(_convert);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const stringType = {
-  validation: validate.string,
+  validation: validate.string
 };
 
 const numberType = {
-  validation: validate.number,
+  validation: validate.number
 };
 
 const floatType = {
   validation: validate.float,
-  convert: (val) => {
+  convert: val => {
     if (typeof val === 'string') {
       return val.replace(',', '.');
     }
 
     return val;
-  },
+  }
 };
 
 const boolType = {
-  validation: validate.bool,
+  validation: validate.bool
 };
 
 const datetimeType = {
-  validation: validate.string,
+  validation: validate.string
 };
 
 const dateType = {
   validation: validate.string,
-  convert: val => Moment(val).format('YYYY-MM-DD'),
+  convert: val => (0, _moment2.default)(val).format('YYYY-MM-DD')
 };
 
-export const orderType = {
+const orderType = exports.orderType = {
   validation: validate.string,
   convert: convert.orderToFilter,
-  default: [['id', 'DESC']],
+  default: [['id', 'DESC']]
 };
 
-export const nameSelType = stringType;
+const nameSelType = exports.nameSelType = stringType;
 
-export const emailSelType = stringType;
+const emailSelType = exports.emailSelType = stringType;
 
-export const passwordSelType = stringType;
+const passwordSelType = exports.passwordSelType = stringType;
 
-export const enabledSelType = boolType;
+const enabledSelType = exports.enabledSelType = boolType;
 
-export const valueSelType = floatType;
+const valueSelType = exports.valueSelType = floatType;
 
-export const userIdSelType = numberType;
+const userIdSelType = exports.userIdSelType = numberType;
 
-export const accountIdSelType = numberType;
+const accountIdSelType = exports.accountIdSelType = numberType;
 
-export const categoryIdSelType = numberType;
+const categoryIdSelType = exports.categoryIdSelType = numberType;
 
-export const accountFromIdSelType = numberType;
+const accountFromIdSelType = exports.accountFromIdSelType = numberType;
 
-export const typeSelType = stringType;
+const typeSelType = exports.typeSelType = stringType;
 
-export const accountToIdSelType = numberType;
+const accountToIdSelType = exports.accountToIdSelType = numberType;
 
-export const transferDateSelType = stringType;
+const transferDateSelType = exports.transferDateSelType = stringType;
 
-export const transactionDateSelType = dateType;
+const transactionDateSelType = exports.transactionDateSelType = dateType;
 
-export const isPaidSelType = boolType;
+const isPaidSelType = exports.isPaidSelType = boolType;
 
-export const batchSelType = stringType;
+const batchSelType = exports.batchSelType = stringType;
 
-export const createdAtSelType = datetimeType;
+const createdAtSelType = exports.createdAtSelType = datetimeType;
 
-export const updatedAtSelType = datetimeType;
+const updatedAtSelType = exports.updatedAtSelType = datetimeType;
 
-export const limitSelType = {
-  ...numberType,
-  default: 100,
-};
+const limitSelType = exports.limitSelType = _extends({}, numberType, {
+  default: 100
+});
 
-export const pageSelType = {
-  ...numberType,
-  default: 1,
-};
+const pageSelType = exports.pageSelType = _extends({}, numberType, {
+  default: 1
+});

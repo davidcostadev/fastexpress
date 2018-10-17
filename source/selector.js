@@ -1,12 +1,7 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 const selector = (definitions, query = {}) => {
   const select = {};
 
-  Object.keys(definitions).forEach(key => {
+  Object.keys(definitions).forEach((key) => {
     if (typeof query[key] !== 'undefined') {
       if (definitions[key].validation(query[key])) {
         if (typeof definitions[key].convert !== 'undefined') {
@@ -25,4 +20,4 @@ const selector = (definitions, query = {}) => {
   return select;
 };
 
-exports.default = selector;
+export default selector;

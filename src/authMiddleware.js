@@ -1,6 +1,19 @@
-import jwt from 'jsonwebtoken';
+'use strict';
 
-const getToken = (req) => {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.middleware = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const getToken = req => {
   if (typeof req.body.token !== 'undefined') {
     return req.body.token;
   } else if (typeof req.query.token !== 'undefined') {
@@ -17,13 +30,13 @@ const checkAuth = (req, res, next, jwtEncryption) => {
 
   if (!token) {
     res.status(403).send({
-      message: 'No token provided',
+      message: 'No token provided'
     });
   } else {
-    jwt.verify(token, jwtEncryption, (err, decoded) => {
+    _jsonwebtoken2.default.verify(token, jwtEncryption, (err, decoded) => {
       if (err) {
         res.status(500).send({
-          message: 'Invalid auth token provided.',
+          message: 'Invalid auth token provided.'
         });
       } else {
         res.user = decoded;
@@ -41,22 +54,17 @@ const onlyUser = (req, res, next) => {
     filter = 'id';
   }
 
-  req.query = {
-    ...req.query,
-    [filter]: res.user.id,
-  };
+  req.query = _extends({}, req.query, {
+    [filter]: res.user.id
+  });
 
-  req.body = {
-    ...req.body,
-    [filter]: res.user.id,
-  };
+  req.body = _extends({}, req.body, {
+    [filter]: res.user.id
+  });
 
   next();
 };
 
-export const middleware = [
-  checkAuth,
-  onlyUser,
-];
+const middleware = exports.middleware = [checkAuth, onlyUser];
 
-export default middleware;
+exports.default = middleware;

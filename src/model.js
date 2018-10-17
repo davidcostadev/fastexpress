@@ -1,13 +1,24 @@
-import bcrypt from 'bcrypt';
+'use strict';
 
-export const listDefaultOptions = {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.cryptPassword = exports.clearData = exports.getModelAlias = exports.listDefaultOptions = undefined;
+
+var _bcrypt = require('bcrypt');
+
+var _bcrypt2 = _interopRequireDefault(_bcrypt);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const listDefaultOptions = exports.listDefaultOptions = {
   where: {},
   filter: null,
   fields: [],
-  aliasDatabase: {},
+  aliasDatabase: {}
 };
 
-export const getModelAlias = (aliasDatabase, db) => (model) => {
+const getModelAlias = exports.getModelAlias = (aliasDatabase, db) => model => {
   const aliasList = Object.keys(aliasDatabase);
 
   if (aliasList.includes(model)) {
@@ -15,26 +26,26 @@ export const getModelAlias = (aliasDatabase, db) => (model) => {
 
     return {
       model: db[aliasDatabase[alias]],
-      as: model,
+      as: model
     };
   }
 
   return {
-    model: db[model],
+    model: db[model]
   };
 };
 
 /* eslint no-use-before-define: "off" */
-const clearItem = scheme => (item) => {
+const clearItem = scheme => item => {
   const newItem = {};
 
-  scheme.forEach((field) => {
+  scheme.forEach(field => {
     if (item === null) {
       newItem[field] = null;
     } else if (typeof field === 'string') {
       newItem[field] = item[field];
     } else {
-      Object.keys(field).forEach((key) => {
+      Object.keys(field).forEach(key => {
         if (typeof item[key] !== 'undefined') {
           newItem[key] = clearData(item[key], field[key]);
         }
@@ -45,7 +56,7 @@ const clearItem = scheme => (item) => {
   return newItem;
 };
 
-export const clearData = (data, scheme) => {
+const clearData = exports.clearData = (data, scheme) => {
   if (Array.isArray(data)) {
     return data.map(clearItem(scheme));
   }
@@ -55,13 +66,11 @@ export const clearData = (data, scheme) => {
 
 /* eslint no-param-reassign: "off" */
 /* eslint no-underscore-dangle: "off" */
-export const cryptPassword = (user, bcryptSalt = 2) => {
+const cryptPassword = exports.cryptPassword = (user, bcryptSalt = 2) => {
   if (user.password !== user._previousDataValues.password) {
-    return bcrypt
-      .hash(user.password, bcrypt.genSaltSync(bcryptSalt))
-      .then((hash) => {
-        user.password = hash;
-      });
+    return _bcrypt2.default.hash(user.password, _bcrypt2.default.genSaltSync(bcryptSalt)).then(hash => {
+      user.password = hash;
+    });
   }
 
   return null;
