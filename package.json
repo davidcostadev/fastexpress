@@ -1,6 +1,6 @@
 {
   "name": "fastexpress",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "src/index.js",
   "unpkg": "dist/fastexpress.min.js",
   "jsdelivr": "dist/fastexpress.min.js",
@@ -14,7 +14,7 @@
   "scripts": {
     "jest": "jest",
     "test": "jest",
-    "build": "npm run build:cjs && npm run build:umd && npm run build:umd:min",
+    "build": "npm run build:cjs",
     "build:cjs": "babel source --out-dir src",
     "build:umd": "cross-env NODE_ENV=development rollup -c -o dist/fastexpress.js",
     "build:umd:min": "cross-env NODE_ENV=production rollup -c -o dist/fastexpress.min.js",
@@ -33,7 +33,8 @@
     "jest": "^23.6.0",
     "regenerator-runtime": "^0.12.1",
     "rimraf": "^2.6.2",
-    "rollup": "^0.66.6"
+    "rollup": "^0.66.6",
+    "rollup-plugin-terser": "^3.0.0"
   },
   "dependencies": {
     "bcrypt": "^3.0.1",
