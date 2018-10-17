@@ -1,0 +1,27 @@
+{
+  "name": "fastexpress",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:davidcostadev/fastexpress.git",
+  "author": "David Costa <davidcostadev@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "jest": "jest",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^23.6.0",
+    "regenerator-runtime": "^0.12.1"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.1",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.3.0",
+    "moment": "^2.22.2",
+    "ramda": "^0.25.0",
+    "sequelize": "^4.39.1"
+  }
+}

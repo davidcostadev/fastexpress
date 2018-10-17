@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`converts dateFilter .convert with more than one date 1`] = `
+Object {
+  Symbol(gte): "2018-07-24T20:09:10.971Z",
+  Symbol(lte): "2018-07-24T20:09:10.971Z",
+}
+`;
+
+exports[`converts dateFilter .convert with one date 1`] = `"2018-07-24T20:09:10.971Z"`;
