@@ -1,20 +1,27 @@
 {
   "name": "fastexpress",
-  "version": "1.0.2",
-  "main": "./src/index.js",
+  "version": "1.0.3",
+  "main": "dist/index.js",
   "repository": "git@github.com:davidcostadev/fastexpress.git",
   "author": "David Costa <davidcostadev@gmail.com>",
   "license": "MIT",
   "scripts": {
     "jest": "jest",
-    "test": "jest"
+    "test": "jest",
+    "build": "npm run build:cjs",
+    "build:cjs": "babel src --out-dir dist"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "babel-types": "^6.26.0",
     "jest": "^23.6.0",
-    "regenerator-runtime": "^0.12.1"
+    "regenerator-runtime": "^0.12.1",
+    "rollup": "^0.66.6"
   },
   "dependencies": {
     "bcrypt": "^3.0.1",
