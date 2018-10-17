@@ -1,4 +1,4 @@
-import { middleware } from './authMiddleware.js';
+import middleware from './authMiddleware.js';
 
 
 export default {
