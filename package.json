@@ -1,6 +1,6 @@
 {
   "name": "fastexpress",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "dist/index.js",
   "repository": "git@github.com:davidcostadev/fastexpress.git",
   "author": "David Costa <davidcostadev@gmail.com>",

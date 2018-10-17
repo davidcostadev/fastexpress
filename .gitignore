@@ -1,6 +1,5 @@
 node_modules
 coverage
-dist
 .env
 database.json
 package-lock.json
