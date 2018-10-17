@@ -1,5 +1,4 @@
-import { dateFilter } from '../src/definitionsFilters.js';
-import { orderToFilter } from '../src/convert.js';
+import { dateFilter, orderToFilter } from '../src/index.js';
 
 describe('converts', () => {
   describe('dateFilter', () => {

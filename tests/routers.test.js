@@ -4,7 +4,7 @@ import {
   namespaceIndexCreator,
   resourceList,
   resourceWithAuth,
-} from '../src/routers.js';
+} from '../src/index.js';
 
 jest.mock('express');
 

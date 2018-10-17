@@ -1,4 +1,4 @@
-import * as validate from '../src/validate.js';
+import { validate } from '../src/index.js';
 
 describe('validade function', () => {
   it('number', () => {

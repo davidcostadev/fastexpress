@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { cryptPassword, getModelAlias, clearData } from '../src/model.js';
+import { cryptPassword, getModelAlias, clearData } from '../src/index.js';
 
 describe('model', () => {
   describe('clearData should work', () => {

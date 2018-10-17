@@ -1,4 +1,4 @@
-import paginationParse from '../src/pagination.js';
+import { paginationParse } from '../src/index.js';
 
 it('should the object', () => {
   expect(paginationParse(10, 1, 5)).toEqual({
