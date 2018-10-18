@@ -21,6 +21,8 @@ import {
   serviceDefaultProps,
   createResourceService as createService
 } from './createService'
+import * as migrationActions from './migration/helper';
+import * as migrationHelper from './migration/create';
 
 export {
   createMiddleware,
@@ -44,4 +46,6 @@ export {
   createController,
   createService,
   serviceDefaultProps,
+  migrationActions,
+  migrationHelper,
 };
