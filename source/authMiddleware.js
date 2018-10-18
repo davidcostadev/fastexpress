@@ -12,7 +12,7 @@ const getToken = (req) => {
   return null;
 };
 
-const checkAuth = (req, res, next, jwtEncryption) => {
+const checkAuth = jwtEncryption => (req, res, next) => {
   const token = getToken(req);
 
   if (!token) {
@@ -54,9 +54,14 @@ const onlyUser = (req, res, next) => {
   next();
 };
 
-export const middleware = [
-  checkAuth,
-  onlyUser,
-];
+// export const middleware = [
+//   checkAuth,
+//   onlyUser,
+// ];
 
-export default middleware;
+const createMiddleware = (jwtEncryption) => ([
+  checkAuth(jwtEncryption),
+  onlyUser,
+])
+
+export default createMiddleware;

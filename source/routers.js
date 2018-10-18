@@ -1,9 +1,3 @@
-// import config from '../../config/envs';
-
-const config = {
-  NAMESPACE: '/api/v1/'
-}
-
 export const resources = (prefix, { router, controller }) => {
   router.get(`${prefix}/`, controller.list);
   router.post(`${prefix}/`, controller.create);
@@ -20,18 +14,20 @@ export const resourcesAuth = (prefix, { router, middleware, controller }) => {
   router.put(`${prefix}/:id`, middleware, controller.update);
 };
 
-export const namespace = url => `${config.NAMESPACE}${url}`;
+export const namespaceCreator = (namespace = '/') => (url = '') => `${namespace}${url}`;
 
-// config.NAMESPACE = '/api/v1/
 
-export const namespaceIndexCreator = urls => config.NAMESPACE
+export const namespaceIndexCreator = namespace => urls => namespace()
   .split('/')
   .filter(word => !!word)
   .reduceRight((pre, cur) => ({
     [cur]: pre,
   }), urls);
 
-export const resourceWithAuth = (url, controller, { router, middleware }) => (
+const defaultNamespace = (url) => `/${url}`;
+
+
+export const resourceWithAuth = (url, controller, { router, middleware, namespace = defaultNamespace }) => (
   resourcesAuth(namespace(url), {
     controller,
     router,
@@ -39,13 +35,13 @@ export const resourceWithAuth = (url, controller, { router, middleware }) => (
   })
 );
 
-export const resourceList = (url, custom = []) => ([
+export const resourceList = (url, { custom = [], namespace = defaultNamespace } = {}) => ([
   ...[
-    controller => (`[get] /api/v1/${controller}`),
-    controller => (`[post] /api/v1/${controller}`),
-    controller => (`[get] /api/v1/${controller}/:id`),
-    controller => (`[delete] /api/v1/${controller}/:id`),
-    controller => (`[put] /api/v1/${controller}/:id`),
-  ].map(method => method(url)),
+    controller => (`[get] ${controller}`),
+    controller => (`[post] ${controller}`),
+    controller => (`[get] ${controller}/:id`),
+    controller => (`[delete] ${controller}/:id`),
+    controller => (`[put] ${controller}/:id`),
+  ].map(method => method(namespace(url))),
   ...custom,
 ]);

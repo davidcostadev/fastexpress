@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
 import encodings from 'iconv-lite/encodings';
-import { Service } from '../src/index.js';
-import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from '../src/errors.js';
+import { Service } from '../source/index.js';
+import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from '../source/errors.js';
 
 iconv.encodings = encodings;
 

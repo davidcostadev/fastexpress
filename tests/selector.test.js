@@ -1,4 +1,4 @@
-import { selector, validate } from '../src/index.js';
+import { selector, validate } from '../source/index.js';
 
 it('selector with a convert config', () => {
   const query = {

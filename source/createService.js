@@ -12,7 +12,7 @@ export const serviceDefaultProps = ({
   database,
 });
 
-const createResourceService = (model, {
+export const createResourceService = (model, {
   only = ACTIONS,
   definitions = {},
   options = {},
@@ -31,4 +31,3 @@ const createResourceService = (model, {
   };
 };
 
-export default createResourceService;

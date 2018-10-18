@@ -1,6 +1,6 @@
 import iconv from 'iconv-lite';
 import encodings from 'iconv-lite/encodings';
-import { Controller } from '../src/index.js';
+import { Controller } from '../source/index.js';
 
 
 iconv.encodings = encodings;

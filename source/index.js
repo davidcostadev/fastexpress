@@ -1,4 +1,4 @@
-import middleware from './authMiddleware.js';
+import createMiddleware from './authMiddleware.js';
 import Controller from './Controller';
 import { dateFilter } from './definitionsFilters.js';
 import { orderToFilter } from './convert.js';
@@ -10,13 +10,20 @@ import {
   namespaceIndexCreator,
   resourceList,
   resourceWithAuth,
+  namespaceCreator,
 } from './routers.js';
 import selector from './selector.js';
 import * as validate from './validate.js';
-import Service from '../src/Service.js';
+import * as convert from './convert.js';
+import Service from './Service.js';
+import createController from './createController'
+import {
+  serviceDefaultProps,
+  createResourceService as createService
+} from './createService'
 
 export {
-  middleware,
+  createMiddleware,
   Controller,
   dateFilter,
   orderToFilter,
@@ -26,10 +33,15 @@ export {
   paginationParse,
   resources,
   resourcesAuth,
+  namespaceCreator,
   namespaceIndexCreator,
   resourceList,
   resourceWithAuth,
   selector,
   validate,
+  convert,
   Service,
+  createController,
+  createService,
+  serviceDefaultProps,
 };

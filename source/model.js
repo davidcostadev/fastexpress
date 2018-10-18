@@ -55,7 +55,7 @@ export const clearData = (data, scheme) => {
 
 /* eslint no-param-reassign: "off" */
 /* eslint no-underscore-dangle: "off" */
-export const cryptPassword = (user, bcryptSalt = 2) => {
+export const cryptPassword = bcryptSalt => (user) => {
   if (user.password !== user._previousDataValues.password) {
     return bcrypt
       .hash(user.password, bcrypt.genSaltSync(bcryptSalt))

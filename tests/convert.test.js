@@ -1,4 +1,4 @@
-import { dateFilter, orderToFilter } from '../src/index.js';
+import { dateFilter, orderToFilter } from '../source/index.js';
 
 describe('converts', () => {
   describe('dateFilter', () => {
