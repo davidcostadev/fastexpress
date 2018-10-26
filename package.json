@@ -1,6 +1,6 @@
 {
   "name": "fastexpress",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "module": "./src/index.js",
   "main": "./cjs/index.js",
   "unpkg": "dist/fastexpress.min.js",
@@ -21,7 +21,8 @@
     "build:umd": "cross-env NODE_ENV=development rollup -c -o dist/fastexpress.js",
     "build:umd:min": "cross-env NODE_ENV=production rollup -c -o dist/fastexpress.min.js",
     "clean": "rimraf dist/* cjs/*",
-    "prepare": "npm run clean && npm run build"
+    "prepare": "npm run clean && npm run build",
+    "npm-publish": "npm run build && npm publish"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
