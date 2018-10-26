@@ -1,10 +1,12 @@
 {
   "name": "fastexpress",
-  "version": "1.1.1",
-  "main": "src/index.js",
+  "version": "1.2.0-dev.1",
+  "module": "./src/index.js",
+  "main": "./cjs/index.js",
   "unpkg": "dist/fastexpress.min.js",
   "jsdelivr": "dist/fastexpress.min.js",
   "files": [
+    "cjs",
     "src",
     "dist"
   ],
