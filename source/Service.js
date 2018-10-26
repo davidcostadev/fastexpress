@@ -7,7 +7,6 @@ import { getModelAlias, listDefaultOptions } from './model.js';
 const list = async ({ query }, Model, { options, database }) => {
   const {
     filters,
-    fields,
     aliasDatabase,
   } = {
     ...listDefaultOptions,

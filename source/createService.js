@@ -3,12 +3,11 @@ import { ACTIONS } from './definitions.js';
 
 export const serviceDefaultProps = ({
   form,
-  fields,
   filters,
   database,
 }) => ({
   definitions: form,
-  options: { fields, filters },
+  options: { filters },
   database,
 });
 

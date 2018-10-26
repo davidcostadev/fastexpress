@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 export const listDefaultOptions = {
   where: {},
   filter: null,
-  fields: [],
   aliasDatabase: {},
 };
 

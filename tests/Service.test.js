@@ -61,16 +61,8 @@ describe('Service', () => {
         findAll: jest.fn().mockResolvedValue([entity]),
         findAndCountAll: jest.fn().mockResolvedValue({ count: 1 }),
       };
-      const fields = [
-        'id',
-        'name',
-      ];
 
-      const result = await Service.list(reqMock, modelMock, {
-        options: {
-          fields,
-        },
-      });
+      const result = await Service.list(reqMock, modelMock, { options: {} });
 
       expect(modelMock.findAll).toBeCalled();
       expect(modelMock.findAndCountAll).toBeCalled();
@@ -107,10 +99,6 @@ describe('Service', () => {
         findAll: jest.fn().mockResolvedValue([entity]),
         findAndCountAll: jest.fn().mockResolvedValue({ count: 1 }),
       };
-      const fields = [
-        'id',
-        'name',
-      ];
 
       reqMock.query = {
         id: 1,
@@ -121,7 +109,6 @@ describe('Service', () => {
       };
       await Service.list(reqMock, modelMock, {
         options: {
-          fields,
           filters: definitions,
           aliasDatabase,
         },
