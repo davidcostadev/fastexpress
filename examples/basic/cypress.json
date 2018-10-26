@@ -1,0 +1,4 @@
+{
+  "pluginsFile": "tests/plugins/index.js",
+  "baseUrl": "http://localhost:3000"
+}
