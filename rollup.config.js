@@ -1,19 +1,17 @@
 var uglify = require('rollup-plugin-terser').terser;
 var pkg = require('./package.json');
 
-var banner = '//  fastexpress v' + pkg.version + '\n'
-  + '//  https://github.com/davidcostadev/fastexpress\n'
-  + '//  (c) ' + new Date().getFullYear() + ' David Costa\n'
-  + '//  fastexpress may be freely distributed under the MIT license.\n';
+var banner = '//  fastexpress v' + pkg.version
+  + ' - (c) ' + new Date().getFullYear() + ' David Costa'
+  + ' - may be freely distributed under the MIT license.\n';
 
-var input = 'source/index.js';
+var input = 'src/index.js';
 
 var config = {
   input: input,
   output: {
     format: 'umd',
-    name: 'R',
-    exports: 'named'
+    name: 'fastexpress',
   },
   banner: banner,
   plugins: []

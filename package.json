@@ -1,10 +1,12 @@
 {
   "name": "fastexpress",
-  "version": "1.1.1",
-  "main": "src/index.js",
+  "version": "1.2.0-dev.2",
+  "module": "./src/index.js",
+  "main": "./cjs/index.js",
   "unpkg": "dist/fastexpress.min.js",
   "jsdelivr": "dist/fastexpress.min.js",
   "files": [
+    "cjs",
     "src",
     "dist"
   ],
@@ -14,11 +16,11 @@
   "scripts": {
     "jest": "jest",
     "test": "jest",
-    "build": "npm run build:cjs",
-    "build:cjs": "babel source --out-dir src",
+    "build": "npm run build:cjs && npm run build:umd && npm run build:umd:min",
+    "build:cjs": "babel src --out-dir cjs",
     "build:umd": "cross-env NODE_ENV=development rollup -c -o dist/fastexpress.js",
     "build:umd:min": "cross-env NODE_ENV=production rollup -c -o dist/fastexpress.min.js",
-    "clean": "rimraf src/* dist/*",
+    "clean": "rimraf dist/* cjs/*",
     "prepare": "npm run clean && npm run build"
   },
   "devDependencies": {
