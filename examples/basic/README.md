@@ -7,16 +7,16 @@
 
 ## Installation
 
-cp config/config.example.json config/config.json
-yarn run sequelize db:create
-yarn run sequelize db:migrate
-yarn run sequelize db:seed:all
-yarn run start
+- cp config/config.example.json config/config.json
+- yarn run sequelize db:create
+- yarn run sequelize db:migrate
+- yarn run sequelize db:seed:all
+- yarn run start
 
 
 
 ## Running tests
 
-yarn run sequelize db:seed:undo:all
-yarn run sequelize db:seed:all
-yarn run cypress or yarn test
+- yarn run sequelize db:seed:undo:all
+- yarn run sequelize db:seed:all
+- yarn run cypress or yarn test
