@@ -1,10 +1,15 @@
 {
   "name": "fastexpress",
-  "version": "1.2.0-dev.0",
+  "version": "1.2.0-dev.1",
   "module": "./src/index.js",
   "main": "./cjs/index.js",
   "unpkg": "dist/fastexpress.min.js",
   "jsdelivr": "dist/fastexpress.min.js",
+  "files": [
+    "cjs",
+    "src",
+    "dist"
+  ],
   "repository": "git@github.com:davidcostadev/fastexpress.git",
   "author": "David Costa <davidcostadev@gmail.com>",
   "license": "MIT",
