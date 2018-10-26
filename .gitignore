@@ -4,5 +4,4 @@ coverage
 database.json
 package-lock.json
 yarn-error.log
-cjs
-dist
+src
