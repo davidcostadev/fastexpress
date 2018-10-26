@@ -2,7 +2,7 @@ import createMiddleware from './authMiddleware.js';
 import Controller from './Controller';
 import { dateFilter } from './definitionsFilters.js';
 import { orderToFilter } from './convert.js';
-import { cryptPassword, getModelAlias, clearData } from './model.js';
+import { cryptPassword, getModelAlias } from './model.js';
 import paginationParse from './pagination.js';
 import {
   resources,
@@ -31,7 +31,6 @@ export {
   orderToFilter,
   cryptPassword,
   getModelAlias,
-  clearData,
   paginationParse,
   resources,
   resourcesAuth,

@@ -24,35 +24,6 @@ export const getModelAlias = (aliasDatabase, db) => (model) => {
   };
 };
 
-/* eslint no-use-before-define: "off" */
-const clearItem = scheme => (item) => {
-  const newItem = {};
-
-  scheme.forEach((field) => {
-    if (item === null) {
-      newItem[field] = null;
-    } else if (typeof field === 'string') {
-      newItem[field] = item[field];
-    } else {
-      Object.keys(field).forEach((key) => {
-        if (typeof item[key] !== 'undefined') {
-          newItem[key] = clearData(item[key], field[key]);
-        }
-      });
-    }
-  });
-
-  return newItem;
-};
-
-export const clearData = (data, scheme) => {
-  if (Array.isArray(data)) {
-    return data.map(clearItem(scheme));
-  }
-
-  return clearItem(scheme)(data);
-};
-
 /* eslint no-param-reassign: "off" */
 /* eslint no-underscore-dangle: "off" */
 export const cryptPassword = bcryptSalt => (user) => {

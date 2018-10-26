@@ -2,7 +2,7 @@ import paginationParse from './pagination.js';
 import selector from './selector.js';
 import * as SelType from './selectorTypes.js';
 import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from './errors.js';
-import { getModelAlias, listDefaultOptions, clearData } from './model.js';
+import { getModelAlias, listDefaultOptions } from './model.js';
 
 const list = async ({ query }, Model, { options, database }) => {
   const {
@@ -52,7 +52,7 @@ const list = async ({ query }, Model, { options, database }) => {
     const pagination = paginationParse(count, page, limit);
 
     return {
-      data: clearData(data, fields),
+      data: JSON.parse(JSON.stringify(data)),
       pagination,
     };
   } catch (e) {
