@@ -16,11 +16,11 @@
   "scripts": {
     "jest": "jest",
     "test": "jest",
-    "build": "npm run build:cjs && npm run build:umd && npm run build:umd:min",
-    "build:cjs": "babel src --out-dir cjs",
+    "build": "npm run build:cjs",
+    "build:cjs": "babel source --out-dir src",
     "build:umd": "cross-env NODE_ENV=development rollup -c -o dist/fastexpress.js",
     "build:umd:min": "cross-env NODE_ENV=production rollup -c -o dist/fastexpress.min.js",
-    "clean": "rimraf dist/* cjs/*",
+    "clean": "rimraf src/* dist/*",
     "prepare": "npm run clean && npm run build"
   },
   "devDependencies": {
