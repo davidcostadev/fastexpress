@@ -1,21 +1,24 @@
 {
   "name": "fastexpress",
   "version": "1.1.1",
-  "module": "./src/index.js",
-  "main": "./cjs/index.js",
+  "main": "src/index.js",
   "unpkg": "dist/fastexpress.min.js",
   "jsdelivr": "dist/fastexpress.min.js",
+  "files": [
+    "src",
+    "dist"
+  ],
   "repository": "git@github.com:davidcostadev/fastexpress.git",
   "author": "David Costa <davidcostadev@gmail.com>",
   "license": "MIT",
   "scripts": {
     "jest": "jest",
     "test": "jest",
-    "build": "npm run build:cjs && npm run build:umd && npm run build:umd:min",
-    "build:cjs": "babel src --out-dir cjs",
+    "build": "npm run build:cjs",
+    "build:cjs": "babel source --out-dir src",
     "build:umd": "cross-env NODE_ENV=development rollup -c -o dist/fastexpress.js",
     "build:umd:min": "cross-env NODE_ENV=production rollup -c -o dist/fastexpress.min.js",
-    "clean": "rimraf dist/* cjs/*",
+    "clean": "rimraf src/* dist/*",
     "prepare": "npm run clean && npm run build"
   },
   "devDependencies": {
