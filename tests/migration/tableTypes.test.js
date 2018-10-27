@@ -1,4 +1,4 @@
-import { table } from '../../src/migration/create.js';
+import { table } from '../../src/migration/create';
 
 describe('tableTypes', () => {
   describe('table should works', () => {

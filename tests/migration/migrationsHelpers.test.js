@@ -2,7 +2,7 @@ import {
   addConstraint,
   createTable,
   dropTable,
-} from '../../src/migration/helper.js';
+} from '../../src/migration/helper';
 
 describe('migrationsHelpers', () => {
   describe('addConstraint should', () => {
