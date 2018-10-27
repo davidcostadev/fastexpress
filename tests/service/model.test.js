@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { cryptPassword, getModelAlias } from '../source/index.js';
+import { cryptPassword, getModelAlias } from '../../src';
 
 describe('model', () => {
   describe('getModelAlias should', () => {
