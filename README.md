@@ -27,7 +27,7 @@ The main functionalities is:
 ## Usage cases
 
 
-### Service
+### on service TaskService.js
 
 The Service is a part of the system responsible for picking information from the models and delivering to the controllers.
 
@@ -55,26 +55,26 @@ module.exports = createService(Tasks, serviceDefaultProps({
 ```
 
 
-### Controller 
+### On controler TasksController.js 
 
 The Controller make a communication between the model and the express
 
 ```javascript
 const { createController } = require('fastexpress');
-const TaskService = require('../services/TaskServices');
+const TaskService = require('../services/TaskService');
 
 module.exports = createController(TaskService);
 ```
 
 
-### Routes
+### on router.js
 
 Create CRUD endpoint to any controller
 
 ```javascript
 const { Router } = require('express');
 const { namespaceCreator, resources } = require('fastexpress');
-const Tasks = require('./controllers/Tasks');
+const Tasks = require('./controllers/TasksController');
 
 const router = Router();
 const namespace = namespaceCreator('/api/v1/');
@@ -89,6 +89,23 @@ resources(namespace('tasks'), { router, controller: Tasks });
   [delete] /api/v1/tasks/:id
   [put] /api/v1/tasks/:id'
 */
+
+module.exports = router;
+
+```
+
+## On server.js
+
+```javascript
+const express = require('express');
+
+const routes = require('./routes');
+
+const app = express();
+
+app.use(routes);
+
+module.exports = app.listen(3000);
 
 ```
 
