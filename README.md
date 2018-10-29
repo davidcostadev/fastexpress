@@ -1,21 +1,21 @@
 # fastexpress
 
-![https://api.travis-ci.org/davidcostadev/fastexpress](https://api.travis-ci.org/davidcostadev/fastexpress.svg?branch=master)
+[![Build Status](https://travis-ci.org/davidcostadev/fastexpress.svg?branch=master)](https://travis-ci.org/davidcostadev/fastexpress)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b045a34c8cb425bf67f1/maintainability)](https://codeclimate.com/github/withmoney/withmoney-api/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b045a34c8cb425bf67f1/test_coverage)](https://codeclimate.com/github/withmoney/withmoney-api/test_coverage)
 [![GitHub license](https://img.shields.io/github/license/davidcostadev/fastexpress.svg)](https://github.com/davidcostadev/fastexpress/blob/master/LICENSE)
- [![npm version](https://img.shields.io/npm/v/fastexpress.svg)](https://www.npmjs.com/package/fastexpress)
+[![npm version](https://img.shields.io/npm/v/fastexpress.svg)](https://www.npmjs.com/package/fastexpress)
 
 ---
 
-fastexpress is a library to improve the development velocity of APIs with express. It's have a list of functionalities to create APIs with little line of code, with possibility to customise it
+fastexpress is a library to improve the development velocity of APIs with express. It's has a list of functionalities to create APIs with a little line of code, with possibility to customize it.
 
 The main functionalities is:
 
-- Improve the creation of model endpoints
-- Create CRUDs with few rows
+- Improve the creation of model endpoints.
+- Create CRUDs with few rows.
 - Add rich integration with templates, allowed filters and joins.
-- Add secure endpoints through token usage (jwt)
+- Add secure endpoints through token usage (jwt).
 
 ## Installation
 
@@ -29,7 +29,7 @@ The main functionalities is:
 
 ### Service
 
-The Service is a part of the system responsible for picking information from the models and delivering to the controllers
+The Service is a part of the system responsible for picking information from the models and delivering to the controllers.
 
 The template is your sequelize template.
 
@@ -96,7 +96,7 @@ resources(namespace('tasks'), { router, controller: Tasks });
 
 ### Basic
 
-This is a basic example of usage of the fastexpress
+This is a basic example of usage of the fastexpress.
 
 - [Basic](examples/basic)
 
