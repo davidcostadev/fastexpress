@@ -1,5 +1,13 @@
 # fastexpress
 
+![https://api.travis-ci.org/davidcostadev/fastexpress](https://api.travis-ci.org/davidcostadev/fastexpress.svg?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b045a34c8cb425bf67f1/maintainability)](https://codeclimate.com/github/withmoney/withmoney-api/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b045a34c8cb425bf67f1/test_coverage)](https://codeclimate.com/github/withmoney/withmoney-api/test_coverage)
+[![GitHub license](https://img.shields.io/github/license/davidcostadev/fastexpress.svg)](https://github.com/davidcostadev/fastexpress/blob/master/LICENSE)
+ [![npm version](https://img.shields.io/npm/v/fastexpress.svg)](https://www.npmjs.com/package/fastexpress)
+
+---
+
 fastexpress is a library to improve the development velocity of APIs with express. It's have a list of functionalities to create APIs with little line of code, with possibility to customise it
 
 The main functionalities is:
