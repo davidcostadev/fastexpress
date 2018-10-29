@@ -90,7 +90,7 @@ resources(namespace('tasks'), { router, controller: Tasks });
 
 This is a basic example of usage of the fastexpress
 
-example/basic
+- [Basic](examples/basic)
 
 
 ## Open Source
