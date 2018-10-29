@@ -5,7 +5,7 @@ var banner = '//  fastexpress v' + pkg.version
   + ' - (c) ' + new Date().getFullYear() + ' David Costa'
   + ' - may be freely distributed under the MIT license.\n';
 
-var input = 'src/index.js';
+var input = './src/index.js'
 
 var config = {
   input: input,

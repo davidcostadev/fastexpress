@@ -5,7 +5,7 @@ import {
   resourceList,
   resourceWithAuth,
   namespaceCreator,
-} from '../source/index.js';
+} from '../../src';
 
 jest.mock('express');
 

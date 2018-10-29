@@ -1,4 +1,4 @@
-import { EXCEPTION_NOT_FOUND } from './errors.js';
+import { EXCEPTION_NOT_FOUND } from './errors';
 
 const defaultResponse = async (req, res, service) => {
   try {

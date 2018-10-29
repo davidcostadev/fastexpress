@@ -1,79 +1,15 @@
-//  fastexpress v1.4.0 - (c) 2018 David Costa - may be freely distributed under the MIT license.
+//  fastexpress v1.4.1 - (c) 2018 David Costa - may be freely distributed under the MIT license.
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('jsonwebtoken'), require('ramda'), require('moment'), require('sequelize'), require('bcrypt')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'jsonwebtoken', 'ramda', 'moment', 'sequelize', 'bcrypt'], factory) :
-  (factory((global.fastexpress = {}),global.jwt,global.R,global.Moment,global.sequelize,global.bcrypt));
-}(this, (function (exports,jwt,R,Moment,sequelize,bcrypt) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('ramda'), require('moment'), require('bcrypt'), require('jsonwebtoken'), require('sequelize')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'ramda', 'moment', 'bcrypt', 'jsonwebtoken', 'sequelize'], factory) :
+  (factory((global.fastexpress = {}),global.R,global.Moment,global.bcrypt,global.jwt,global.sequelize));
+}(this, (function (exports,R,Moment,bcrypt,jwt,sequelize) { 'use strict';
 
-  jwt = jwt && jwt.hasOwnProperty('default') ? jwt['default'] : jwt;
   R = R && R.hasOwnProperty('default') ? R['default'] : R;
   Moment = Moment && Moment.hasOwnProperty('default') ? Moment['default'] : Moment;
   bcrypt = bcrypt && bcrypt.hasOwnProperty('default') ? bcrypt['default'] : bcrypt;
-
-  const getToken = (req) => {
-    if (typeof req.body.token !== 'undefined') {
-      return req.body.token;
-    } else if (typeof req.query.token !== 'undefined') {
-      return req.query.token;
-    } else if (typeof req.headers.authorization !== 'undefined') {
-      return req.headers.authorization.replace('Bearer ', '');
-    }
-
-    return null;
-  };
-
-  const checkAuth = jwtEncryption => (req, res, next) => {
-    const token = getToken(req);
-
-    if (!token) {
-      res.status(403).send({
-        message: 'No token provided',
-      });
-    } else {
-      jwt.verify(token, jwtEncryption, (err, decoded) => {
-        if (err) {
-          res.status(500).send({
-            message: 'Invalid auth token provided.',
-          });
-        } else {
-          res.user = decoded;
-
-          next();
-        }
-      });
-    }
-  };
-
-  const onlyUser = (req, res, next) => {
-    let filter = 'UserId';
-
-    if (req.route.path === '/api/v1/users/') {
-      filter = 'id';
-    }
-
-    req.query = {
-      ...req.query,
-      [filter]: res.user.id,
-    };
-
-    req.body = {
-      ...req.body,
-      [filter]: res.user.id,
-    };
-
-    next();
-  };
-
-  // export const middleware = [
-  //   checkAuth,
-  //   onlyUser,
-  // ];
-
-  const createMiddleware = (jwtEncryption) => ([
-    checkAuth(jwtEncryption),
-    onlyUser,
-  ]);
+  jwt = jwt && jwt.hasOwnProperty('default') ? jwt['default'] : jwt;
 
   const EXCEPTION_NOT_FOUND = 'not found';
   const EXCEPTION_UNPROCESSABLE_ENTITY = 'unprocessable entity';
@@ -119,6 +55,136 @@
     get,
     update,
     destroy,
+  };
+
+  const ACTIONS = ['create', 'get', 'list', 'destroy', 'update'];
+
+  const createResourceController = (service, { only = ACTIONS, custom = {} } = {}) => {
+    const methods = {};
+
+    only.forEach((action) => {
+      methods[action] = (req, res) => Controller[action](req, res, service[action]);
+    });
+
+    return {
+      ...methods,
+      ...custom,
+    };
+  };
+
+  const { table } = require('./create');
+
+  const createTable = (name, callback, then = () => {}) => (queryInterface, DataTypes) => (
+    queryInterface.createTable(name, {
+      ...table(DataTypes, {
+        ...callback(DataTypes),
+      }),
+    }).then(() => then(queryInterface, DataTypes))
+  );
+
+  const dropTable = name => queryInterface => queryInterface.dropTable(name);
+
+  const addConstraint = (queryInterface, tableCurrent, { tableName, field, name }) => (
+    queryInterface.addConstraint(tableCurrent, [field], {
+      type: 'foreign key',
+      name,
+      references: {
+        table: tableName,
+        field: 'id',
+      },
+      onDelete: 'cascade',
+      onUpdate: 'no action',
+    })
+  );
+
+  module.exports = {
+    dropTable,
+    createTable,
+    addConstraint,
+  };
+
+  var helper = /*#__PURE__*/Object.freeze({
+
+  });
+
+  const id = DataTypes => ({
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
+  });
+
+  const timestamp = DataTypes => ({
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+  });
+
+  const table$1 = (DataTypes, fields = {}) => ({
+    ...id(DataTypes),
+    ...fields,
+    ...timestamp(DataTypes),
+  });
+
+  module.exports = {
+    id,
+    timestamp,
+    table: table$1,
+  };
+
+  var create$1 = /*#__PURE__*/Object.freeze({
+
+  });
+
+  const getTotalPages = (totalItems, perPage) => Math.ceil(totalItems / perPage);
+
+  const getNextPageIfExist = (currentPage, totalPages) => (
+    currentPage < totalPages ? currentPage + 1 : null
+  );
+  const getPreviousPageIfExist = currentPage => (
+    currentPage > 1 ? currentPage - 1 : null
+  );
+
+  const paginationParse = (totalItems, currentPage, perPage) => {
+    const totalPages = getTotalPages(totalItems, perPage);
+
+    return {
+      totalItems,
+      currentPage,
+      perPage,
+      totalPages,
+      nextPage: getNextPageIfExist(currentPage, totalPages),
+      previousPage: getPreviousPageIfExist(currentPage),
+    };
+  };
+
+  const selector = (definitions, query = {}) => {
+    const select = {};
+
+    Object.keys(definitions).forEach((key) => {
+      if (typeof query[key] !== 'undefined') {
+        if (definitions[key].validation(query[key])) {
+          if (typeof definitions[key].convert !== 'undefined') {
+            select[key] = definitions[key].convert(query[key], key);
+          } else {
+            select[key] = query[key];
+          }
+        } else if (typeof definitions[key].default !== 'undefined') {
+          select[key] = definitions[key].default;
+        }
+      } else if (typeof definitions[key].default !== 'undefined') {
+        select[key] = definitions[key].default;
+      }
+    });
+
+    return select;
   };
 
   const string = R.compose(Boolean, R.length);
@@ -173,22 +239,6 @@
     default: 1,
   };
 
-  const dateFilter = {
-    validation: () => true,
-    convert: (val) => {
-      if (val.indexOf(',') > -1) {
-        const parts = val.split(',');
-        const [start, end] = parts;
-        return {
-          [sequelize.Op.gte]: start,
-          [sequelize.Op.lte]: end,
-        };
-      }
-
-      return val;
-    },
-  };
-
   const listDefaultOptions = {
     where: {},
     filter: null,
@@ -224,98 +274,6 @@
     }
 
     return null;
-  };
-
-  const getTotalPages = (totalItems, perPage) => Math.ceil(totalItems / perPage);
-
-  const getNextPageIfExist = (currentPage, totalPages) => (
-    currentPage < totalPages ? currentPage + 1 : null
-  );
-  const getPreviousPageIfExist = currentPage => (
-    currentPage > 1 ? currentPage - 1 : null
-  );
-
-  const paginationParse = (totalItems, currentPage, perPage) => {
-    const totalPages = getTotalPages(totalItems, perPage);
-
-    return {
-      totalItems,
-      currentPage,
-      perPage,
-      totalPages,
-      nextPage: getNextPageIfExist(currentPage, totalPages),
-      previousPage: getPreviousPageIfExist(currentPage),
-    };
-  };
-
-  const resources = (prefix, { router, controller }) => {
-    router.get(`${prefix}/`, controller.list);
-    router.post(`${prefix}/`, controller.create);
-    router.get(`${prefix}/:id`, controller.get);
-    router.delete(`${prefix}/:id`, controller.destroy);
-    router.put(`${prefix}/:id`, controller.update);
-  };
-
-  const resourcesAuth = (prefix, { router, middleware, controller }) => {
-    router.get(`${prefix}/`, middleware, controller.list);
-    router.post(`${prefix}/`, middleware, controller.create);
-    router.get(`${prefix}/:id`, middleware, controller.get);
-    router.delete(`${prefix}/:id`, middleware, controller.destroy);
-    router.put(`${prefix}/:id`, middleware, controller.update);
-  };
-
-  const namespaceCreator = (namespace = '/') => (url = '') => `${namespace}${url}`;
-
-
-  const namespaceIndexCreator = namespace => urls => namespace()
-    .split('/')
-    .filter(word => !!word)
-    .reduceRight((pre, cur) => ({
-      [cur]: pre,
-    }), urls);
-
-  const defaultNamespace = (url) => `/${url}`;
-
-
-  const resourceWithAuth = (url, controller, { router, middleware, namespace = defaultNamespace }) => (
-    resourcesAuth(namespace(url), {
-      controller,
-      router,
-      middleware,
-    })
-  );
-
-  const resourceList = (url, { custom = [], namespace = defaultNamespace } = {}) => ([
-    ...[
-      controller => (`[get] ${controller}`),
-      controller => (`[post] ${controller}`),
-      controller => (`[get] ${controller}/:id`),
-      controller => (`[delete] ${controller}/:id`),
-      controller => (`[put] ${controller}/:id`),
-    ].map(method => method(namespace(url))),
-    ...custom,
-  ]);
-
-  const selector = (definitions, query = {}) => {
-    const select = {};
-
-    Object.keys(definitions).forEach((key) => {
-      if (typeof query[key] !== 'undefined') {
-        if (definitions[key].validation(query[key])) {
-          if (typeof definitions[key].convert !== 'undefined') {
-            select[key] = definitions[key].convert(query[key], key);
-          } else {
-            select[key] = query[key];
-          }
-        } else if (typeof definitions[key].default !== 'undefined') {
-          select[key] = definitions[key].default;
-        }
-      } else if (typeof definitions[key].default !== 'undefined') {
-        select[key] = definitions[key].default;
-      }
-    });
-
-    return select;
   };
 
   const list$1 = async ({ query }, Model, { options, database }) => {
@@ -390,7 +348,7 @@
     }
   };
 
-  const create$1 = async ({ body }, Model, { definitions }) => {
+  const create$2 = async ({ body }, Model, { definitions }) => {
     const dataBody = selector(definitions, body);
 
     try {
@@ -442,25 +400,10 @@
 
   var Service = {
     list: list$1,
-    create: create$1,
+    create: create$2,
     get: get$1,
     update: update$1,
     destroy: destroy$1,
-  };
-
-  const ACTIONS = ['create', 'get', 'list', 'destroy', 'update'];
-
-  const createResourceController = (service, { only = ACTIONS, custom = {} } = {}) => {
-    const methods = {};
-
-    only.forEach((action) => {
-      methods[action] = (req, res) => Controller[action](req, res, service[action]);
-    });
-
-    return {
-      ...methods,
-      ...custom,
-    };
   };
 
   const serviceDefaultProps = ({
@@ -492,76 +435,133 @@
     };
   };
 
-  const { table } = require('./create');
+  const resources = (prefix, { router, controller }) => {
+    router.get(`${prefix}/`, controller.list);
+    router.post(`${prefix}/`, controller.create);
+    router.get(`${prefix}/:id`, controller.get);
+    router.delete(`${prefix}/:id`, controller.destroy);
+    router.put(`${prefix}/:id`, controller.update);
+  };
 
-  const createTable = (name, callback, then = () => {}) => (queryInterface, DataTypes) => (
-    queryInterface.createTable(name, {
-      ...table(DataTypes, {
-        ...callback(DataTypes),
-      }),
-    }).then(() => then(queryInterface, DataTypes))
-  );
+  const resourcesAuth = (prefix, { router, middleware, controller }) => {
+    router.get(`${prefix}/`, middleware, controller.list);
+    router.post(`${prefix}/`, middleware, controller.create);
+    router.get(`${prefix}/:id`, middleware, controller.get);
+    router.delete(`${prefix}/:id`, middleware, controller.destroy);
+    router.put(`${prefix}/:id`, middleware, controller.update);
+  };
 
-  const dropTable = name => queryInterface => queryInterface.dropTable(name);
+  const namespaceCreator = (namespace = '/') => (url = '') => `${namespace}${url}`;
 
-  const addConstraint = (queryInterface, tableCurrent, { tableName, field, name }) => (
-    queryInterface.addConstraint(tableCurrent, [field], {
-      type: 'foreign key',
-      name,
-      references: {
-        table: tableName,
-        field: 'id',
-      },
-      onDelete: 'cascade',
-      onUpdate: 'no action',
+
+  const namespaceIndexCreator = namespace => urls => namespace()
+    .split('/')
+    .filter(word => !!word)
+    .reduceRight((pre, cur) => ({
+      [cur]: pre,
+    }), urls);
+
+  const defaultNamespace = (url) => `/${url}`;
+
+
+  const resourceWithAuth = (url, controller, { router, middleware, namespace = defaultNamespace }) => (
+    resourcesAuth(namespace(url), {
+      controller,
+      router,
+      middleware,
     })
   );
 
-  module.exports = {
-    dropTable,
-    createTable,
-    addConstraint,
+  const resourceList = (url, { custom = [], namespace = defaultNamespace } = {}) => ([
+    ...[
+      controller => (`[get] ${controller}`),
+      controller => (`[post] ${controller}`),
+      controller => (`[get] ${controller}/:id`),
+      controller => (`[delete] ${controller}/:id`),
+      controller => (`[put] ${controller}/:id`),
+    ].map(method => method(namespace(url))),
+    ...custom,
+  ]);
+
+  const getToken = (req) => {
+    if (typeof req.body.token !== 'undefined') {
+      return req.body.token;
+    } else if (typeof req.query.token !== 'undefined') {
+      return req.query.token;
+    } else if (typeof req.headers.authorization !== 'undefined') {
+      return req.headers.authorization.replace('Bearer ', '');
+    }
+
+    return null;
   };
 
-  var helper = /*#__PURE__*/Object.freeze({
+  const checkAuth = jwtEncryption => (req, res, next) => {
+    const token = getToken(req);
 
-  });
+    if (!token) {
+      res.status(403).send({
+        message: 'No token provided',
+      });
+    } else {
+      jwt.verify(token, jwtEncryption, (err, decoded) => {
+        if (err) {
+          res.status(500).send({
+            message: 'Invalid auth token provided.',
+          });
+        } else {
+          res.user = decoded;
 
-  const id = DataTypes => ({
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-    },
-  });
-
-  const timestamp$1 = DataTypes => ({
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-  });
-
-  const table$1 = (DataTypes, fields = {}) => ({
-    ...id(DataTypes),
-    ...fields,
-    ...timestamp$1(DataTypes),
-  });
-
-  module.exports = {
-    id,
-    timestamp: timestamp$1,
-    table: table$1,
+          next();
+        }
+      });
+    }
   };
 
-  var create$2 = /*#__PURE__*/Object.freeze({
+  const onlyUser = (req, res, next) => {
+    let filter = 'UserId';
 
-  });
+    if (req.route.path === '/api/v1/users/') {
+      filter = 'id';
+    }
+
+    req.query = {
+      ...req.query,
+      [filter]: res.user.id,
+    };
+
+    req.body = {
+      ...req.body,
+      [filter]: res.user.id,
+    };
+
+    next();
+  };
+
+  // export const middleware = [
+  //   checkAuth,
+  //   onlyUser,
+  // ];
+
+  const createMiddleware = (jwtEncryption) => ([
+    checkAuth(jwtEncryption),
+    onlyUser,
+  ]);
+
+  const dateFilter = {
+    validation: () => true,
+    convert: (val) => {
+      if (val.indexOf(',') > -1) {
+        const parts = val.split(',');
+        const [start, end] = parts;
+        return {
+          [sequelize.Op.gte]: start,
+          [sequelize.Op.lte]: end,
+        };
+      }
+
+      return val;
+    },
+  };
 
   exports.createMiddleware = createMiddleware;
   exports.Controller = Controller;
@@ -584,7 +584,7 @@
   exports.createService = createResourceService;
   exports.serviceDefaultProps = serviceDefaultProps;
   exports.migrationActions = helper;
-  exports.migrationHelper = create$2;
+  exports.migrationHelper = create$1;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

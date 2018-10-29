@@ -1,6 +1,6 @@
 import Moment from 'moment';
-import * as validate from './validate.js';
-import * as convert from './convert.js';
+import * as validate from './validate';
+import * as convert from './convert';
 
 const stringType = {
   validation: validate.string,

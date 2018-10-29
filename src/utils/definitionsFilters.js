@@ -7,7 +7,7 @@ import {
   valueSelType,
   typeSelType,
   isPaidSelType,
-} from './selectorTypes.js';
+} from './selectorTypes';
 
 export const dateFilter = {
   validation: () => true,

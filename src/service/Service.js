@@ -1,8 +1,8 @@
-import paginationParse from './pagination.js';
-import selector from './selector.js';
-import * as SelType from './selectorTypes.js';
-import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from './errors.js';
-import { getModelAlias, listDefaultOptions } from './model.js';
+import paginationParse from '../utils/pagination';
+import selector from '../utils/selector';
+import * as SelType from '../utils/selectorTypes';
+import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from '../controller/errors';
+import { getModelAlias, listDefaultOptions } from './model';
 
 const list = async ({ query }, Model, { options, database }) => {
   const {

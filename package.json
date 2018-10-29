@@ -1,6 +1,6 @@
 {
   "name": "fastexpress",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "module": "./src/index.js",
   "main": "./cjs/index.js",
   "unpkg": "dist/fastexpress.min.js",
@@ -46,5 +46,10 @@
     "moment": "^2.22.2",
     "ramda": "^0.25.0",
     "sequelize": "^4.39.1"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/tests"
+    ]
   }
 }

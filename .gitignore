@@ -5,3 +5,4 @@ database.json
 package-lock.json
 yarn-error.log
 cjs
+.DS_Store
