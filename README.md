@@ -83,11 +83,11 @@ resources(namespace('tasks'), { router, controller: Tasks });
 
 /**
   Endpoints
-  [get] /api/v1/tasks
-  [post] /api/v1/tasks
-  [get] /api/v1/tasks/:id
-  [delete] /api/v1/tasks/:id
-  [put] /api/v1/tasks/:id'
+  [get] /api/v1/tasks // to list tasks
+  [post] /api/v1/tasks // to add a new task
+  [get] /api/v1/tasks/:id // to get a one task
+  [delete] /api/v1/tasks/:id // to delete a task
+  [put] /api/v1/tasks/:id // to edit a task
 */
 
 module.exports = router;
@@ -98,10 +98,13 @@ module.exports = router;
 
 ```javascript
 const express = require('express');
-
+const bodyParser = require('body-parser');
 const routes = require('./routes');
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(routes);
 
