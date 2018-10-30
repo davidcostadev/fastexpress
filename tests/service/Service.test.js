@@ -163,9 +163,9 @@ describe('Service', () => {
   });
 
   describe('get', () => {
-    it('default', async () => {
+    it.only('default', async () => {
       const modelMock = {
-        findById: jest.fn().mockResolvedValue(entity),
+        findOne: jest.fn().mockResolvedValue(entity),
       };
 
       reqMock.params = {
@@ -174,14 +174,14 @@ describe('Service', () => {
 
       const result = await Service.get(reqMock, modelMock, {});
 
-      expect(modelMock.findById.mock.calls).toEqual([[1]]);
+      expect(modelMock.findOne).toBeCalledWith({ where: { id: 1 } });
 
       expect(result).toEqual(result);
     });
 
     it('simulate error', async () => {
       const modelMock = {
-        findById: jest.fn().mockReturnValue(Promise.resolve(null)),
+        findOne: jest.fn().mockReturnValue(Promise.resolve(null)),
       };
 
       try {
