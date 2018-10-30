@@ -19,20 +19,19 @@ export const createResourceService = (model, {
   custom = {},
   database,
 }) => {
-  const methods = {};
   const customNew = {}
 
-  only.forEach((action) => {
-    methods[action] = req => Service[action](req, model, { definitions, options, database });
-  });
 
-  Object.keys(custom).map(key => (
-    customNew[key] = req => custom[key](req, model, { definitions, options, database })
-  ))
+  const methods = only.reduce((pre, cur) => {
+    pre[cur] = Service[cur];
+    return pre;
+  }, custom)
 
-  return {
-    ...methods,
-    ...customNew,
-  };
+
+  const methodsWithArgs = Object.keys(methods)
+    .map(key => ({
+      [key]: req => methods[key](req, model, { definitions, options, database })
+    })).reduce((pre, cur) => Object.assign(pre, cur), {});
+
+  return methodsWithArgs;
 };
-
