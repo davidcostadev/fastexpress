@@ -60,18 +60,42 @@ const list = async ({ query }, Model, { options, database }) => {
   }
 };
 
-const get = async (req, Model) => {
-  const { id } = req.params;
+const get = async ({ params, query }, Model, { options, database }) => {
+  const { id } = params;
+  const {
+    filters,
+    aliasDatabase,
+  } = {
+    ...listDefaultOptions,
+    ...options,
+  };
+  const {
+    batch,
+  } = selector({
+    batch: SelType.batchSelType,
+    ...filters,
+  }, query);
+
+  const select = {
+    where: { id }
+  };
+  if (batch) {
+    let models = batch.split(',');
+
+    models = models.map(getModelAlias(aliasDatabase, database));
+    select.include = models;
+  }
 
   try {
-    const entity = await Model.findById(id);
+    const entity = await Model.findOne(select);
 
     if (!entity) {
       throw new Error(EXCEPTION_NOT_FOUND);
     }
 
-    return entity;
+    return JSON.parse(JSON.stringify(entity));
   } catch (e) {
+    console.error(e);
     throw new Error(EXCEPTION_NOT_FOUND);
   }
 };
