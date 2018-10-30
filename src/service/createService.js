@@ -9,6 +9,7 @@ export const serviceDefaultProps = ({
   definitions: form,
   options: { filters },
   database,
+  custom,
 });
 
 export const createResourceService = (model, {
@@ -19,14 +20,19 @@ export const createResourceService = (model, {
   database,
 }) => {
   const methods = {};
+  const customNew = {}
 
   only.forEach((action) => {
     methods[action] = req => Service[action](req, model, { definitions, options, database });
   });
 
+  Object.keys(custom).map(key => (
+    customNew[key] = req => custom[key](req, model, { definitions, options, database })
+  ))
+
   return {
     ...methods,
-    ...custom,
+    ...customNew,
   };
 };
 
