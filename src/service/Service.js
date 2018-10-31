@@ -10,12 +10,7 @@ import {
 } from './selectWith';
 
 const list = async (req, Model, configs) => {
-  let where = {};
-
-  const {
-    limit,
-    page,
-  } = selector({
+  const { limit, page } = selector({
     limit: SelType.limitSelType,
     page: SelType.pageSelType,
   }, req.query);
@@ -24,11 +19,9 @@ const list = async (req, Model, configs) => {
     selectWithPagination(req, configs),
     selectWithBatch(req, configs),
     selectWithFilters(req, configs),
-  )()
+  )();
 
-  if (select.where) {
-    where = select.where;
-  }
+  const where = select.where ? select.where : {};
 
   try {
     const data = await Model.findAll(select);

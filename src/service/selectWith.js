@@ -26,7 +26,8 @@ export const selectWithBatch = ({ query }, { options, database }) => (select = {
   return select
 }
 
-export const selectWithPagination = ({ query }, configs) => (select = {}) => {const {
+export const selectWithPagination = ({ query }, configs) => (select = {}) => {
+  const {
     limit,
     page,
     order,
