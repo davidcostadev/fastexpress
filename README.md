@@ -8,13 +8,13 @@
 
 ---
 
-fastexpress is a library to improve the development velocity of APIs with express. It's has a list of functionalities to create APIs with a little line of code, with possibility to customize it.
+fastexpress is a library designed to speed up the development of APIs with express. It's has a list of functionalities to create APIs with a small amount of lines of code, with possibility to customize it.
 
 The main functionalities is:
 
 - Improve the creation of model endpoints.
 - Create CRUDs with few rows.
-- Add rich integration with templates, allowed filters and joins.
+- Add rich integration with templates, allowing filters and joins.
 - Add secure endpoints through token usage (jwt).
 
 ## Installation
@@ -26,10 +26,9 @@ The main functionalities is:
 
 ## Usage cases
 
-
 ### on service TaskService.js
 
-The Service is a part of the system responsible for picking information from the models and delivering to the controllers.
+The Service is the part of the system responsible for getting information from the models and delivering It to the controllers.
 
 The template is your sequelize template.
 
