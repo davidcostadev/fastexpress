@@ -55,7 +55,7 @@ describe('Service', () => {
     };
   });
 
-  describe.only('list', () => {
+  describe('list', () => {
     it('default', async () => {
       const modelMock = {
         findAll: jest.fn().mockResolvedValue([entity]),
@@ -162,10 +162,10 @@ describe('Service', () => {
     });
   });
 
-  describe.only('get', () => {
+  describe('get', () => {
     it('default', async () => {
       const modelMock = {
-        findOne: jest.fn().mockResolvedValue(entity),
+        findById: jest.fn().mockResolvedValue(entity),
       };
 
       reqMock.params = {
@@ -174,14 +174,14 @@ describe('Service', () => {
 
       const result = await Service.get(reqMock, modelMock, {});
 
-      expect(modelMock.findOne).toBeCalledWith({ where: { id: 1 } });
+      expect(modelMock.findById.mock.calls).toEqual([[1]]);
 
       expect(result).toEqual(result);
     });
 
     it('simulate error', async () => {
       const modelMock = {
-        findOne: jest.fn().mockReturnValue(Promise.resolve(null)),
+        findById: jest.fn().mockReturnValue(Promise.resolve(null)),
       };
 
       try {
