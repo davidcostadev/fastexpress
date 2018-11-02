@@ -12,26 +12,29 @@ export const serviceDefaultProps = ({
   custom,
 });
 
-export const createResourceService = (model, {
+export const createResourceService = (Model, {
   only = ACTIONS,
   definitions = {},
   options = {},
   custom = {},
   database,
 }) => {
-  const customNew = {}
+  const config = {
+    definitions,
+    options,
+    database,
+  };
 
-
-  const methods = only.reduce((pre, cur) => {
-    pre[cur] = Service[cur];
-    return pre;
+  const methodsOnly = only.reduce((methods, method) => {
+    methods[method] = Service[method];
+    return methods;
   }, custom)
-
 
   const methodsWithArgs = Object.keys(methods)
     .map(key => ({
-      [key]: req => methods[key](req, model, { definitions, options, database })
-    })).reduce((pre, cur) => Object.assign(pre, cur), {});
+      [key]: req => methodsOnly[key](req, Model, config)
+    }))
+    .reduce((pre, cur) => Object.assign(pre, cur), {});
 
   return methodsWithArgs;
 };
