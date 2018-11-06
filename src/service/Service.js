@@ -1,49 +1,27 @@
+import { compose } from 'ramda';
 import paginationParse from '../utils/pagination';
 import selector from '../utils/selector';
 import * as SelType from '../utils/selectorTypes';
 import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from '../controller/errors';
-import { getModelAlias, listDefaultOptions } from './model';
+import {
+  selectWithBatch,
+  selectWithFilters,
+  selectWithPagination,
+} from './selectWith';
 
-const list = async ({ query }, Model, { options, database }) => {
-  const {
-    filters,
-    aliasDatabase,
-  } = {
-    ...listDefaultOptions,
-    ...options,
-  };
-  let where = {};
-
-  const {
-    limit,
-    page,
-    batch,
-    order,
-  } = selector({
+const list = async (req, Model, configs) => {
+  const { limit, page } = selector({
     limit: SelType.limitSelType,
     page: SelType.pageSelType,
-    batch: SelType.batchSelType,
-    order: SelType.orderType,
-    ...filters,
-  }, query);
+  }, req.query);
 
-  const select = {
-    limit,
-    offset: parseInt(limit, 10) * (page - 1),
-    order,
-  };
+  const select = compose(
+    selectWithPagination(req, configs),
+    selectWithBatch(req, configs),
+    selectWithFilters(req, configs),
+  )();
 
-  if (filters) {
-    where = selector(filters, query);
-    select.where = where;
-  }
-
-  if (batch) {
-    let models = batch.split(',');
-
-    models = models.map(getModelAlias(aliasDatabase, database));
-    select.include = models;
-  }
+  const where = select.where ? select.where : {};
 
   try {
     const data = await Model.findAll(select);
@@ -60,18 +38,23 @@ const list = async ({ query }, Model, { options, database }) => {
   }
 };
 
-const get = async (req, Model) => {
+const get = async (req, Model, configs) => {
   const { id } = req.params;
 
+  const select = selectWithBatch(req, configs)({
+    where: { id }
+  });
+
   try {
-    const entity = await Model.findById(id);
+    const entity = await Model.findOne(select);
 
     if (!entity) {
       throw new Error(EXCEPTION_NOT_FOUND);
     }
 
-    return entity;
+    return JSON.parse(JSON.stringify(entity));
   } catch (e) {
+    console.error(e);
     throw new Error(EXCEPTION_NOT_FOUND);
   }
 };
