@@ -23,6 +23,7 @@ import paginationParse from './utils/pagination';
 import selector from './utils/selector';
 import * as validate from './utils/validate';
 import * as convert from './utils/convert';
+import * as type from './utils/selectorTypes'
 
 export {
   createMiddleware,
@@ -47,4 +48,5 @@ export {
   serviceDefaultProps,
   migrationActions,
   migrationHelper,
+  type,
 };
