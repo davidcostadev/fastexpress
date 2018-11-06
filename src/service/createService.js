@@ -30,7 +30,7 @@ export const createResourceService = (Model, {
     return methods;
   }, custom)
 
-  const methodsWithArgs = Object.keys(methods)
+  const methodsWithArgs = Object.keys(methodsOnly)
     .map(key => ({
       [key]: req => methodsOnly[key](req, Model, config)
     }))
