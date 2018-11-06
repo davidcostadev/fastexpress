@@ -55,7 +55,7 @@ describe('Service', () => {
     };
   });
 
-  describe.only('list', () => {
+  describe('list', () => {
     it('default', async () => {
       const modelMock = {
         findAll: jest.fn().mockResolvedValue([entity]),
@@ -162,7 +162,7 @@ describe('Service', () => {
     });
   });
 
-  describe.only('get', () => {
+  describe('get', () => {
     it('default', async () => {
       const modelMock = {
         findOne: jest.fn().mockResolvedValue(entity),

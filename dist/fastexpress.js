@@ -1,4 +1,4 @@
-//  fastexpress v1.4.1 - (c) 2018 David Costa - may be freely distributed under the MIT license.
+//  fastexpress v1.5.2 - (c) 2018 David Costa - may be freely distributed under the MIT license.
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('ramda'), require('moment'), require('bcrypt'), require('jsonwebtoken'), require('sequelize')) :
@@ -6,7 +6,7 @@
   (factory((global.fastexpress = {}),global.R,global.Moment,global.bcrypt,global.jwt,global.sequelize));
 }(this, (function (exports,R,Moment,bcrypt,jwt,sequelize) { 'use strict';
 
-  R = R && R.hasOwnProperty('default') ? R['default'] : R;
+  var R__default = 'default' in R ? R['default'] : R;
   Moment = Moment && Moment.hasOwnProperty('default') ? Moment['default'] : Moment;
   bcrypt = bcrypt && bcrypt.hasOwnProperty('default') ? bcrypt['default'] : bcrypt;
   jwt = jwt && jwt.hasOwnProperty('default') ? jwt['default'] : jwt;
@@ -187,7 +187,7 @@
     return select;
   };
 
-  const string = R.compose(Boolean, R.length);
+  const string = R__default.compose(Boolean, R__default.length);
 
   const number = num => Number.isInteger(parseInt(num, 10));
 
@@ -276,39 +276,19 @@
     return null;
   };
 
-  const list$1 = async ({ query }, Model, { options, database }) => {
+  const selectWithBatch = ({ query }, { options, database }) => (select = {}) => {
     const {
-      filters,
       aliasDatabase,
     } = {
       ...listDefaultOptions,
       ...options,
     };
-    let where = {};
 
     const {
-      limit,
-      page,
       batch,
-      order,
     } = selector({
-      limit: limitSelType,
-      page: pageSelType,
       batch: batchSelType,
-      order: orderType,
-      ...filters,
     }, query);
-
-    const select = {
-      limit,
-      offset: parseInt(limit, 10) * (page - 1),
-      order,
-    };
-
-    if (filters) {
-      where = selector(filters, query);
-      select.where = where;
-    }
 
     if (batch) {
       let models = batch.split(',');
@@ -316,6 +296,57 @@
       models = models.map(getModelAlias(aliasDatabase, database));
       select.include = models;
     }
+
+    return select
+  };
+
+  const selectWithPagination = ({ query }, configs) => (select = {}) => {
+    const {
+      limit,
+      page,
+      order,
+    } = selector({
+      limit: limitSelType,
+      page: pageSelType,
+      order: orderType,
+    }, query);
+
+    return  {
+      ...select,
+      limit,
+      offset: parseInt(limit, 10) * (page - 1),
+      order,
+    };
+  };
+
+  const selectWithFilters = ({ query }, { options }) => (select = {}) => {
+    const {
+      filters,
+    } = {
+      ...listDefaultOptions,
+      ...options,
+    };
+
+    if (filters) {
+      select.where = selector(filters, query);
+    }
+
+    return select;
+  };
+
+  const list$1 = async (req, Model, configs) => {
+    const { limit, page } = selector({
+      limit: limitSelType,
+      page: pageSelType,
+    }, req.query);
+
+    const select = R.compose(
+      selectWithPagination(req, configs),
+      selectWithBatch(req, configs),
+      selectWithFilters(req, configs),
+    )();
+
+    const where = select.where ? select.where : {};
 
     try {
       const data = await Model.findAll(select);
@@ -332,18 +363,23 @@
     }
   };
 
-  const get$1 = async (req, Model) => {
+  const get$1 = async (req, Model, configs) => {
     const { id } = req.params;
 
+    const select = selectWithBatch(req, configs)({
+      where: { id }
+    });
+
     try {
-      const entity = await Model.findById(id);
+      const entity = await Model.findOne(select);
 
       if (!entity) {
         throw new Error(EXCEPTION_NOT_FOUND);
       }
 
-      return entity;
+      return JSON.parse(JSON.stringify(entity));
     } catch (e) {
+      console.error(e);
       throw new Error(EXCEPTION_NOT_FOUND);
     }
   };
@@ -414,25 +450,34 @@
     definitions: form,
     options: { filters },
     database,
+    custom,
   });
 
-  const createResourceService = (model, {
+  const createResourceService = (Model, {
     only = ACTIONS,
     definitions = {},
     options = {},
     custom = {},
     database,
   }) => {
-    const methods = {};
-
-    only.forEach((action) => {
-      methods[action] = req => Service[action](req, model, { definitions, options, database });
-    });
-
-    return {
-      ...methods,
-      ...custom,
+    const config = {
+      definitions,
+      options,
+      database,
     };
+
+    const methodsOnly = only.reduce((methods, method) => {
+      methods[method] = Service[method];
+      return methods;
+    }, custom);
+
+    const methodsWithArgs = Object.keys(methodsOnly)
+      .map(key => ({
+        [key]: req => methodsOnly[key](req, Model, config)
+      }))
+      .reduce((pre, cur) => Object.assign(pre, cur), {});
+
+    return methodsWithArgs;
   };
 
   const resources = (prefix, { router, controller }) => {
