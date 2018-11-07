@@ -1,4 +1,4 @@
-//  fastexpress v1.5.2 - (c) 2018 David Costa - may be freely distributed under the MIT license.
+//  fastexpress v1.6.0 - (c) 2018 David Costa - may be freely distributed under the MIT license.
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('ramda'), require('moment'), require('bcrypt'), require('jsonwebtoken'), require('sequelize')) :
@@ -221,6 +221,30 @@
     validation: number,
   };
 
+  const floatType = {
+    validation: float,
+    convert: (val) => {
+      if (typeof val === 'string') {
+        return val.replace(',', '.');
+      }
+
+      return val;
+    },
+  };
+
+  const boolType = {
+    validation: bool,
+  };
+
+  const datetimeType = {
+    validation: string,
+  };
+
+  const dateType = {
+    validation: string,
+    convert: val => Moment(val).format('YYYY-MM-DD'),
+  };
+
   const orderType = {
     validation: string,
     convert: orderToFilter,
@@ -238,6 +262,19 @@
     ...numberType,
     default: 1,
   };
+
+  var selectorTypes = /*#__PURE__*/Object.freeze({
+    stringType: stringType,
+    numberType: numberType,
+    floatType: floatType,
+    boolType: boolType,
+    datetimeType: datetimeType,
+    dateType: dateType,
+    orderType: orderType,
+    batchSelType: batchSelType,
+    limitSelType: limitSelType,
+    pageSelType: pageSelType
+  });
 
   const listDefaultOptions = {
     where: {},
@@ -630,6 +667,7 @@
   exports.serviceDefaultProps = serviceDefaultProps;
   exports.migrationActions = helper;
   exports.migrationHelper = create$1;
+  exports.type = selectorTypes;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
