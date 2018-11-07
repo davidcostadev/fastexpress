@@ -1,6 +1,5 @@
 import { Op } from 'sequelize';
 
-
 export const dateFilter = {
   validation: () => true,
   convert: (val) => {
