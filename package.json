@@ -15,7 +15,7 @@
   "license": "MIT",
   "scripts": {
     "jest": "jest",
-    "test": "jest",
+    "test": "jest --coverage",
     "build": "npm run build:cjs && npm run build:umd && npm run build:umd:min",
     "build:cjs": "babel src --out-dir cjs",
     "build:umd": "cross-env NODE_ENV=development rollup -c -o dist/fastexpress.js",

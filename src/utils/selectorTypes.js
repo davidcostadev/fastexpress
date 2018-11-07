@@ -40,39 +40,7 @@ export const orderType = {
   default: [['id', 'DESC']],
 };
 
-export const nameSelType = stringType;
-
-export const emailSelType = stringType;
-
-export const passwordSelType = stringType;
-
-export const enabledSelType = boolType;
-
-export const valueSelType = floatType;
-
-export const userIdSelType = numberType;
-
-export const accountIdSelType = numberType;
-
-export const categoryIdSelType = numberType;
-
-export const accountFromIdSelType = numberType;
-
-export const typeSelType = stringType;
-
-export const accountToIdSelType = numberType;
-
-export const transferDateSelType = stringType;
-
-export const transactionDateSelType = dateType;
-
-export const isPaidSelType = boolType;
-
 export const batchSelType = stringType;
-
-export const createdAtSelType = datetimeType;
-
-export const updatedAtSelType = datetimeType;
 
 export const limitSelType = {
   ...numberType,
