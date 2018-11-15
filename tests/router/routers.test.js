@@ -105,7 +105,7 @@ describe('routers', () => {
     });
   });
 
-  describe('resources function should', () => {
+  describe.only('resources function should', () => {
     it('works', () => {
       resources('model', {
         router,

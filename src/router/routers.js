@@ -1,9 +1,14 @@
-export const resources = (prefix, { router, controller }) => {
-  router.get(`${prefix}/`, controller.list);
-  router.post(`${prefix}/`, controller.create);
-  router.get(`${prefix}/:id`, controller.get);
-  router.delete(`${prefix}/:id`, controller.destroy);
-  router.put(`${prefix}/:id`, controller.update);
+import { ACTIONS, URL_ACTIONS } from '../utils/definitions';
+
+
+export const resources = (prefix, { router, controller, only = ACTIONS }) => {
+  only.forEach((actionOnly) => {
+    URL_ACTIONS.forEach(([method, action, url]) => {
+      if (actionOnly === action) {
+        router[method](url(prefix), controller[action]);
+      }
+    })
+  })
 };
 
 export const resourcesAuth = (prefix, { router, middleware, controller }) => {
