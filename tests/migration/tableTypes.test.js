@@ -59,8 +59,6 @@ describe('tableTypes', () => {
           allowNull: false,
         },
       });
-
-      // console.log(queryInterface.createTable.mock.calls[0])
     });
   });
 });
