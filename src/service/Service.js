@@ -42,7 +42,7 @@ const get = async (req, Model, configs) => {
   const { id } = req.params;
 
   const select = selectWithBatch(req, configs)({
-    where: { id }
+    where: { id },
   });
 
   try {

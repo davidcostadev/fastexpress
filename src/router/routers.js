@@ -24,9 +24,10 @@ export const namespaceIndexCreator = namespace => urls => namespace()
     [cur]: pre,
   }), urls);
 
-const defaultNamespace = (url) => `/${url}`;
+const defaultNamespace = url => `/${url}`;
 
 
+// eslint-disable-next-line max-len
 export const resourceWithAuth = (url, controller, { router, middleware, namespace = defaultNamespace }) => (
   resourcesAuth(namespace(url), {
     controller,

@@ -3,9 +3,11 @@ import jwt from 'jsonwebtoken';
 const getToken = (req) => {
   if (typeof req.body.token !== 'undefined') {
     return req.body.token;
-  } else if (typeof req.query.token !== 'undefined') {
+  }
+  if (typeof req.query.token !== 'undefined') {
     return req.query.token;
-  } else if (typeof req.headers.authorization !== 'undefined') {
+  }
+  if (typeof req.headers.authorization !== 'undefined') {
     return req.headers.authorization.replace('Bearer ', '');
   }
 
@@ -54,14 +56,10 @@ const onlyUser = (req, res, next) => {
   next();
 };
 
-// export const middleware = [
-//   checkAuth,
-//   onlyUser,
-// ];
 
-const createMiddleware = (jwtEncryption) => ([
+const createMiddleware = jwtEncryption => ([
   checkAuth(jwtEncryption),
   onlyUser,
-])
+]);
 
 export default createMiddleware;

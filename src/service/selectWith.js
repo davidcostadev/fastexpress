@@ -20,13 +20,14 @@ export const selectWithBatch = ({ query }, { options, database }) => (select = {
     let models = batch.split(',');
 
     models = models.map(getModelAlias(aliasDatabase, database));
+    // eslint-disable-next-line no-param-reassign
     select.include = models;
   }
 
-  return select
-}
+  return select;
+};
 
-export const selectWithPagination = ({ query }, configs) => (select = {}) => {
+export const selectWithPagination = ({ query }) => (select = {}) => {
   const {
     limit,
     page,
@@ -37,13 +38,13 @@ export const selectWithPagination = ({ query }, configs) => (select = {}) => {
     order: SelType.orderType,
   }, query);
 
-  return  {
+  return {
     ...select,
     limit,
     offset: parseInt(limit, 10) * (page - 1),
     order,
   };
-}
+};
 
 export const selectWithFilters = ({ query }, { options }) => (select = {}) => {
   const {
@@ -54,8 +55,9 @@ export const selectWithFilters = ({ query }, { options }) => (select = {}) => {
   };
 
   if (filters) {
+    // eslint-disable-next-line no-param-reassign
     select.where = selector(filters, query);
   }
 
   return select;
-}
+};
