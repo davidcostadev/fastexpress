@@ -1,0 +1,5 @@
+config/config.example.json
+node_modules
+tests/reports/
+tests/screenshots
+tests/videos
