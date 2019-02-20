@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 
+// eslint-disable-next-line import/prefer-default-export
 export const dateFilter = {
   validation: () => true,
   convert: (val) => {

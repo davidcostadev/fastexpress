@@ -1,4 +1,4 @@
-//  fastexpress v1.7.0 - (c) 2018 David Costa - may be freely distributed under the MIT license.
+//  fastexpress v1.7.1 - (c) 2019 David Costa - may be freely distributed under the MIT license.
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('ramda'), require('moment'), require('bcrypt'), require('jsonwebtoken'), require('sequelize')) :
@@ -57,6 +57,7 @@
     destroy,
   };
 
+  // eslint-disable-next-line import/prefer-default-export
   const ACTIONS = ['create', 'get', 'list', 'destroy', 'update'];
 
   const createResourceController = (service, { only = ACTIONS, custom = {} } = {}) => {
@@ -331,13 +332,14 @@
       let models = batch.split(',');
 
       models = models.map(getModelAlias(aliasDatabase, database));
+      // eslint-disable-next-line no-param-reassign
       select.include = models;
     }
 
-    return select
+    return select;
   };
 
-  const selectWithPagination = ({ query }, configs) => (select = {}) => {
+  const selectWithPagination = ({ query }) => (select = {}) => {
     const {
       limit,
       page,
@@ -348,7 +350,7 @@
       order: orderType,
     }, query);
 
-    return  {
+    return {
       ...select,
       limit,
       offset: parseInt(limit, 10) * (page - 1),
@@ -365,6 +367,7 @@
     };
 
     if (filters) {
+      // eslint-disable-next-line no-param-reassign
       select.where = selector(filters, query);
     }
 
@@ -404,7 +407,7 @@
     const { id } = req.params;
 
     const select = selectWithBatch(req, configs)({
-      where: { id }
+      where: { id },
     });
 
     try {
@@ -487,7 +490,6 @@
     definitions: form,
     options: { filters },
     database,
-    custom,
   });
 
   const createResourceService = (Model, {
@@ -503,14 +505,14 @@
       database,
     };
 
-    const methodsOnly = only.reduce((methods, method) => {
-      methods[method] = Service[method];
-      return methods;
-    }, custom);
+    const methodsOnly = only.reduce((methods, method) => ({
+      ...methods,
+      [method]: Service[method],
+    }), custom);
 
     const methodsWithArgs = Object.keys(methodsOnly)
       .map(key => ({
-        [key]: req => methodsOnly[key](req, Model, config)
+        [key]: req => methodsOnly[key](req, Model, config),
       }))
       .reduce((pre, cur) => Object.assign(pre, cur), {});
 
@@ -543,9 +545,10 @@
       [cur]: pre,
     }), urls);
 
-  const defaultNamespace = (url) => `/${url}`;
+  const defaultNamespace = url => `/${url}`;
 
 
+  // eslint-disable-next-line max-len
   const resourceWithAuth = (url, controller, { router, middleware, namespace = defaultNamespace }) => (
     resourcesAuth(namespace(url), {
       controller,
@@ -568,9 +571,11 @@
   const getToken = (req) => {
     if (typeof req.body.token !== 'undefined') {
       return req.body.token;
-    } else if (typeof req.query.token !== 'undefined') {
+    }
+    if (typeof req.query.token !== 'undefined') {
       return req.query.token;
-    } else if (typeof req.headers.authorization !== 'undefined') {
+    }
+    if (typeof req.headers.authorization !== 'undefined') {
       return req.headers.authorization.replace('Bearer ', '');
     }
 
@@ -619,16 +624,13 @@
     next();
   };
 
-  // export const middleware = [
-  //   checkAuth,
-  //   onlyUser,
-  // ];
 
-  const createMiddleware = (jwtEncryption) => ([
+  const createMiddleware = jwtEncryption => ([
     checkAuth(jwtEncryption),
     onlyUser,
   ]);
 
+  // eslint-disable-next-line import/prefer-default-export
   const dateFilter = {
     validation: () => true,
     convert: (val) => {

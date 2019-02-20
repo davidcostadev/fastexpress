@@ -42,12 +42,12 @@ describe('routers', () => {
         middleware: {},
         namespace,
       });
-      expect(router.get).toBeCalledTimes(2)
-      expect(router.get).toBeCalledWith('/namespace/url1/', {}, controller.list)
-      expect(router.get).toBeCalledWith('/namespace/url1/:id', {}, controller.get)
-      expect(router.post).toBeCalledWith('/namespace/url1/', {}, controller.create)
-      expect(router.delete).toBeCalledWith('/namespace/url1/:id', {}, controller.destroy)
-      expect(router.put).toBeCalledWith('/namespace/url1/:id', {}, controller.update)
+      expect(router.get).toBeCalledTimes(2);
+      expect(router.get).toBeCalledWith('/namespace/url1/', {}, controller.list);
+      expect(router.get).toBeCalledWith('/namespace/url1/:id', {}, controller.get);
+      expect(router.post).toBeCalledWith('/namespace/url1/', {}, controller.create);
+      expect(router.delete).toBeCalledWith('/namespace/url1/:id', {}, controller.destroy);
+      expect(router.put).toBeCalledWith('/namespace/url1/:id', {}, controller.update);
     });
   });
 
@@ -80,7 +80,7 @@ describe('routers', () => {
 
     it(' should create a array of object with namespace', () => {
       expect(resourceList('url', {
-        namespace: namespaceCreator('/namespace/')
+        namespace: namespaceCreator('/namespace/'),
       })).toEqual([
         '[get] /namespace/url',
         '[post] /namespace/url',

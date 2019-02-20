@@ -85,8 +85,6 @@ describe('migrationsHelpers', () => {
           },
         ],
       ]);
-
-      // console.log(queryInterface.createTable.mock.calls[0])
     });
 
     it('works with then', async () => {
