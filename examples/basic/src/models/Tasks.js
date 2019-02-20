@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     completed: {
       type: DataTypes.BOOLEAN,
-      default: false,
+      defaultValue: false,
     },
   }, {});
   Tasks.associate = () => {};
