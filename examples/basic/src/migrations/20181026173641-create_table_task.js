@@ -7,7 +7,7 @@ module.exports = {
     },
     completed: {
       type: Sequelize.BOOLEAN,
-      default: false,
+      defaultValue: false,
     },
   })),
   down: migrationActions.dropTable('Tasks'),
