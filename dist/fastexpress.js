@@ -1,10 +1,10 @@
-//  fastexpress v1.8.0-alpha.1 - (c) 2019 David Costa - may be freely distributed under the MIT license.
+//  fastexpress v2.0.0-alpha.1 - (c) 2019 David Costa - may be freely distributed under the MIT license.
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('ramda'), require('moment'), require('bcrypt'), require('jsonwebtoken'), require('sequelize')) :
   typeof define === 'function' && define.amd ? define(['exports', 'ramda', 'moment', 'bcrypt', 'jsonwebtoken', 'sequelize'], factory) :
-  (factory((global.fastexpress = {}),global.R,global.Moment,global.bcrypt,global.jwt,global.sequelize));
-}(this, (function (exports,R,Moment,bcrypt,jwt,sequelize) { 'use strict';
+  (global = global || self, factory(global.fastexpress = {}, global.R, global.Moment, global.bcrypt, global.jwt, global.sequelize));
+}(this, function (exports, R, Moment, bcrypt, jwt, sequelize) { 'use strict';
 
   var R__default = 'default' in R ? R['default'] : R;
   Moment = Moment && Moment.hasOwnProperty('default') ? Moment['default'] : Moment;
@@ -57,7 +57,6 @@
     destroy,
   };
 
-  // eslint-disable-next-line import/prefer-default-export
   const ACTIONS = ['create', 'get', 'list', 'destroy', 'update'];
 
   const createResourceController = (service, { only = ACTIONS, custom = {} } = {}) => {
@@ -211,7 +210,7 @@
 
   var convert = /*#__PURE__*/Object.freeze({
     orderToFilter: orderToFilter,
-    default: orderToFilter
+    'default': orderToFilter
   });
 
   const stringType = {
@@ -547,9 +546,11 @@
 
   const defaultNamespace = url => `/${url}`;
 
-
-  // eslint-disable-next-line max-len
-  const resourceWithAuth = (url, controller, { router, middleware, namespace = defaultNamespace }) => (
+  const resourceWithAuth = (url, controller, {
+    router,
+    middleware,
+    namespace = defaultNamespace,
+  }) => (
     resourcesAuth(namespace(url), {
       controller,
       router,
@@ -630,7 +631,6 @@
     onlyUser,
   ]);
 
-  // eslint-disable-next-line import/prefer-default-export
   const dateFilter = {
     validation: () => true,
     convert: (val) => {
@@ -647,30 +647,30 @@
     },
   };
 
-  exports.createMiddleware = createMiddleware;
   exports.Controller = Controller;
-  exports.dateFilter = dateFilter;
-  exports.orderToFilter = orderToFilter;
-  exports.cryptPassword = cryptPassword;
-  exports.getModelAlias = getModelAlias;
-  exports.paginationParse = paginationParse;
-  exports.resources = resources;
-  exports.resourcesAuth = resourcesAuth;
-  exports.namespaceCreator = namespaceCreator;
-  exports.namespaceIndexCreator = namespaceIndexCreator;
-  exports.resourceList = resourceList;
-  exports.resourceWithAuth = resourceWithAuth;
-  exports.selector = selector;
-  exports.validate = validate;
-  exports.convert = convert;
   exports.Service = Service;
+  exports.convert = convert;
   exports.createController = createResourceController;
+  exports.createMiddleware = createMiddleware;
   exports.createService = createResourceService;
-  exports.serviceDefaultProps = serviceDefaultProps;
+  exports.cryptPassword = cryptPassword;
+  exports.dateFilter = dateFilter;
+  exports.getModelAlias = getModelAlias;
   exports.migrationActions = helper;
   exports.migrationHelper = create$1;
+  exports.namespaceCreator = namespaceCreator;
+  exports.namespaceIndexCreator = namespaceIndexCreator;
+  exports.orderToFilter = orderToFilter;
+  exports.paginationParse = paginationParse;
+  exports.resourceList = resourceList;
+  exports.resourceWithAuth = resourceWithAuth;
+  exports.resources = resources;
+  exports.resourcesAuth = resourcesAuth;
+  exports.selector = selector;
+  exports.serviceDefaultProps = serviceDefaultProps;
   exports.type = selectorTypes;
+  exports.validate = validate;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));

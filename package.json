@@ -1,6 +1,6 @@
 {
   "name": "fastexpress",
-  "version": "1.8.0-alpha.1",
+  "version": "2.0.0-alfa.0",
   "module": "./src/index.js",
   "main": "./cjs/index.js",
   "unpkg": "dist/fastexpress.min.js",
