@@ -1,4 +1,4 @@
-//  fastexpress v1.7.1 - (c) 2019 David Costa - may be freely distributed under the MIT license.
+//  fastexpress v1.8.0-alpha.1 - (c) 2019 David Costa - may be freely distributed under the MIT license.
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('ramda'), require('moment'), require('bcrypt'), require('jsonwebtoken'), require('sequelize')) :
