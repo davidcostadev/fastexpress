@@ -1,8 +1,8 @@
 import { compose } from 'ramda';
-import paginationParse from '../utils/pagination';
-import selector from '../utils/selector';
-import * as SelType from '../utils/selectorTypes';
-import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from '../controller/errors';
+import paginationParse from './pagination';
+import selector from './selector';
+import * as SelType from './selectorTypes';
+import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from './lib/errors';
 import {
   selectWithBatch,
   selectWithFilters,

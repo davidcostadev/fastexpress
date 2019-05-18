@@ -1,6 +1,6 @@
-import selector from '../utils/selector';
+import selector from './selector';
 import { getModelAlias, listDefaultOptions } from './model';
-import * as SelType from '../utils/selectorTypes';
+import * as SelType from './selectorTypes';
 
 export const selectWithBatch = ({ query }, { options, database }) => (select = {}) => {
   const {

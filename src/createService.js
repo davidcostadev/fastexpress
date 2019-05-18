@@ -1,5 +1,5 @@
 import Service from './Service';
-import { ACTIONS } from '../utils/definitions';
+import { ACTIONS } from './definitions';
 
 export const serviceDefaultProps = ({
   form,

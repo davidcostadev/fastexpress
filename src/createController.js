@@ -1,5 +1,5 @@
 import Controller from './Controller';
-import { ACTIONS } from '../utils/definitions';
+import { ACTIONS } from './definitions';
 
 const createResourceController = (service, { only = ACTIONS, custom = {} } = {}) => {
   const methods = {};

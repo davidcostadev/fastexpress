@@ -1,18 +1,9 @@
-import iconv from 'iconv-lite';
-import encodings from 'iconv-lite/encodings';
-import { Controller } from '../../src';
+import Controller from '../../src/Controller';
 
+describe('Controller', () => {
+  let reqMock;
+  let resMock;
 
-iconv.encodings = encodings;
-
-let reqMock = {
-  query: {},
-};
-let resMock = {
-  json: jest.fn(),
-};
-
-describe('Accounts Controller should', () => {
   beforeEach(async () => {
     const status = jest.fn();
 
@@ -30,64 +21,64 @@ describe('Accounts Controller should', () => {
     status.mockReturnValue(resMock);
   });
 
-  it('simulate error on list', async () => {
+  it('should simulate error on list', async () => {
     const serviceMock = jest.fn().mockReturnValue(Promise.reject(new Error('Async error')));
 
     await Controller.list(reqMock, resMock, serviceMock);
 
     expect(resMock.status).toBeCalled();
     expect(resMock.json).toBeCalled();
-    expect(resMock.status.mock.calls[0][0]).toEqual(500);
-    expect(resMock.json.mock.calls[0][0]).toEqual({
+    expect(resMock.status).toBeCalledWith(500);
+    expect(resMock.json).toBeCalledWith({
       error: 'Async error',
     });
   });
 
-  it('simulate error on get', async () => {
+  it('should simulate error on get', async () => {
     const serviceMock = jest.fn().mockReturnValue(Promise.reject(new Error('Async error')));
 
     await Controller.get(reqMock, resMock, serviceMock);
 
     expect(resMock.status).toBeCalled();
     expect(resMock.send).toBeCalled();
-    expect(resMock.status.mock.calls[0][0]).toEqual(500);
-    expect(resMock.send.mock.calls[0][0]).toEqual(new Error('Async error'));
+    expect(resMock.status).toBeCalledWith(500);
+    expect(resMock.send).toBeCalledWith(new Error('Async error'));
   });
 
-  it('simulate error on create', async () => {
+  it('should simulate error on create', async () => {
     const ModelMock = jest.fn().mockReturnValue(Promise.reject(new Error('Async error')));
 
     await Controller.create(reqMock, resMock, ModelMock, {});
 
     expect(resMock.status).toBeCalled();
     expect(resMock.json).toBeCalled();
-    expect(resMock.status.mock.calls[0][0]).toEqual(500);
-    expect(resMock.json.mock.calls[0][0]).toEqual({
+    expect(resMock.status).toBeCalledWith(500);
+    expect(resMock.json).toBeCalledWith({
       error: 'Async error',
     });
   });
 
-  it('simulate error on update', async () => {
+  it('should simulate error on update', async () => {
     const ModelMock = jest.fn().mockReturnValue(Promise.reject(new Error('Async error')));
 
     await Controller.update(reqMock, resMock, ModelMock, {});
 
     expect(resMock.status).toBeCalled();
     expect(resMock.json).toBeCalled();
-    expect(resMock.status.mock.calls[0][0]).toEqual(500);
-    expect(resMock.json.mock.calls[0][0]).toEqual({
+    expect(resMock.status).toBeCalledWith(500);
+    expect(resMock.json).toBeCalledWith({
       error: 'Async error',
     });
   });
 
-  it('simulate error on destroy', async () => {
+  it('should simulate error on destroy', async () => {
     const ModelMock = jest.fn().mockReturnValue(Promise.reject(new Error('Async error')));
 
     await Controller.destroy(reqMock, resMock, ModelMock, {});
 
     expect(resMock.status).toBeCalled();
     expect(resMock.send).toBeCalled();
-    expect(resMock.status.mock.calls[0][0]).toEqual(500);
-    expect(resMock.send.mock.calls[0][0]).toEqual(new Error('Async error'));
+    expect(resMock.status).toBeCalledWith(500);
+    expect(resMock.send).toBeCalledWith(new Error('Async error'));
   });
 });

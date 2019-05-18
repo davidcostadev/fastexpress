@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
 import encodings from 'iconv-lite/encodings';
-import { Service } from '../../src';
-import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from '../../src/controller/errors';
+import Service from '../../src/Service';
+import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from '../../src/lib/errors';
 
 iconv.encodings = encodings;
 

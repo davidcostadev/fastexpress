@@ -1,13 +1,13 @@
-import Controller from './controller/Controller';
-import createController from './controller/createController';
-import * as migrationActions from './migration/helper';
-import * as migrationHelper from './migration/create';
-import Service from './service/Service';
+import Controller from './Controller';
+import createController from './createController';
+import * as migrationActions from './helper';
+import * as migrationHelper from './create';
+import Service from './Service';
 import {
   serviceDefaultProps,
   createResourceService as createService,
-} from './service/createService';
-import { cryptPassword, getModelAlias } from './service/model';
+} from './createService';
+import { cryptPassword, getModelAlias } from './model';
 import {
   resources,
   resourcesAuth,
@@ -15,17 +15,17 @@ import {
   resourceList,
   resourceWithAuth,
   namespaceCreator,
-} from './router/routers';
-import createMiddleware from './router/authMiddleware';
-import { dateFilter } from './utils/definitionsFilters';
+} from './routers';
+import createMiddleware from './authMiddleware';
+import { dateFilter } from './definitionsFilters';
 // eslint-disable-next-line import/no-duplicates
-import { orderToFilter } from './utils/convert';
-import paginationParse from './utils/pagination';
-import selector from './utils/selector';
-import * as validate from './utils/validate';
+import { orderToFilter } from './convert';
+import paginationParse from './pagination';
+import selector from './selector';
+import * as validate from './validate';
 // eslint-disable-next-line import/no-duplicates
-import * as convert from './utils/convert';
-import * as type from './utils/selectorTypes';
+import * as convert from './convert';
+import * as type from './selectorTypes';
 
 export {
   createMiddleware,

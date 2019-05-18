@@ -1,4 +1,4 @@
-import { validate } from '../../src';
+import * as validate from '../../src/validate';
 
 describe('validade function', () => {
   it('number', () => {

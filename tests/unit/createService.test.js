@@ -1,6 +1,7 @@
-import { createService, Service } from '../../src/index';
+import Service from '../../src/Service';
+import { createResourceService as createService } from '../../src/createService';
 
-jest.mock('../../src/service/Service', () => ({
+jest.mock('../../src/Service', () => ({
   create: jest.fn(),
   list: jest.fn(),
   get: jest.fn(),
@@ -17,8 +18,8 @@ describe('createService', () => {
     Model = 'Model';
     configs = {
       database: 'MyDatabase',
-      definitions: { one: 'one'},
-      options: { two: 'two'},
+      definitions: { one: 'one' },
+      options: { two: 'two' },
     };
     req = {
       key: 'value',
@@ -48,10 +49,10 @@ describe('createService', () => {
   });
 
   it('should get with custom methods', () => {
-    const another = (req, model, configs) => Service.get({
-      ...req,
+    const another = (reqAnother, model, configsAnother) => Service.get({
+      ...reqAnother,
       three: 'three',
-    }, model, configs);
+    }, model, configsAnother);
 
     const serviceCreated = createService(Model, {
       ...configs,
