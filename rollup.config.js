@@ -1,20 +1,20 @@
-var uglify = require('rollup-plugin-terser').terser;
-var pkg = require('./package.json');
+const uglify = require('rollup-plugin-terser').terser;
+const pkg = require('./package.json');
 
-var banner = '//  fastexpress v' + pkg.version
-  + ' - (c) ' + new Date().getFullYear() + ' David Costa'
+const banner = `//  fastexpress v${pkg.version
+} - (c) ${new Date().getFullYear()} David Costa`
   + ' - may be freely distributed under the MIT license.\n';
 
-var input = './src/index.js'
+const input = './src/index.js';
 
-var config = {
-  input: input,
+const config = {
+  input,
   output: {
     format: 'umd',
     name: 'fastexpress',
+    banner,
   },
-  banner: banner,
-  plugins: []
+  plugins: [],
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -24,9 +24,9 @@ if (process.env.NODE_ENV === 'production') {
         pure_getters: true,
         unsafe: true,
         unsafe_comps: true,
-        warnings: false
-      }
-    })
+        warnings: false,
+      },
+    }),
   );
 }
 

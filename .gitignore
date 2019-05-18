@@ -1,8 +1,6 @@
-node_modules
+.DS_Store
+cjs
 coverage
-.env
-database.json
+node_modules
 package-lock.json
 yarn-error.log
-cjs
-.DS_Store

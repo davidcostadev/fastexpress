@@ -1,18 +1,5 @@
 {
   "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "node": "8.12"
-        }
-      }
-    ]
-  ],
-  "env": {
-    "test": {
-      "plugins": ["@babel/plugin-transform-runtime"]
-    }
-  }
-
+    ["@babel/preset-env", {"targets": {"node": "8.12"}}],
+  ]
 }
