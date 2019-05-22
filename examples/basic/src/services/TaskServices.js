@@ -1,4 +1,4 @@
-const { createService, serviceDefaultProps, validate } = require('fastexpress');
+const { createService, serviceDefaultProps, validate } = require('../../../../src');
 const database = require('../models');
 
 const { Tasks } = database;

@@ -393,7 +393,7 @@
       const pagination = paginationParse(count, page, limit);
 
       return {
-        data: JSON.parse(JSON.stringify(data)),
+        data,
         pagination,
       };
     } catch (e) {
@@ -416,7 +416,7 @@
         throw new Error(EXCEPTION_NOT_FOUND);
       }
 
-      return JSON.parse(JSON.stringify(entity));
+      return entity;
     } catch (e) {
       console.error(e);
       throw new Error(EXCEPTION_NOT_FOUND);
@@ -441,7 +441,7 @@
     const dataBody = selector(definitions, body);
 
     try {
-      const entity = await Model.findById(id);
+      const entity = await Model.findByPk(id);
 
       if (!entity) {
         throw new Error(EXCEPTION_NOT_FOUND);

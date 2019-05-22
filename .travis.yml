@@ -1,15 +1,15 @@
 language: node_js
-# services:
-#   - mysql
+services:
+  - mysql
 cache: yarn
-# addons:
-#   apt:
-#     sources:
-#       - mysql-5.7-trusty
-#     packages:
-#       - mysql-server
-#       - mysql-client
-# dist: trusty
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
+dist: trusty
 node_js:
   - 8
 # before_install:
@@ -19,7 +19,7 @@ node_js:
 #   - cp .env.example .env
 
 before_script:
-  # - yarn run config:db
+  - yarn run pre-test
   # - yarn run pretest
   - "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
   - "chmod +x ./cc-test-reporter"

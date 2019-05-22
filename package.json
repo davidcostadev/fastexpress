@@ -22,21 +22,24 @@
     "build:umd:min": "cross-env NODE_ENV=production rollup -c -o dist/fastexpress.min.js",
     "clean": "rimraf dist/* cjs/*",
     "prepare": "npm run clean && npm run build",
-    "npm-publish": "npm run build && npm publish"
+    "npm-publish": "npm run build && npm publish",
+    "pre-test": "cd tests/integration && cross-env NODE_ENV=test node init"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.4",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.2",
     "jest": "^24.7.1",
+    "mysql2": "^1.6.5",
     "rollup": "^1.12.2",
-    "rollup-plugin-terser": "^4.0.4"
+    "rollup-plugin-terser": "^4.0.4",
+    "sequelize-cli": "^5.4.0"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",

@@ -29,7 +29,7 @@ const list = async (req, Model, configs) => {
     const pagination = paginationParse(count, page, limit);
 
     return {
-      data: JSON.parse(JSON.stringify(data)),
+      data,
       pagination,
     };
   } catch (e) {
@@ -52,7 +52,7 @@ const get = async (req, Model, configs) => {
       throw new Error(EXCEPTION_NOT_FOUND);
     }
 
-    return JSON.parse(JSON.stringify(entity));
+    return entity;
   } catch (e) {
     console.error(e);
     throw new Error(EXCEPTION_NOT_FOUND);
@@ -77,7 +77,7 @@ const update = async ({ params, body }, Model, { definitions }) => {
   const dataBody = selector(definitions, body);
 
   try {
-    const entity = await Model.findById(id);
+    const entity = await Model.findByPk(id);
 
     if (!entity) {
       throw new Error(EXCEPTION_NOT_FOUND);

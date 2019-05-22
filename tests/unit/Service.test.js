@@ -227,7 +227,7 @@ describe('Service', () => {
   describe('update', () => {
     it('default', async () => {
       const modelMock = {
-        findById: jest.fn().mockResolvedValue({
+        findByPk: jest.fn().mockResolvedValue({
           ...entity,
           update: jest.fn().mockResolvedValue(entity),
         }),
@@ -238,13 +238,13 @@ describe('Service', () => {
 
       const result = await Service.update(reqMock, modelMock, { definitions });
 
-      expect(modelMock.findById.mock.calls).toEqual([[1]]);
+      expect(modelMock.findByPk.mock.calls).toEqual([[1]]);
       expect(result).toEqual(entity);
     });
 
     it('update with wrong user', async () => {
       const modelMock = {
-        findById: () => Promise.resolve(false),
+        findByPk: () => Promise.resolve(false),
       };
 
       try {
@@ -256,7 +256,7 @@ describe('Service', () => {
 
     it('update with corrent user', async () => {
       const modelMock = {
-        findById: () => true,
+        findByPk: () => true,
         update: () => Promise.reject(new Error('Async error')),
       };
 

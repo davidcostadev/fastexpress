@@ -1,0 +1,134 @@
+import sequelize from 'sequelize';
+import Controller from '../../../examples/basic/src/controllers/Tasks';
+import { Tasks } from '../../../examples/basic/src/models';
+import TaskFactory from './factories/Task.Factory';
+import { EXCEPTION_NOT_FOUND } from '../../../src/lib/errors';
+import truncate from '../truncate';
+
+let reqMock = {
+  query: {},
+};
+let resMock = {
+  json: jest.fn(),
+};
+
+describe('Controller', () => {
+  let task;
+
+  beforeAll(async () => {
+    await truncate();
+    task = await TaskFactory({
+      name: 'Task 01',
+    });
+
+    task = await Tasks.findByPk(task.id);
+  });
+
+  beforeEach(async () => {
+    const status = jest.fn();
+
+    reqMock = {
+      query: {},
+      params: {},
+      body: {},
+    };
+    resMock = {
+      status,
+      send: jest.fn(),
+      json: jest.fn(),
+    };
+
+    status.mockReturnValue(resMock);
+  });
+
+  afterAll(() => {
+    sequelize.close();
+  });
+
+  it('list entities', async () => {
+    await Controller.list(reqMock, resMock);
+    expect(resMock.json).toBeCalled();
+
+    const response = resMock.json.mock.calls[0][0];
+
+    expect(response).toHaveProperty('data');
+    expect(response).toHaveProperty('pagination');
+    expect(response.data.length).toBeTruthy();
+    expect(response.data[0]).toEqual(task);
+    expect(response.pagination).toEqual({
+      currentPage: 1,
+      nextPage: null,
+      perPage: 100,
+      previousPage: null,
+      totalItems: 1,
+      totalPages: 1,
+    });
+  });
+
+  it('create an entity', async () => {
+    const body = {
+      name: 'This is a TODO',
+    };
+
+    reqMock.body = body;
+
+    await Controller.create(reqMock, resMock);
+    const entity = resMock.json.mock.calls[0][0];
+
+    expect(body.name).toEqual(entity.name);
+  });
+
+  it('get entity', async () => {
+    reqMock.params.id = task.id;
+
+    await Controller.get(reqMock, resMock);
+    expect(resMock.json).toBeCalledWith(task);
+  });
+
+  it('get error not found on', async () => {
+    reqMock.params.id = 99999999;
+
+    const errorMock = console.error;
+    console.error = jest.fn();
+    await Controller.get(reqMock, resMock);
+
+    expect(console.error).toBeCalled();
+
+    console.error = errorMock;
+
+    expect(resMock.status).toBeCalledWith(404);
+    expect(resMock.send).toBeCalledWith(EXCEPTION_NOT_FOUND);
+  });
+
+  it('update entity', async () => {
+    reqMock.params.id = task.id;
+    const body = {
+      name: 'Lanche',
+      completed: true,
+    };
+    reqMock.body = body;
+
+    await Controller.update(reqMock, resMock);
+
+    task = await Tasks.findByPk(task.id);
+
+    expect(resMock.json).toBeCalled();
+
+    const response = resMock.json.mock.calls[0][0];
+
+    expect(response).toBeTruthy();
+    expect(response.toJSON()).toHaveProperty('name');
+    expect(response.toJSON()).toHaveProperty('completed');
+    expect(response.name).toEqual(body.name);
+    expect(response.completed).toEqual(body.completed);
+  });
+
+  it('delete entity', async () => {
+    reqMock.params.id = task.id;
+
+    await Controller.destroy(reqMock, resMock);
+
+    expect(resMock.send).toBeCalled();
+    expect(resMock.status).toBeCalledWith(204);
+  });
+});
