@@ -121,6 +121,16 @@ This is a basic example of usage of the fastexpress.
 - [Basic](examples/basic)
 
 
+## Fastexpress development
+
+The tests use mysql, it need to use it.
+
+With docker: `docker run --name fastexpress-mysql -e MYSQL_ROOT_PASSWORD=123 -p 3306:3306 -d mysql:5`
+
+`yarn run pre-test`
+
+`yarn run jest` or `yarn run test`
+
 ## Open Source
 
 If you have any question/bug/sugestion just create a new issue!

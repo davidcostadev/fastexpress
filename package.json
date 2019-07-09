@@ -23,7 +23,7 @@
     "clean": "rimraf dist/* cjs/*",
     "prepare": "npm run clean && npm run build",
     "npm-publish": "npm run build && npm publish",
-    "pre-test": "cd tests/integration && cross-env NODE_ENV=test node init"
+    "pre-test": "cross-env-shell NODE_ENV=test 'sequelize db:create && sequelize db:migrate'"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
