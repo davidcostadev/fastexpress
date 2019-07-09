@@ -2,11 +2,8 @@
   "name": "fastexpress",
   "version": "2.0.0-alpha.1",
   "module": "./src/index.js",
-  "main": "./cjs/index.js",
-  "unpkg": "dist/fastexpress.min.js",
-  "jsdelivr": "dist/fastexpress.min.js",
+  "main": "./src/index.js",
   "files": [
-    "cjs",
     "src",
     "dist"
   ],
@@ -16,25 +13,18 @@
   "scripts": {
     "jest": "cross-env NODE_ENV=test jest",
     "test": "cross-env NODE_ENV=test jest --coverage",
-    "build": "npm run build:cjs && npm run build:umd && npm run build:umd:min",
-    "build:cjs": "babel src --out-dir cjs",
-    "build:umd": "cross-env NODE_ENV=development rollup -c -o dist/fastexpress.js",
-    "build:umd:min": "cross-env NODE_ENV=production rollup -c -o dist/fastexpress.min.js",
-    "clean": "rimraf dist/* cjs/*",
-    "prepare": "npm run clean && npm run build",
-    "npm-publish": "npm run build && npm publish",
+    "lint": "eslint ./src/**/*.js",
+    "npm-publish": "npm run lint && npm publish",
     "pre-test": "cross-env-shell NODE_ENV=test 'sequelize db:create && sequelize db:migrate'"
   },
+  "engines": {
+    "node": "8.16.0"
+  },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.4.4",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.7.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.18.0",
     "jest": "^24.7.1",
     "mysql2": "^1.6.5",
     "rollup": "^1.12.2",

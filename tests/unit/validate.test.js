@@ -1,4 +1,4 @@
-import * as validate from '../../src/validate';
+const validate = require('../../src/validate');
 
 describe('validade function', () => {
   it('number', () => {

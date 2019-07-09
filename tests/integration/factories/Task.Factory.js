@@ -1,5 +1,5 @@
 // import faker from "faker";
-import models from '../src/models';
+const models = require('../src/models');
 
 /**
  * Generate an object which container attributes needed
@@ -24,4 +24,4 @@ const data = async (props = {}) => {
  *
  * @return {Object}       A user instance
  */
-export default async (props = {}) => models.Tasks.create(await data(props));
+module.exports = async (props = {}) => models.Tasks.create(await data(props));

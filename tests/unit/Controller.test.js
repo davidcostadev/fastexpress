@@ -1,4 +1,4 @@
-import Controller from '../../src/Controller';
+const Controller = require('../../src/Controller');
 
 describe('Controller', () => {
   let reqMock;

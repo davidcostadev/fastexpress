@@ -1,7 +1,7 @@
-import Service from './Service';
-import { ACTIONS } from './definitions';
+const Service = require('./Service');
+const { ACTIONS } = require('./definitions');
 
-export const serviceDefaultProps = ({
+const serviceDefaultProps = ({
   form,
   filters,
   database,
@@ -11,7 +11,7 @@ export const serviceDefaultProps = ({
   database,
 });
 
-export const createResourceService = (Model, {
+const createResourceService = (Model, {
   only = ACTIONS,
   definitions = {},
   options = {},
@@ -36,4 +36,9 @@ export const createResourceService = (Model, {
     .reduce((pre, cur) => Object.assign(pre, cur), {});
 
   return methodsWithArgs;
+};
+
+module.exports = {
+  serviceDefaultProps,
+  createResourceService,
 };

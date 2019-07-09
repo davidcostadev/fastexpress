@@ -20,4 +20,4 @@ const paginationParse = (totalItems, currentPage, perPage) => {
   };
 };
 
-export default paginationParse;
+module.exports = paginationParse;

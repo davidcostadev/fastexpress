@@ -1,5 +1,5 @@
-import { dateFilter } from '../../src/definitionsFilters';
-import { orderToFilter } from '../../src/convert';
+const { dateFilter } = require('../../src/definitionsFilters');
+const { orderToFilter } = require('../../src/convert');
 
 describe('converts', () => {
   describe('dateFilter', () => {

@@ -1,5 +1,5 @@
-import * as validate from '../../src/validate';
-import selector from '../../src/selector';
+const validate = require('../../src/validate');
+const selector = require('../../src/selector');
 
 it('selector with a convert config', () => {
   const query = {

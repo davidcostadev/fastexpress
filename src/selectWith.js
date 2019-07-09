@@ -1,8 +1,8 @@
-import selector from './selector';
-import { getModelAlias, listDefaultOptions } from './model';
-import * as SelType from './selectorTypes';
+const selector = require('./selector');
+const { getModelAlias, listDefaultOptions } = require('./model');
+const SelType = require('./selectorTypes');
 
-export const selectWithBatch = ({ query }, { options, database }) => (select = {}) => {
+const selectWithBatch = ({ query }, { options, database }) => (select = {}) => {
   const {
     aliasDatabase,
   } = {
@@ -27,7 +27,7 @@ export const selectWithBatch = ({ query }, { options, database }) => (select = {
   return select;
 };
 
-export const selectWithPagination = ({ query }) => (select = {}) => {
+const selectWithPagination = ({ query }) => (select = {}) => {
   const {
     limit,
     page,
@@ -46,7 +46,7 @@ export const selectWithPagination = ({ query }) => (select = {}) => {
   };
 };
 
-export const selectWithFilters = ({ query }, { options }) => (select = {}) => {
+const selectWithFilters = ({ query }, { options }) => (select = {}) => {
   const {
     filters,
   } = {
@@ -60,4 +60,10 @@ export const selectWithFilters = ({ query }, { options }) => (select = {}) => {
   }
 
   return select;
+};
+
+module.exports = {
+  selectWithBatch,
+  selectWithPagination,
+  selectWithFilters,
 };
