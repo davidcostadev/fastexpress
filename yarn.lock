@@ -2794,6 +2794,11 @@ lru-queue@0.1:
   dependencies:
     es5-ext "~0.10.2"
 
+luxon@^1.16.1:
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.16.1.tgz#62568d483989fa108f5c87178a05bcc707f7698b"
+  integrity sha512-3aYYMFpIRdEQJl00ki+NDr2zx/Ulf7ZgohBUb6ifZQuVkP8/KCYJluISl0YNbvZXBdzCbVhpQnS4M6Svjpn7EA==
+
 make-dir@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"
