@@ -1,7 +1,7 @@
-import iconv from 'iconv-lite';
-import encodings from 'iconv-lite/encodings';
-import Service from '../../src/Service';
-import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from '../../src/lib/errors';
+const iconv = require('iconv-lite');
+const encodings = require('iconv-lite/encodings');
+const Service = require('../../src/Service');
+const { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } = require('../../src/lib/errors');
 
 iconv.encodings = encodings;
 
@@ -125,10 +125,10 @@ describe('Service', () => {
             include: [
               {
                 as: 'AccountFrom',
-                model: {},
+                model: new (class Accounts { })(),
               },
               {
-                model: {},
+                model: new (class Transactions { })(),
               },
             ],
           },

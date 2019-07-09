@@ -1,8 +1,8 @@
-import {
+const {
   addConstraint,
   createTable,
   dropTable,
-} from '../../src/helper';
+} = require('../../src/helper');
 
 describe('migrationsHelpers', () => {
   describe('addConstraint should', () => {

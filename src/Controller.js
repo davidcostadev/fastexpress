@@ -1,4 +1,4 @@
-import { EXCEPTION_NOT_FOUND } from './lib/errors';
+const { EXCEPTION_NOT_FOUND } = require('./lib/errors');
 
 const defaultResponse = async (req, res, service) => {
   try {
@@ -35,7 +35,7 @@ const destroy = async (req, res, service) => {
   }
 };
 
-export default {
+module.exports = {
   list,
   create,
   get,

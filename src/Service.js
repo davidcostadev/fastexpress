@@ -1,13 +1,13 @@
-import { compose } from 'ramda';
-import paginationParse from './pagination';
-import selector from './selector';
-import * as SelType from './selectorTypes';
-import { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } from './lib/errors';
-import {
+const { compose } = require('ramda');
+const paginationParse = require('./pagination');
+const selector = require('./selector');
+const SelType = require('./selectorTypes');
+const { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } = require('./lib/errors');
+const {
   selectWithBatch,
   selectWithFilters,
   selectWithPagination,
-} from './selectWith';
+} = require('./selectWith');
 
 const list = async (req, Model, configs) => {
   const { limit, page } = selector({
@@ -109,7 +109,7 @@ const destroy = async (req, Model) => {
   }
 };
 
-export default {
+module.exports = {
   list,
   create,
   get,

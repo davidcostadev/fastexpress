@@ -1,11 +1,11 @@
-import {
+const {
   resources,
   resourcesAuth,
   namespaceIndexCreator,
   resourceList,
   resourceWithAuth,
   namespaceCreator,
-} from '../../src/routers';
+} = require('../../src/routers');
 
 jest.mock('express');
 

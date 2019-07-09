@@ -1,4 +1,4 @@
-export const resources = (prefix, { router, controller }) => {
+const resources = (prefix, { router, controller }) => {
   router.get(`${prefix}/`, controller.list);
   router.post(`${prefix}/`, controller.create);
   router.get(`${prefix}/:id`, controller.get);
@@ -6,7 +6,7 @@ export const resources = (prefix, { router, controller }) => {
   router.put(`${prefix}/:id`, controller.update);
 };
 
-export const resourcesAuth = (prefix, { router, middleware, controller }) => {
+const resourcesAuth = (prefix, { router, middleware, controller }) => {
   router.get(`${prefix}/`, middleware, controller.list);
   router.post(`${prefix}/`, middleware, controller.create);
   router.get(`${prefix}/:id`, middleware, controller.get);
@@ -14,10 +14,10 @@ export const resourcesAuth = (prefix, { router, middleware, controller }) => {
   router.put(`${prefix}/:id`, middleware, controller.update);
 };
 
-export const namespaceCreator = (namespace = '/') => (url = '') => `${namespace}${url}`;
+const namespaceCreator = (namespace = '/') => (url = '') => `${namespace}${url}`;
 
 
-export const namespaceIndexCreator = namespace => urls => namespace()
+const namespaceIndexCreator = namespace => urls => namespace()
   .split('/')
   .filter(word => !!word)
   .reduceRight((pre, cur) => ({
@@ -26,7 +26,7 @@ export const namespaceIndexCreator = namespace => urls => namespace()
 
 const defaultNamespace = url => `/${url}`;
 
-export const resourceWithAuth = (url, controller, {
+const resourceWithAuth = (url, controller, {
   router,
   middleware,
   namespace = defaultNamespace,
@@ -38,7 +38,7 @@ export const resourceWithAuth = (url, controller, {
   })
 );
 
-export const resourceList = (url, { custom = [], namespace = defaultNamespace } = {}) => ([
+const resourceList = (url, { custom = [], namespace = defaultNamespace } = {}) => ([
   ...[
     controller => (`[get] ${controller}`),
     controller => (`[post] ${controller}`),
@@ -48,3 +48,13 @@ export const resourceList = (url, { custom = [], namespace = defaultNamespace } 
   ].map(method => method(namespace(url))),
   ...custom,
 ]);
+
+
+module.exports = {
+  resources,
+  resourcesAuth,
+  namespaceCreator,
+  namespaceIndexCreator,
+  resourceWithAuth,
+  resourceList,
+};

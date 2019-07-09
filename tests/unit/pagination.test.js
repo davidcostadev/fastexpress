@@ -1,4 +1,4 @@
-import paginationParse from '../../src/pagination';
+const paginationParse = require('../../src/pagination');
 
 it('should the object', () => {
   expect(paginationParse(10, 1, 5)).toEqual({

@@ -1,7 +1,5 @@
 module.exports = {
-  parser: 'babel-eslint',
   extends: ['airbnb-base'],
-  env: { 'es6': true },
   rules: {
     'arrow-body-style': ['error', 'as-needed'],
     'import/no-unresolved': 'off',

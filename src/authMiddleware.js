@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
 const getToken = (req) => {
   if (typeof req.body.token !== 'undefined') {
@@ -62,4 +62,4 @@ const createMiddleware = jwtEncryption => ([
   onlyUser,
 ]);
 
-export default createMiddleware;
+module.exports = createMiddleware;
