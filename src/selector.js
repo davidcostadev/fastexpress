@@ -20,4 +20,4 @@ const selector = (definitions, query = {}) => {
   return select;
 };
 
-export default selector;
+module.exports = selector;

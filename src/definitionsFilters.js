@@ -1,6 +1,6 @@
-import { Op } from 'sequelize';
+const { Op } = require('sequelize');
 
-export const dateFilter = {
+const dateFilter = {
   validation: () => true,
   convert: (val) => {
     if (val.indexOf(',') > -1) {
@@ -14,4 +14,8 @@ export const dateFilter = {
 
     return val;
   },
+};
+
+module.exports = {
+  dateFilter,
 };

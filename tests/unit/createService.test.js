@@ -1,5 +1,5 @@
-import Service from '../../src/Service';
-import { createResourceService as createService } from '../../src/createService';
+const Service = require('../../src/Service');
+const { createResourceService: createService } = require('../../src/createService');
 
 jest.mock('../../src/Service', () => ({
   create: jest.fn(),

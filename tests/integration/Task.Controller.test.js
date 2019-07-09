@@ -1,9 +1,9 @@
-import sequelize from 'sequelize';
-import Controller from './src/controllers/Tasks';
-import { Tasks } from './src/models';
-import TaskFactory from './factories/Task.Factory';
-import { EXCEPTION_NOT_FOUND } from '../../src/lib/errors';
-import truncate from './truncate';
+const sequelize = require('sequelize');
+const Controller = require('./src/controllers/Tasks');
+const { Tasks } = require('./src/models');
+const TaskFactory = require('./factories/Task.Factory');
+const { EXCEPTION_NOT_FOUND } = require('../../src/lib/errors');
+const truncate = require('./truncate');
 
 let reqMock = {
   query: {},

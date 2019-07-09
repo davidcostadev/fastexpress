@@ -1,33 +1,33 @@
-import Controller from './Controller';
-import createController from './createController';
-import * as migrationActions from './helper';
-import * as migrationHelper from './create';
-import Service from './Service';
-import {
+const Controller = require('./Controller');
+const createController = require('./createController');
+const migrationActions = require('./helper');
+const migrationHelper = require('./create');
+const Service = require('./Service');
+const {
   serviceDefaultProps,
-  createResourceService as createService,
-} from './createService';
-import { cryptPassword, getModelAlias } from './model';
-import {
+  createResourceService: createService,
+} = require('./createService');
+const { cryptPassword, getModelAlias } = require('./model');
+const {
   resources,
   resourcesAuth,
   namespaceIndexCreator,
   resourceList,
   resourceWithAuth,
   namespaceCreator,
-} from './routers';
-import createMiddleware from './authMiddleware';
-import { dateFilter } from './definitionsFilters';
+} = require('./routers');
+const createMiddleware = require('./authMiddleware');
+const { dateFilter } = require('./definitionsFilters');
 // eslint-disable-next-line import/no-duplicates
-import { orderToFilter } from './convert';
-import paginationParse from './pagination';
-import selector from './selector';
-import * as validate from './validate';
+const { orderToFilter } = require('./convert');
+const paginationParse = require('./pagination');
+const selector = require('./selector');
+const validate = require('./validate');
 // eslint-disable-next-line import/no-duplicates
-import * as convert from './convert';
-import * as type from './selectorTypes';
+const convert = require('./convert');
+const type = require('./selectorTypes');
 
-export {
+module.exports = {
   createMiddleware,
   Controller,
   dateFilter,

@@ -1,12 +1,12 @@
-import bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt');
 
-export const listDefaultOptions = {
+const listDefaultOptions = {
   where: {},
   filter: null,
   aliasDatabase: {},
 };
 
-export const getModelAlias = (aliasDatabase, db) => (model) => {
+const getModelAlias = (aliasDatabase, db) => (model) => {
   const aliasList = Object.keys(aliasDatabase);
 
   if (aliasList.includes(model)) {
@@ -25,7 +25,7 @@ export const getModelAlias = (aliasDatabase, db) => (model) => {
 
 /* eslint no-param-reassign: "off" */
 /* eslint no-underscore-dangle: "off" */
-export const cryptPassword = bcryptSalt => (user) => {
+const cryptPassword = bcryptSalt => (user) => {
   if (user.password !== user._previousDataValues.password) {
     return bcrypt
       .hash(user.password, bcrypt.genSaltSync(bcryptSalt))
@@ -35,4 +35,10 @@ export const cryptPassword = bcryptSalt => (user) => {
   }
 
   return null;
+};
+
+module.exports = {
+  listDefaultOptions,
+  getModelAlias,
+  cryptPassword,
 };

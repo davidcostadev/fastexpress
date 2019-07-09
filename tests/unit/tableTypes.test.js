@@ -1,4 +1,4 @@
-import { table } from '../../src/create';
+const { table } = require('../../src/create');
 
 describe('tableTypes', () => {
   describe('table should works', () => {

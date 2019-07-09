@@ -1,9 +1,16 @@
-import R from 'ramda';
+const R = require('ramda');
 
-export const string = R.compose(Boolean, R.length);
+const string = R.compose(Boolean, R.length);
 
-export const number = num => Number.isInteger(parseInt(num, 10));
+const number = num => Number.isInteger(parseInt(num, 10));
 
-export const float = num => !Number.isNaN(parseFloat(num));
+const float = num => !Number.isNaN(parseFloat(num));
 
-export const bool = val => typeof Boolean(val) === 'boolean';
+const bool = val => typeof Boolean(val) === 'boolean';
+
+module.exports = {
+  string,
+  number,
+  float,
+  bool,
+};

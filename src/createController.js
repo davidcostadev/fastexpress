@@ -1,5 +1,5 @@
-import Controller from './Controller';
-import { ACTIONS } from './definitions';
+const Controller = require('./Controller');
+const { ACTIONS } = require('./definitions');
 
 const createResourceController = (service, { only = ACTIONS, custom = {} } = {}) => {
   const methods = {};
@@ -14,4 +14,4 @@ const createResourceController = (service, { only = ACTIONS, custom = {} } = {})
   };
 };
 
-export default createResourceController;
+module.exports = createResourceController;

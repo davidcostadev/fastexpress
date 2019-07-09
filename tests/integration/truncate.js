@@ -1,4 +1,4 @@
-import models from './src/models';
+const models = require('./src/models');
 
 async function truncate() {
   const modelsList = await Promise.all(Object.keys(models).map((key) => {
@@ -10,4 +10,4 @@ async function truncate() {
   return modelsList;
 }
 
-export default truncate;
+module.exports = truncate;
