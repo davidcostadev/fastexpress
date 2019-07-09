@@ -1,5 +1,5 @@
 // import faker from "faker";
-import models from '../../../../examples/basic/src/models';
+import models from '../src/models';
 
 /**
  * Generate an object which container attributes needed

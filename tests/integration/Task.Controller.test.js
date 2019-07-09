@@ -1,9 +1,9 @@
 import sequelize from 'sequelize';
-import Controller from '../../../examples/basic/src/controllers/Tasks';
-import { Tasks } from '../../../examples/basic/src/models';
+import Controller from './src/controllers/Tasks';
+import { Tasks } from './src/models';
 import TaskFactory from './factories/Task.Factory';
-import { EXCEPTION_NOT_FOUND } from '../../../src/lib/errors';
-import truncate from '../truncate';
+import { EXCEPTION_NOT_FOUND } from '../../src/lib/errors';
+import truncate from './truncate';
 
 let reqMock = {
   query: {},

@@ -1,4 +1,4 @@
-import models from '../../examples/basic/src/models';
+import models from './src/models';
 
 async function truncate() {
   const modelsList = await Promise.all(Object.keys(models).map((key) => {
