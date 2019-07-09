@@ -26,6 +26,7 @@ const validate = require('./validate');
 // eslint-disable-next-line import/no-duplicates
 const convert = require('./convert');
 const type = require('./selectorTypes');
+const server = require('./server');
 
 module.exports = {
   createMiddleware,
@@ -50,5 +51,6 @@ module.exports = {
   serviceDefaultProps,
   migrationActions,
   migrationHelper,
+  server,
   type,
 };
