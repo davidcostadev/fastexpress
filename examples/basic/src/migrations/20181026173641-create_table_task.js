@@ -1,4 +1,4 @@
-const { migrationActions } = require('../../../../cjs');
+const { migrationActions } = require('../../../../src');
 
 module.exports = {
   up: migrationActions.createTable('Tasks', Sequelize => ({
