@@ -25,6 +25,7 @@ const selector = require('./selector');
 const validate = require('./validate');
 // eslint-disable-next-line import/no-duplicates
 const convert = require('./convert');
+const Resources = require('./Resources');
 const type = require('./selectorTypes');
 const server = require('./server');
 
@@ -36,6 +37,7 @@ module.exports = {
   cryptPassword,
   getModelAlias,
   paginationParse,
+  Resources,
   resources,
   resourcesAuth,
   namespaceCreator,
