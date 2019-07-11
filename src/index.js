@@ -28,12 +28,14 @@ const convert = require('./convert');
 const Resources = require('./Resources');
 const type = require('./selectorTypes');
 const server = require('./server');
+const endpoint = require('./endpoint');
 
 module.exports = {
   createMiddleware,
   Controller,
   dateFilter,
   orderToFilter,
+  endpoint,
   cryptPassword,
   getModelAlias,
   paginationParse,
