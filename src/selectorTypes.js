@@ -1,4 +1,4 @@
-const { DateTime } = require('luxon');
+const Moment = require('moment');
 const validate = require('./validate');
 const convert = require('./convert');
 
@@ -31,7 +31,7 @@ const datetimeType = {
 
 const dateType = {
   validation: validate.string,
-  convert: val => DateTime.fromISO(val).toISODate(),
+  convert: val => Moment(val).format('YYYY-MM-DD'),
 };
 
 const orderType = {
