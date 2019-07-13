@@ -37,7 +37,7 @@
     "express": "^4.17.0",
     "iconv-lite": "^0.4.24",
     "jsonwebtoken": "^8.5.1",
-    "luxon": "^1.16.1",
+    "moment": "^2.24.0",
     "ramda": "^0.26.1",
     "sequelize": "^5.8.6"
   }
