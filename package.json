@@ -12,7 +12,7 @@
   "scripts": {
     "jest": "cross-env NODE_ENV=test jest -i --forceExit",
     "test": "cross-env NODE_ENV=test jest -i --forceExit --coverage",
-    "lint": "eslint ./src/**/*.js",
+    "lint": "eslint src/** tests/**",
     "npm-publish": "npm run lint && npm publish",
     "pre-test": "cross-env-shell NODE_ENV=test 'sequelize db:create && sequelize db:migrate'"
   },
