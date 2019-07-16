@@ -63,11 +63,11 @@ describe('routers', () => {
     });
 
     it(' should create a array of object with custom', () => {
-      expect(resourceList('url', {
-        custom: [
-          '[get] /custom',
-        ],
-      })).toEqual([
+      expect(
+        resourceList('url', {
+          custom: ['[get] /custom'],
+        }),
+      ).toEqual([
         '[get] /url',
         '[post] /url',
         '[get] /url/:id',
@@ -77,11 +77,12 @@ describe('routers', () => {
       ]);
     });
 
-
     it(' should create a array of object with namespace', () => {
-      expect(resourceList('url', {
-        namespace: namespaceCreator('/namespace/'),
-      })).toEqual([
+      expect(
+        resourceList('url', {
+          namespace: namespaceCreator('/namespace/'),
+        }),
+      ).toEqual([
         '[get] /namespace/url',
         '[post] /namespace/url',
         '[get] /namespace/url/:id',
@@ -93,9 +94,11 @@ describe('routers', () => {
 
   describe('namespaceIndexCreator', () => {
     it('should create a object with urls', () => {
-      expect(namespaceIndexCreator(namespaceCreator('/api/v1/'))({
-        legal: 1,
-      })).toEqual({
+      expect(
+        namespaceIndexCreator(namespaceCreator('/api/v1/'))({
+          legal: 1,
+        }),
+      ).toEqual({
         api: {
           v1: {
             legal: 1,

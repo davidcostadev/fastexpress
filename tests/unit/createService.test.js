@@ -49,10 +49,15 @@ describe('createService', () => {
   });
 
   it('should get with custom methods', () => {
-    const another = (reqAnother, model, configsAnother) => Service.get({
-      ...reqAnother,
-      three: 'three',
-    }, model, configsAnother);
+    const another = (reqAnother, model, configsAnother) =>
+      Service.get(
+        {
+          ...reqAnother,
+          three: 'three',
+        },
+        model,
+        configsAnother,
+      );
 
     const serviceCreated = createService(Model, {
       ...configs,
@@ -65,9 +70,13 @@ describe('createService', () => {
 
     serviceCreated.another(req);
 
-    expect(Service.get).toBeCalledWith({
-      ...req,
-      three: 'three',
-    }, Model, configs);
+    expect(Service.get).toBeCalledWith(
+      {
+        ...req,
+        three: 'three',
+      },
+      Model,
+      configs,
+    );
   });
 });

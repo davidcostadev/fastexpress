@@ -3,17 +3,16 @@ const paginationParse = require('./pagination');
 const selector = require('./selector');
 const SelType = require('./selectorTypes');
 const { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } = require('./lib/errors');
-const {
-  selectWithBatch,
-  selectWithFilters,
-  selectWithPagination,
-} = require('./selectWith');
+const { selectWithBatch, selectWithFilters, selectWithPagination } = require('./selectWith');
 
 const list = async (req, Model, configs) => {
-  const { limit, page } = selector({
-    limit: SelType.limitSelType,
-    page: SelType.pageSelType,
-  }, req.query);
+  const { limit, page } = selector(
+    {
+      limit: SelType.limitSelType,
+      page: SelType.pageSelType,
+    },
+    req.query,
+  );
 
   const select = compose(
     selectWithPagination(req, configs),

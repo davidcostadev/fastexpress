@@ -27,9 +27,7 @@ describe('converts', () => {
 
   describe('orderToFilter', () => {
     it('should work', () => {
-      expect(orderToFilter('name.ASC')).toEqual([
-        ['name', 'ASC'],
-      ]);
+      expect(orderToFilter('name.ASC')).toEqual([['name', 'ASC']]);
     });
   });
 });
