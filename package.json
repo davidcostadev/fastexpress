@@ -3,10 +3,7 @@
   "version": "2.0.0-alpha.1",
   "module": "./src/index.js",
   "main": "./src/index.js",
-  "files": [
-    "src",
-    "dist"
-  ],
+  "files": [ "src" ],
   "repository": "git@github.com:davidcostadev/fastexpress.git",
   "author": "David Costa <davidcostadev@gmail.com>",
   "license": "MIT",
@@ -22,23 +19,23 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint": "6.0.1",
+    "eslint-config-airbnb-base": "13.2.0",
     "eslint-plugin-import": "^2.18.0",
     "jest": "^24.7.1",
     "mysql2": "^1.6.5",
-    "rollup": "^1.12.2",
-    "rollup-plugin-terser": "^4.0.4",
-    "sequelize-cli": "^5.4.0",
+    "rollup": "1.17.0",
+    "rollup-plugin-terser": "5.1.1",
+    "sequelize-cli": "5.5.0",
     "supertest": "^4.0.2"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
-    "express": "^4.17.0",
-    "iconv-lite": "^0.4.24",
+    "express": "4.17.1",
+    "iconv-lite": "0.5.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "ramda": "^0.26.1",
-    "sequelize": "^5.8.6"
+    "sequelize": "5.10.1"
   }
 }
