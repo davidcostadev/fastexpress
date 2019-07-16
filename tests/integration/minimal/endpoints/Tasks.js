@@ -3,11 +3,15 @@ const database = require('../models');
 
 const { Tasks: Model } = database;
 
-module.exports = endpoint(Model, {
-  name: {
-    validation: validate.string,
+module.exports = endpoint(
+  Model,
+  {
+    name: {
+      validation: validate.string,
+    },
+    completed: {
+      validation: validate.bool,
+    },
   },
-  completed: {
-    validation: validate.bool,
-  },
-}, database);
+  database,
+);

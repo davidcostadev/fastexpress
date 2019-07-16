@@ -3,10 +3,7 @@ const createController = require('./createController');
 const migrationActions = require('./helper');
 const migrationHelper = require('./create');
 const Service = require('./Service');
-const {
-  serviceDefaultProps,
-  createResourceService: createService,
-} = require('./createService');
+const { serviceDefaultProps, createResourceService: createService } = require('./createService');
 const { cryptPassword, getModelAlias } = require('./model');
 const {
   resources,

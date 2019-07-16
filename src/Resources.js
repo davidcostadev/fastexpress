@@ -1,10 +1,5 @@
 const { Router } = require('express');
-const {
-  namespaceCreator,
-  namespaceIndexCreator,
-  resources,
-  resourceList,
-} = require('./routers');
+const { namespaceCreator, namespaceIndexCreator, resources, resourceList } = require('./routers');
 
 class Resources {
   constructor(options = {}) {
@@ -28,11 +23,13 @@ class Resources {
   }
 
   setIndexResponse() {
-    const indexResponse = this.resources.reduce((acc, cur) => ({
-      ...acc,
-      [cur]: resourceList('tasks', { namespace: this.namespace }),
-    }), {});
-
+    const indexResponse = this.resources.reduce(
+      (acc, cur) => ({
+        ...acc,
+        [cur]: resourceList('tasks', { namespace: this.namespace }),
+      }),
+      {},
+    );
 
     this.router.get(this.namespace(), (req, res) => {
       res.send(this.indexCreator(indexResponse));
@@ -44,6 +41,5 @@ class Resources {
     return this.router;
   }
 }
-
 
 module.exports = Resources;

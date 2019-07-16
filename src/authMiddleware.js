@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const getToken = (req) => {
+const getToken = req => {
   if (typeof req.body.token !== 'undefined') {
     return req.body.token;
   }
@@ -56,10 +56,6 @@ const onlyUser = (req, res, next) => {
   next();
 };
 
-
-const createMiddleware = jwtEncryption => ([
-  checkAuth(jwtEncryption),
-  onlyUser,
-]);
+const createMiddleware = jwtEncryption => [checkAuth(jwtEncryption), onlyUser];
 
 module.exports = createMiddleware;

@@ -50,8 +50,8 @@ describe('Service', () => {
       name: 'David',
     };
     database = {
-      Accounts: new (class Accounts { })(),
-      Transactions: new (class Transactions { })(),
+      Accounts: new (class Accounts {})(),
+      Transactions: new (class Transactions {})(),
     };
   });
 
@@ -76,11 +76,7 @@ describe('Service', () => {
           },
         ],
       ]);
-      expect(modelMock.findAndCountAll.mock.calls).toEqual([
-        [
-          { where: {} },
-        ],
-      ]);
+      expect(modelMock.findAndCountAll.mock.calls).toEqual([[{ where: {} }]]);
       expect(result).toEqual({
         data: [entity],
         pagination: {
@@ -125,10 +121,10 @@ describe('Service', () => {
             include: [
               {
                 as: 'AccountFrom',
-                model: new (class Accounts { })(),
+                model: new (class Accounts {})(),
               },
               {
-                model: new (class Transactions { })(),
+                model: new (class Transactions {})(),
               },
             ],
           },

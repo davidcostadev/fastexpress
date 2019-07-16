@@ -7,5 +7,4 @@ const Routers = new Resources({
   .add('tasks', Tasks)
   .getRouters();
 
-
 module.exports = Routers;

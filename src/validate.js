@@ -1,6 +1,9 @@
 const R = require('ramda');
 
-const string = R.compose(Boolean, R.length);
+const string = R.compose(
+  Boolean,
+  R.length,
+);
 
 const number = num => Number.isInteger(parseInt(num, 10));
 

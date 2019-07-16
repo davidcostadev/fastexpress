@@ -10,9 +10,12 @@ const form = {
   completed: {
     validation: validate.bool,
   },
-}
+};
 
-module.exports = createService(Tasks, serviceDefaultProps({
-  database,
-  form,
-}));
+module.exports = createService(
+  Tasks,
+  serviceDefaultProps({
+    database,
+    form,
+  }),
+);

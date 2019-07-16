@@ -20,10 +20,13 @@ describe('model', () => {
         Accounts: 'Accounts',
       };
 
-      const result = getModelAlias({
-        AccountFrom: 'Accounts',
-        AccountTo: 'Accounts',
-      }, Model)('AccountFrom');
+      const result = getModelAlias(
+        {
+          AccountFrom: 'Accounts',
+          AccountTo: 'Accounts',
+        },
+        Model,
+      )('AccountFrom');
 
       expect(result).toEqual({
         as: 'AccountFrom',

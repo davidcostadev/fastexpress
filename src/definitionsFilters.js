@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 
 const dateFilter = {
   validation: () => true,
-  convert: (val) => {
+  convert: val => {
     if (val.indexOf(',') > -1) {
       const parts = val.split(',');
       const [start, end] = parts;

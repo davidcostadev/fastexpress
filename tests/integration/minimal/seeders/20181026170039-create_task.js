@@ -1,11 +1,11 @@
 module.exports = {
-  up: async (queryInterface) => {
+  up: async queryInterface => {
     await queryInterface.bulkInsert('Tasks', [
       {
         name: 'First Task',
         completed: true,
         createdAt: new Date(),
-      updatedAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: 'Second Task',
@@ -16,7 +16,7 @@ module.exports = {
     ]);
   },
 
-  down: (queryInterface) => {
+  down: queryInterface => {
     queryInterface.bulkDelete('Tasks');
-  }
+  },
 };
