@@ -3,7 +3,9 @@
   "version": "2.0.0-alpha.1",
   "module": "./src/index.js",
   "main": "./src/index.js",
-  "files": [ "src" ],
+  "files": [
+    "src"
+  ],
   "repository": "git@github.com:davidcostadev/fastexpress.git",
   "author": "David Costa <davidcostadev@gmail.com>",
   "license": "MIT",
