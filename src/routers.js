@@ -16,39 +16,36 @@ const resourcesAuth = (prefix, { router, middleware, controller }) => {
 
 const namespaceCreator = (namespace = '/') => (url = '') => `${namespace}${url}`;
 
-
-const namespaceIndexCreator = namespace => urls => namespace()
-  .split('/')
-  .filter(word => !!word)
-  .reduceRight((pre, cur) => ({
-    [cur]: pre,
-  }), urls);
+const namespaceIndexCreator = namespace => urls =>
+  namespace()
+    .split('/')
+    .filter(word => !!word)
+    .reduceRight(
+      (pre, cur) => ({
+        [cur]: pre,
+      }),
+      urls,
+    );
 
 const defaultNamespace = url => `/${url}`;
 
-const resourceWithAuth = (url, controller, {
-  router,
-  middleware,
-  namespace = defaultNamespace,
-}) => (
+const resourceWithAuth = (url, controller, { router, middleware, namespace = defaultNamespace }) =>
   resourcesAuth(namespace(url), {
     controller,
     router,
     middleware,
-  })
-);
+  });
 
-const resourceList = (url, { custom = [], namespace = defaultNamespace } = {}) => ([
+const resourceList = (url, { custom = [], namespace = defaultNamespace } = {}) => [
   ...[
-    controller => (`[get] ${controller}`),
-    controller => (`[post] ${controller}`),
-    controller => (`[get] ${controller}/:id`),
-    controller => (`[delete] ${controller}/:id`),
-    controller => (`[put] ${controller}/:id`),
+    controller => `[get] ${controller}`,
+    controller => `[post] ${controller}`,
+    controller => `[get] ${controller}/:id`,
+    controller => `[delete] ${controller}/:id`,
+    controller => `[put] ${controller}/:id`,
   ].map(method => method(namespace(url))),
   ...custom,
-]);
-
+];
 
 module.exports = {
   resources,

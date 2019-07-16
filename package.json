@@ -3,14 +3,16 @@
   "version": "2.0.0-alpha.1",
   "module": "./src/index.js",
   "main": "./src/index.js",
-  "files": [ "src" ],
+  "files": [
+    "src"
+  ],
   "repository": "git@github.com:davidcostadev/fastexpress.git",
   "author": "David Costa <davidcostadev@gmail.com>",
   "license": "MIT",
   "scripts": {
     "jest": "cross-env NODE_ENV=test jest -i --forceExit",
     "test": "cross-env NODE_ENV=test jest -i --forceExit --coverage",
-    "lint": "eslint ./src/**/*.js",
+    "lint": "eslint src/** tests/**",
     "npm-publish": "npm run lint && npm publish",
     "pre-test": "cross-env-shell NODE_ENV=test 'sequelize db:create && sequelize db:migrate'"
   },
@@ -19,11 +21,14 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "eslint": "6.0.1",
+    "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.2.0",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.7.1",
     "mysql2": "^1.6.5",
+    "prettier": "^1.18.2",
     "rollup": "1.17.0",
     "rollup-plugin-terser": "5.1.1",
     "sequelize-cli": "5.5.0",

@@ -12,7 +12,7 @@ const numberType = {
 
 const floatType = {
   validation: validate.float,
-  convert: (val) => {
+  convert: val => {
     if (typeof val === 'string') {
       return val.replace(',', '.');
     }
@@ -51,7 +51,6 @@ const pageSelType = {
   ...numberType,
   default: 1,
 };
-
 
 module.exports = {
   stringType,

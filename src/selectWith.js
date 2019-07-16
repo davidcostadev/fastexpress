@@ -3,18 +3,17 @@ const { getModelAlias, listDefaultOptions } = require('./model');
 const SelType = require('./selectorTypes');
 
 const selectWithBatch = ({ query }, { options, database }) => (select = {}) => {
-  const {
-    aliasDatabase,
-  } = {
+  const { aliasDatabase } = {
     ...listDefaultOptions,
     ...options,
   };
 
-  const {
-    batch,
-  } = selector({
-    batch: SelType.batchSelType,
-  }, query);
+  const { batch } = selector(
+    {
+      batch: SelType.batchSelType,
+    },
+    query,
+  );
 
   if (batch) {
     let models = batch.split(',');
@@ -28,15 +27,14 @@ const selectWithBatch = ({ query }, { options, database }) => (select = {}) => {
 };
 
 const selectWithPagination = ({ query }) => (select = {}) => {
-  const {
-    limit,
-    page,
-    order,
-  } = selector({
-    limit: SelType.limitSelType,
-    page: SelType.pageSelType,
-    order: SelType.orderType,
-  }, query);
+  const { limit, page, order } = selector(
+    {
+      limit: SelType.limitSelType,
+      page: SelType.pageSelType,
+      order: SelType.orderType,
+    },
+    query,
+  );
 
   return {
     ...select,
@@ -47,9 +45,7 @@ const selectWithPagination = ({ query }) => (select = {}) => {
 };
 
 const selectWithFilters = ({ query }, { options }) => (select = {}) => {
-  const {
-    filters,
-  } = {
+  const { filters } = {
     ...listDefaultOptions,
     ...options,
   };
