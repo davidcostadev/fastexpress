@@ -21,7 +21,7 @@ describe('Controller', () => {
       name: 'Task 01',
     });
 
-    task = await Tasks.findByPk(task.id);
+    task = JSON.parse(JSON.stringify(await Tasks.findByPk(task.id)));
   });
 
   beforeEach(async () => {

@@ -28,7 +28,7 @@ const list = async (req, Model, configs) => {
     const pagination = paginationParse(count, page, limit);
 
     return {
-      data,
+      data: JSON.parse(JSON.stringify(data)),
       pagination,
     };
   } catch (e) {
@@ -51,7 +51,7 @@ const get = async (req, Model, configs) => {
       throw new Error(EXCEPTION_NOT_FOUND);
     }
 
-    return entity;
+    return JSON.parse(JSON.stringify(entity));
   } catch (e) {
     console.error(e);
     throw new Error(EXCEPTION_NOT_FOUND);
