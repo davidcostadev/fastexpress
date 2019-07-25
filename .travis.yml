@@ -14,7 +14,7 @@ node_js:
   - 8
 before_install:
   - mysql -e "use mysql; update user set authentication_string=PASSWORD('123') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-  - service mysql restart
+  # - service mysql restart
 
 before_script:
   - yarn run lint
