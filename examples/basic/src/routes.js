@@ -1,26 +1,10 @@
-const { Router } = require('express');
-const {
-  namespaceCreator,
-  namespaceIndexCreator,
-  resourceList,
-  resources,
-} = require('fastexpress');
-const Tasks = require('./controllers/Tasks');
+const { Resources } = require('../../../src');
+const Tasks = require('./resourcers/Tasks');
 
-const router = Router();
+const routers = new Resources({
+  namespace: '/api/v1/',
+})
+  .add('tasks', Tasks)
+  .getRouters();
 
-const namespace = namespaceCreator('/api/v1/');
-const indexCreator = namespaceIndexCreator(namespace);
-
-// root helper
-router.get('/', (req, res) => {
-  res.send(indexCreator({
-    tasks: resourceList('tasks', { namespace }),
-  }));
-});
-
-// enpoints
-
-resources(`${namespace('tasks')}`, { router, controller: Tasks });
-
-module.exports = router;
+module.exports = routers;
