@@ -9,13 +9,13 @@ cache: yarn
 #     packages:
 #       - mysql-server
 #       - mysql-client
-dist: trusty
+# dist: trusty
 node_js:
   - 8
-before_install:
-  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('123') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-  - sudo mysql_upgrade -u root -p123
-  - sudo service mysql restart
+# before_install:
+#   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('123') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+#   - sudo mysql_upgrade -u root -p123
+#   - sudo service mysql restart
 
 before_script:
   - yarn run lint
