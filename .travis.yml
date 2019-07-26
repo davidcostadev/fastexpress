@@ -2,13 +2,13 @@ language: node_js
 services:
   - mysql
 cache: yarn
-addons:
-  apt:
-    sources:
-      - mysql-5.7-trusty
-    packages:
-      - mysql-server
-      - mysql-client
+# addons:
+#   apt:
+#     sources:
+#       - mysql-5.7-trusty
+#     packages:
+#       - mysql-server
+#       - mysql-client
 dist: trusty
 node_js:
   - 8
