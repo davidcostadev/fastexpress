@@ -44,8 +44,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: yarn run lint
-      - run: yarn run pre-test
+      # - run: yarn run lint
+      # - run: yarn run pre-test
 
       # run tests!
       - run: yarn test
