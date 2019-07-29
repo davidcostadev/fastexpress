@@ -1,6 +1,31 @@
 const { Router } = require('express');
 const { namespaceCreator, namespaceIndexCreator, resources, resourceList } = require('./routers');
 
+const urlsIndexCreator = path =>
+  path
+    .split('/')
+    .filter(s => s.length)
+    .reduce(
+      (acc, cur) => {
+        const url = [acc[acc.length - 1], `${cur}/`].join('');
+        acc.push(url);
+
+        return acc;
+      },
+      ['/'],
+    );
+
+const deepCreator = (path, obj) =>
+  path
+    .split('/')
+    .filter(s => s.length)
+    .reduceRight(
+      (acc, cur) => ({
+        [cur]: acc,
+      }),
+      obj,
+    );
+
 class Resources {
   constructor(options = {}) {
     this.namespace = namespaceCreator(options.namespace);
@@ -31,8 +56,11 @@ class Resources {
       {},
     );
 
-    this.router.get(this.namespace(), (req, res) => {
-      res.send(this.indexCreator(indexResponse));
+    urlsIndexCreator(this.namespace()).forEach((url, i, list) => {
+      const urlRest = list[list.length - 1].replace(new RegExp(`${url}`), '');
+      this.router.get(url, (req, res) => {
+        res.send(deepCreator(urlRest, indexResponse));
+      });
     });
   }
 

@@ -21,13 +21,13 @@ describe('app.minimal', () => {
     sequelize.close();
   });
 
-  it('Should the endpoint /api/v1 the endpoints tree', done => {
+  it('Should the endpoint / return objects api, v1, and tasks', done => {
     const app = express();
 
     app.use(routes);
 
     request(app)
-      .get('/api/v1')
+      .get('/')
       .expect(
         200,
         {
@@ -42,6 +42,52 @@ describe('app.minimal', () => {
               ],
             },
           },
+        },
+        done,
+      );
+  });
+
+  it('Should the endpoint /api return objects v1, and tasks', done => {
+    const app = express();
+
+    app.use(routes);
+
+    request(app)
+      .get('/api')
+      .expect(
+        200,
+        {
+          v1: {
+            tasks: [
+              '[get] /api/v1/tasks',
+              '[post] /api/v1/tasks',
+              '[get] /api/v1/tasks/:id',
+              '[delete] /api/v1/tasks/:id',
+              '[put] /api/v1/tasks/:id',
+            ],
+          },
+        },
+        done,
+      );
+  });
+
+  it('Should the endpoint /api/v1 the endpoints tree', done => {
+    const app = express();
+
+    app.use(routes);
+
+    request(app)
+      .get('/api/v1')
+      .expect(
+        200,
+        {
+          tasks: [
+            '[get] /api/v1/tasks',
+            '[post] /api/v1/tasks',
+            '[get] /api/v1/tasks/:id',
+            '[delete] /api/v1/tasks/:id',
+            '[put] /api/v1/tasks/:id',
+          ],
         },
         done,
       );
