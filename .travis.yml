@@ -1,22 +1,22 @@
+dist: xenial
 language: node_js
 services:
   - mysql
 cache: yarn
-# addons:
-#   apt:
-#     sources:
-#       - mysql-5.7-trusty
-#     packages:
-#       - mysql-server
-#       - mysql-client
-dist: xenial
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
 node_js:
   - 8
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS fastexpress_test;'
-  - mysql -e "use mysql; update user set authentication_string=PASSWORD('123') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-  - service mysql restart
-  - cp .env.example .env
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('123') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade -u root -p123
+  - sudo service mysql restart
+
 
 before_script:
   # - yarn run config:db
