@@ -10,7 +10,6 @@ addons:
     packages:
       - mysql-server
       - mysql-client
-# dist: trusty
 dist: xenial
 node_js:
   - 8
