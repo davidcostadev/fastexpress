@@ -1,7 +1,7 @@
 {
   "test": {
     "username": "root",
-    "password": "",
+    "password": "123",
     "database": "fastexpress_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
