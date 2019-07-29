@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  mysql:
+  build:
     docker:
       - image: circleci/node:8
       - image: circleci/mysql:5
