@@ -20,11 +20,17 @@ The main functionalities is:
 - Add rich integration with templates, allowing filters and joins.
 - Add secure endpoints through token usage (jwt).
 
+
+## Dependencies
+
+- `npm install --save sequelize`
+- `yarn add sequelize`
+
+
 ## Installation
 
-`npm install --save fastexpress`
-
-`yarn add fastexpress`
+- `npm install --save fastexpress`
+- `yarn add fastexpress`
 
 ## Usage cases
 
