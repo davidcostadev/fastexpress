@@ -1,14 +1,42 @@
 const R = require('ramda');
 
+/**
+ * Check empty string
+ *
+ * @param {string} string
+ *
+ * @return {string}
+ */
 const string = R.compose(
   Boolean,
   R.length,
 );
 
+/**
+ * Convert to number
+ *
+ * @param {string} num
+ *
+ * @return {number}
+ */
 const number = num => Number.isInteger(parseInt(num, 10));
 
+/**
+ * Convert to number
+ *
+ * @param {string} num
+ *
+ * @return {number}
+ */
 const float = num => !Number.isNaN(parseFloat(num));
 
+/**
+ * Convert to bollean
+ *
+ * @param {string} num
+ *
+ * @return {boolean}
+ */
 const bool = val => typeof Boolean(val) === 'boolean';
 
 module.exports = {

@@ -75,6 +75,13 @@ class Resources {
     });
   }
 
+  /**
+   * This function will create the index response and return the routers
+   *
+   * @returns this.routers
+   *
+   * @memberOf Resources
+   */
   getRouters() {
     this.setIndexResponse();
     return this.router;

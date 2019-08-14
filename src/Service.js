@@ -5,6 +5,12 @@ const SelType = require('./selectorTypes');
 const { EXCEPTION_NOT_FOUND, EXCEPTION_UNPROCESSABLE_ENTITY } = require('./lib/errors');
 const { selectWithBatch, selectWithFilters, selectWithPagination } = require('./selectWith');
 
+/**
+ * @param {object} req
+ * @param {object} Model
+ * @param {object} configs
+ * @returns {object}
+ */
 const list = async (req, Model, configs) => {
   const { limit, page } = selector(
     {
@@ -37,6 +43,12 @@ const list = async (req, Model, configs) => {
   }
 };
 
+/**
+ * @param {object} req
+ * @param {object} Model
+ * @param {object} configs
+ * @returns {object}
+ */
 const get = async (req, Model, configs) => {
   const { id } = req.params;
 
@@ -58,6 +70,13 @@ const get = async (req, Model, configs) => {
   }
 };
 
+/**
+ *
+ * @param {object} { body }
+ * @param {object} Model
+ * @param {object} { definitions }
+ * @returns {object}
+ */
 const create = async ({ body }, Model, { definitions }) => {
   const dataBody = selector(definitions, body);
 
@@ -70,6 +89,13 @@ const create = async ({ body }, Model, { definitions }) => {
   }
 };
 
+/**
+ *
+ * @param {object} { params, body }
+ * @param {object} Model
+ * @param {object} { definitions }
+ * @returns {object}
+ */
 const update = async ({ params, body }, Model, { definitions }) => {
   const { id } = params;
 
@@ -94,6 +120,12 @@ const update = async ({ params, body }, Model, { definitions }) => {
   }
 };
 
+/**
+ *
+ * @param {object} req
+ * @param {object} Model
+ * @returns {object}
+ */
 const destroy = async (req, Model) => {
   const { id } = req.params;
 
