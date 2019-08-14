@@ -1,43 +1,17 @@
-const { Router } = require('express');
-const {
-  namespaceCreator,
-  namespaceIndexCreator,
-  createMiddleware,
-  resourceList,
-  resourceWithAuth,
-} = require('fastexpress');
-const Tasks = require('./controllers/Tasks');
-const Users = require('./controllers/Users');
-const Auth = require('./controllers/Auth');
-
-const router = Router();
+const { createMiddleware, Resources } = require('../../../src');
+const Users = require('./endpoints/Users');
+const Auth = require('./endpoints/Auth');
+const Tasks = require('./endpoints/Tasks');
 
 const middleware = createMiddleware('secretkey');
-const namespace = namespaceCreator('/api/v1/');
-const indexCreator = namespaceIndexCreator(namespace);
 
-// root helper
-router.get('/', (req, res) => {
-  res.send(indexCreator({
-    tasks: resourceList('tasks', { namespace }),
-    users: resourceList('users', { namespace }),
-    auth: [
-      `[post] ${namespace('login')}`,
-      `[post] ${namespace('register')}`,
-    ],
-  }));
+const routers = new Resources({
+  namespace: '/api/v1/',
 });
 
-// enpoints
+routers.add('tasks', Tasks, middleware);
 
-const options = { router, middleware, namespace };
+routers.router.post(routers.namespace('login'), Auth.login);
+routers.router.post(routers.namespace('register'), Users.create);
 
-resourceWithAuth('tasks', Tasks, options);
-resourceWithAuth('Users', Users, options);
-
-// custom
-
-router.post(namespace('login'), Auth.login);
-router.post(namespace('register'), Users.create);
-
-module.exports = router;
+module.exports = routers.getRouters();

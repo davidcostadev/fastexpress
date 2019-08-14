@@ -1,23 +1,23 @@
-const returnID = value => (
-  Array.isArray(value) ? value[0].id : value
-);
+const bcrypt = require('bcrypt');
 
-const insertor = bulkInsert => async (table, entity, options = { returning: true }) => (
-  returnID(await bulkInsert(table, [entity], options))
-);
+const BCRYPT_SALT = 8;
+
+const returnID = value => (Array.isArray(value) ? value[0].id : value);
+
+const insertor = bulkInsert => async (table, entity, options = { returning: true }) =>
+  returnID(await bulkInsert(table, [entity], options));
 
 module.exports = {
-  up: async (queryInterface) => {
+  up: async queryInterface => {
     const seed = insertor(queryInterface.bulkInsert.bind(queryInterface));
 
     const UserId = await seed('Users', {
       name: 'User Name',
       email: 'username@email.com',
-      password: 'password',
+      password: bcrypt.hashSync('P@ssw0rd', bcrypt.genSaltSync(BCRYPT_SALT)),
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-
 
     await queryInterface.bulkInsert('Tasks', [
       {
@@ -37,7 +37,7 @@ module.exports = {
     ]);
   },
 
-  down: (queryInterface) => {
+  down: queryInterface => {
     queryInterface.bulkDelete('Users');
   },
 };

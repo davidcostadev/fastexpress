@@ -12,6 +12,7 @@ jest.mock('express');
 describe('routers', () => {
   let router;
   let controller;
+  let warnOld;
 
   beforeEach(() => {
     router = {
@@ -27,27 +28,38 @@ describe('routers', () => {
       destroy: jest.fn(),
       update: jest.fn(),
     };
+
+    warnOld = global.console.warn;
+    global.console.warn = jest.fn();
   });
 
   afterEach(() => {
-    // mockRestore
+    global.console.warn = warnOld;
   });
 
   describe('resourceWithAuth', () => {
     it(' should create a routes with routers resources', () => {
       const namespace = namespaceCreator('/namespace/');
 
+      function checkSomething() {}
+
+      const middleware = [checkSomething];
+
       resourceWithAuth('url1', controller, {
         router,
-        middleware: {},
+        middleware,
         namespace,
       });
+
       expect(router.get).toBeCalledTimes(2);
-      expect(router.get).toBeCalledWith('/namespace/url1/', {}, controller.list);
-      expect(router.get).toBeCalledWith('/namespace/url1/:id', {}, controller.get);
-      expect(router.post).toBeCalledWith('/namespace/url1/', {}, controller.create);
-      expect(router.delete).toBeCalledWith('/namespace/url1/:id', {}, controller.destroy);
-      expect(router.put).toBeCalledWith('/namespace/url1/:id', {}, controller.update);
+      expect(router.get).toBeCalledWith('/namespace/url1/', middleware, controller.list);
+      expect(router.get).toBeCalledWith('/namespace/url1/:id', middleware, controller.get);
+      expect(router.post).toBeCalledWith('/namespace/url1/', middleware, controller.create);
+      expect(router.delete).toBeCalledWith('/namespace/url1/:id', middleware, controller.destroy);
+      expect(router.put).toBeCalledWith('/namespace/url1/:id', middleware, controller.update);
+      expect(global.console.warn).toBeCalledWith(
+        'Deprecated: Use `resources` instead of `resourcesAuth`.',
+      );
     });
   });
 
@@ -121,11 +133,17 @@ describe('routers', () => {
       expect(router.delete.mock.calls[0][0]).toEqual('model/:id');
       expect(router.put.mock.calls[0][0]).toEqual('model/:id');
 
-      expect(router.get.mock.calls[0][1]).toEqual(controller.list);
-      expect(router.post.mock.calls[0][1]).toEqual(controller.create);
-      expect(router.get.mock.calls[1][1]).toEqual(controller.get);
-      expect(router.delete.mock.calls[0][1]).toEqual(controller.destroy);
-      expect(router.put.mock.calls[0][1]).toEqual(controller.update);
+      expect(router.get.mock.calls[0][1]).toEqual([]);
+      expect(router.post.mock.calls[0][1]).toEqual([]);
+      expect(router.get.mock.calls[1][1]).toEqual([]);
+      expect(router.delete.mock.calls[0][1]).toEqual([]);
+      expect(router.put.mock.calls[0][1]).toEqual([]);
+
+      expect(router.get.mock.calls[0][2]).toEqual(controller.list);
+      expect(router.post.mock.calls[0][2]).toEqual(controller.create);
+      expect(router.get.mock.calls[1][2]).toEqual(controller.get);
+      expect(router.delete.mock.calls[0][2]).toEqual(controller.destroy);
+      expect(router.put.mock.calls[0][2]).toEqual(controller.update);
     });
   });
 
@@ -156,6 +174,10 @@ describe('routers', () => {
       expect(router.get.mock.calls[1][2]).toEqual(controller.get);
       expect(router.delete.mock.calls[0][2]).toEqual(controller.destroy);
       expect(router.put.mock.calls[0][2]).toEqual(controller.update);
+
+      expect(global.console.warn).toBeCalledWith(
+        'Deprecated: Use `resources` instead of `resourcesAuth`.',
+      );
     });
   });
 });
