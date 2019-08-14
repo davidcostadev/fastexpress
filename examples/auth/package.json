@@ -1,0 +1,21 @@
+{
+  "name": "fast-express-example-auth",
+  "version": "1.0.0",
+  "description": "Auth usage of fastexpress",
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js --watch src",
+    "sequelize": "sequelize"
+  },
+  "author": "David Costa <davidcostadev@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "mysql2": "^1.6.1",
+    "sequelize": "5.14.0",
+    "sequelize-cli": "^5.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.5"
+  }
+}

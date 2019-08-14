@@ -16,7 +16,7 @@ jobs:
     steps:
       - checkout
       - run:
-      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          # Our primary container isn't MYSQL so run a sleep command until it's ready.
           name: Waiting for MySQL to be ready
           command: |
             for i in `seq 1 10`;
@@ -44,8 +44,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # - run: yarn run lint
-      # - run: yarn run pre-test
+      - run: yarn run lint
+      - run: yarn run pre-test
 
       # run tests!
       - run: yarn test

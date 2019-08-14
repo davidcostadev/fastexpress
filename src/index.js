@@ -1,40 +1,42 @@
-import Controller from './controller/Controller';
-import createController from './controller/createController';
-import * as migrationActions from './migration/helper';
-import * as migrationHelper from './migration/create';
-import Service from './service/Service';
-import {
-  serviceDefaultProps,
-  createResourceService as createService,
-} from './service/createService';
-import { cryptPassword, getModelAlias } from './service/model';
-import {
+const Controller = require('./Controller');
+const createController = require('./createController');
+const migrationActions = require('./helper');
+const migrationHelper = require('./create');
+const Service = require('./Service');
+const { serviceDefaultProps, createResourceService: createService } = require('./createService');
+const { cryptPassword, getModelAlias } = require('./model');
+const {
   resources,
   resourcesAuth,
   namespaceIndexCreator,
   resourceList,
   resourceWithAuth,
   namespaceCreator,
-} from './router/routers';
-import createMiddleware from './router/authMiddleware';
-import { dateFilter } from './utils/definitionsFilters';
+} = require('./routers');
+const createMiddleware = require('./authMiddleware');
+const { dateFilter } = require('./definitionsFilters');
 // eslint-disable-next-line import/no-duplicates
-import { orderToFilter } from './utils/convert';
-import paginationParse from './utils/pagination';
-import selector from './utils/selector';
-import * as validate from './utils/validate';
+const { orderToFilter } = require('./convert');
+const paginationParse = require('./pagination');
+const selector = require('./selector');
+const validate = require('./validate');
 // eslint-disable-next-line import/no-duplicates
-import * as convert from './utils/convert';
-import * as type from './utils/selectorTypes';
+const convert = require('./convert');
+const Resources = require('./Resources');
+const type = require('./selectorTypes');
+const server = require('./server');
+const endpoint = require('./endpoint');
 
-export {
+module.exports = {
   createMiddleware,
   Controller,
   dateFilter,
   orderToFilter,
+  endpoint,
   cryptPassword,
   getModelAlias,
   paginationParse,
+  Resources,
   resources,
   resourcesAuth,
   namespaceCreator,
@@ -50,5 +52,6 @@ export {
   serviceDefaultProps,
   migrationActions,
   migrationHelper,
+  server,
   type,
 };

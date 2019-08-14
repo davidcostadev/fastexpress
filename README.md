@@ -2,6 +2,7 @@
 
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 [![Build Status](https://travis-ci.org/davidcostadev/fastexpress.svg?branch=master)](https://travis-ci.org/davidcostadev/fastexpress)
+[![CircleCI](https://circleci.com/gh/davidcostadev/fastexpress.svg?style=svg)](https://circleci.com/gh/davidcostadev/fastexpress)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b045a34c8cb425bf67f1/maintainability)](https://codeclimate.com/github/withmoney/withmoney-api/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b045a34c8cb425bf67f1/test_coverage)](https://codeclimate.com/github/withmoney/withmoney-api/test_coverage)
 [![GitHub license](https://img.shields.io/github/license/davidcostadev/fastexpress.svg)](https://github.com/davidcostadev/fastexpress/blob/master/LICENSE)
@@ -120,6 +121,16 @@ This is a basic example of usage of the fastexpress.
 
 - [Basic](examples/basic)
 
+
+## Fastexpress development
+
+The tests use mysql, it need to use it.
+
+With docker: `docker run --name fastexpress-mysql -e MYSQL_ROOT_PASSWORD=123 -p 3306:3306 -d mysql:5`
+
+`yarn run pre-test`
+
+`yarn run jest` or `yarn run test`
 
 ## Open Source
 

@@ -1,6 +1,7 @@
 .git
-.DS_Store
-src
-examples
 .github
+.DS_Store
+examples
+src
 tests
+coverage

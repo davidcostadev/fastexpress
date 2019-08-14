@@ -1,0 +1,9 @@
+const EXCEPTION_NOT_FOUND = 'not found';
+const EXCEPTION_UNPROCESSABLE_ENTITY = 'unprocessable entity';
+const EXCEPTION_INTERNAL_SERVER_ERROR = 'internal server error';
+
+module.exports = {
+  EXCEPTION_NOT_FOUND,
+  EXCEPTION_UNPROCESSABLE_ENTITY,
+  EXCEPTION_INTERNAL_SERVER_ERROR,
+};

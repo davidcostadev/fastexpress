@@ -11,9 +11,8 @@
   "author": "David Costa <davidcostadev@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "fastexpress": "latest",
     "mysql2": "^1.6.1",
-    "sequelize": "^4.41.0",
+    "sequelize": "^5.3.0",
     "sequelize-cli": "^5.2.0"
   },
   "devDependencies": {

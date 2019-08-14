@@ -1,28 +1,27 @@
+dist: xenial
 language: node_js
-# services:
-#   - mysql
+services:
+  - mysql
 cache: yarn
-# addons:
-#   apt:
-#     sources:
-#       - mysql-5.7-trusty
-#     packages:
-#       - mysql-server
-#       - mysql-client
-# dist: trusty
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
 node_js:
   - 8
-# before_install:
-#   - mysql -e 'CREATE DATABASE IF NOT EXISTS fastexpress_test;'
-#   - mysql -e "use mysql; update user set authentication_string=PASSWORD('123') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-#   - service mysql restart
-#   - cp .env.example .env
+before_install:
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('123') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade -u root -p123
+  - sudo service mysql restart
 
 before_script:
-  # - yarn run config:db
-  # - yarn run pretest
-  - "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
-  - "chmod +x ./cc-test-reporter"
-  - "./cc-test-reporter before-build"
+  - yarn run lint
+  - yarn run pre-test
+  - 'curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter'
+  - 'chmod +x ./cc-test-reporter'
+  - './cc-test-reporter before-build'
 after_script:
-  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+  - './cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT'
