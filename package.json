@@ -1,62 +1,46 @@
 {
   "name": "fastexpress",
-  "version": "1.8.0-alpha.1",
+  "version": "2.0.0-alpha.3",
   "module": "./src/index.js",
-  "main": "./cjs/index.js",
-  "unpkg": "dist/fastexpress.min.js",
-  "jsdelivr": "dist/fastexpress.min.js",
+  "main": "./src/index.js",
   "files": [
-    "cjs",
-    "src",
-    "dist"
+    "src"
   ],
   "repository": "git@github.com:davidcostadev/fastexpress.git",
   "author": "David Costa <davidcostadev@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "jest": "cross-env NODE_ENV=test jest",
-    "test": "cross-env NODE_ENV=test jest --coverage",
-    "build": "npm run build:cjs && npm run build:umd && npm run build:umd:min",
-    "build:cjs": "babel src --out-dir cjs",
-    "build:umd": "cross-env NODE_ENV=development rollup -c -o dist/fastexpress.js",
-    "build:umd:min": "cross-env NODE_ENV=production rollup -c -o dist/fastexpress.min.js",
-    "clean": "rimraf dist/* cjs/*",
-    "prepare": "npm run clean && npm run build",
-    "npm-publish": "npm run build && npm publish"
+    "jest": "cross-env NODE_ENV=test jest -i --forceExit",
+    "test": "cross-env NODE_ENV=test jest -i --forceExit --coverage",
+    "lint": "eslint src/** tests/**",
+    "npm-publish": "npm run lint && npm publish",
+    "pre-test": "cross-env-shell NODE_ENV=test 'sequelize db:create && sequelize db:migrate'"
+  },
+  "engines": {
+    "node": "8.16.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
-    "@babel/node": "^7.2.2",
-    "@babel/plugin-transform-runtime": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
-    "@babel/runtime": "^7.4.4",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.8.0",
     "cross-env": "^5.2.0",
     "eslint": "5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-import-resolver-webpack": "0.11.1",
-    "eslint-plugin-import": "2.17.2",
-    "eslint-plugin-jsx-a11y": "6.2.1",
-    "eslint-plugin-react": "7.13.0",
-    "jest": "24.8.0",
-    "regenerator-runtime": "0.13.2",
-    "rimraf": "2.6.3",
-    "rollup": "^0.66.6",
-    "rollup-plugin-terser": "^3.0.0"
+    "eslint-config-airbnb-base": "13.2.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^24.7.1",
+    "mysql2": "^1.6.5",
+    "prettier": "^1.18.2",
+    "rollup": "1.17.0",
+    "rollup-plugin-terser": "5.1.1",
+    "sequelize-cli": "5.5.0",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
-    "bcrypt": "3.0.6",
-    "express": "4.17.0",
-    "jsonwebtoken": "8.5.1",
-    "moment": "2.24.0",
-    "ramda": "0.26.1",
-    "sequelize": "5.3.0"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/tests"
-    ]
+    "bcrypt": "^3.0.6",
+    "express": "4.17.1",
+    "iconv-lite": "0.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "ramda": "^0.26.1",
+    "sequelize": "5.10.1"
   }
 }

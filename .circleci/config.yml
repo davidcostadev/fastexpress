@@ -7,11 +7,29 @@ jobs:
   build:
     docker:
       - image: circleci/node:8
+      - image: circleci/mysql:5
+        environment:
+          MYSQL_ROOT_PASSWORD: 123
 
     working_directory: ~/repo
 
     steps:
       - checkout
+      - run:
+          # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting for MySQL to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Install MySQL CLI; Import dummy data; run an example query
+          command: |
+            sudo apt-get install default-mysql-client
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -26,6 +44,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - run: yarn run lint
+      - run: yarn run pre-test
 
       # run tests!
       - run: yarn test

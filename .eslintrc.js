@@ -1,21 +1,17 @@
 module.exports = {
-  parser: 'babel-eslint',
-  extends: ['airbnb'],
-  env: { 'es6': true },
+  extends: ['airbnb-base', 'prettier'],
+  plugins: ['prettier'],
   rules: {
+    'prettier/prettier': 'error',
     'arrow-body-style': ['error', 'as-needed'],
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
-  },
-  settings: {
-    'import/resolver': 'webpack'
+    'no-console': ['error', { allow: ['error'] }],
   },
   env: {
-    browser: true,
     node: true,
     es6: true,
     amd: true,
-    mocha: true,
     jest: true,
   },
 };
