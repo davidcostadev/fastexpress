@@ -1,4 +1,4 @@
-const { migrationActions } = require('fastexpress');
+const { migrationActions } = require('../../../../src');
 
 module.exports = {
   up: migrationActions.createTable('Users', Sequelize => ({

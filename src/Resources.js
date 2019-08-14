@@ -36,11 +36,22 @@ class Resources {
     return this;
   }
 
-  add(endpoint, controller) {
+  /**
+   * Add new resource
+   *
+   * @param {string} endpoint
+   * @param {function} controller
+   * @param {array} [middleware=[]]
+   * @returns self
+   *
+   * @memberOf Resources
+   */
+  add(endpoint, controller, middleware = []) {
     this.resources.push(endpoint);
 
     resources(this.namespace(endpoint), {
       router: this.router,
+      middleware,
       controller,
     });
 
