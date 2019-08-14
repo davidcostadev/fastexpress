@@ -8,6 +8,7 @@
 [![GitHub license](https://img.shields.io/github/license/davidcostadev/fastexpress.svg)](https://github.com/davidcostadev/fastexpress/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/fastexpress.svg)](https://www.npmjs.com/package/fastexpress)
 [![Open Source Helpers](https://www.codetriage.com/davidcostadev/fastexpress/badges/users.svg)](https://www.codetriage.com/davidcostadev/fastexpress)
+
 ---
 
 fastexpress is a library designed to speed up the development of APIs with express. It's has a list of functionalities to create APIs with a small amount of lines of code, with possibility to customize it.
@@ -25,92 +26,181 @@ The main functionalities is:
 
 `yarn add fastexpress`
 
-
 ## Usage cases
 
-### on service TaskService.js
+### Structure Recommended
 
-The Service is the part of the system responsible for getting information from the models and delivering It to the controllers.
+```
+config/database.json
+src/resources/{Name}.js
+src/models/{Name}.js
+src/migrations/...
+src/seeders/...
+src/routers.js
+src/server.js
+.sequelizerc
+```
 
-The template is your sequelize template.
+### on .sequelierc
 
 ```javascript
-const { createService, serviceDefaultProps, validate } = require('fastexpress');
+const path = require('path');
+
+module.exports = {
+  config: path.resolve('config', 'database.json'),
+  'models-path': path.resolve('src', 'models'),
+  'seeders-path': path.resolve('src', 'seeders'),
+  'migrations-path': path.resolve('src', 'migrations'),
+};
+```
+
+### on src/resources/Tasks.js
+
+```javascript
+const { endpoint, validate } = require('fastexpress');
 const database = require('../models');
 
-const { Tasks } = database;
+const { Tasks: Model } = database;
 
-const form = {
-  name: {
-    validation: validate.string,
+module.exports = endpoint(
+  Model,
+  {
+    name: {
+      validation: validate.string,
+    },
+    completed: {
+      validation: validate.bool,
+    },
   },
-  completed: {
-    validation: validate.bool,
-  },
-}
-
-module.exports = createService(Tasks, serviceDefaultProps({
   database,
-  form,
-}));
+);
 ```
 
-
-### On controler TasksController.js 
-
-The Controller make a communication between the model and the express
+### on src/models/index.js
 
 ```javascript
-const { createController } = require('fastexpress');
-const TaskService = require('../services/TaskService');
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const configs = require('../../config/database.json');
 
-module.exports = createController(TaskService);
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+
+const config = configs[env];
+const db = {};
+let sequelize;
+
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+
+fs.readdirSync(__dirname)
+  .filter(file => file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js')
+  .forEach(file => {
+    const model = sequelize.import(path.join(__dirname, file));
+    db[model.name] = model;
+  });
+
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+module.exports = db;
 ```
 
+### on src/models/Tasks.js
 
-### on router.js
+```javascript
+module.exports = (sequelize, DataTypes) => {
+  const Tasks = sequelize.define(
+    'Tasks',
+    {
+      name: DataTypes.STRING,
+      completed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+    },
+    {},
+  );
+  Tasks.associate = () => {};
+  return Tasks;
+};
+```
+
+### on src/resources/Tasks.js
+
+```javascript
+const { endpoint, validate } = require('fastexpress');
+const database = require('../models');
+
+const { Tasks: Model } = database;
+
+module.exports = endpoint(
+  Model,
+  {
+    name: {
+      validation: validate.string,
+    },
+    completed: {
+      validation: validate.bool,
+    },
+  },
+  database,
+);
+```
+
+### on routers.js
 
 Create CRUD endpoint to any controller
 
 ```javascript
-const { Router } = require('express');
-const { namespaceCreator, resources } = require('fastexpress');
-const Tasks = require('./controllers/TasksController');
+const { Resources } = require('fastexpress');
+const Tasks = require('./resources/Tasks');
 
-const router = Router();
-const namespace = namespaceCreator('/api/v1/');
+const routers = new Resources({
+  namespace: '/api/v1/',
+})
+  .add('tasks', Tasks)
+  .getRouters();
 
-resources(namespace('tasks'), { router, controller: Tasks });
-
-/**
-  Endpoints
-  [get] /api/v1/tasks // to list tasks
-  [post] /api/v1/tasks // to add a new task
-  [get] /api/v1/tasks/:id // to get a one task
-  [delete] /api/v1/tasks/:id // to delete a task
-  [put] /api/v1/tasks/:id // to edit a task
-*/
-
-module.exports = router;
-
+module.exports = routers;
 ```
+
+#### Basic Endpoints
+
+- `[get]` /api
+- `[get]` /api/v1
+
+#### Resources
+
+- `[get]` /api/v1/tasks - to list tasks
+- `[post]` /api/v1/tasks - to add a new task
+- `[get]` /api/v1/tasks/:id - to get a one task
+- `[delete]` /api/v1/tasks/:id - to delete a task
+- `[put]` /api/v1/tasks/:id - to edit a task
 
 ## On server.js
 
 ```javascript
-const express = require('express');
-const bodyParser = require('body-parser');
+const { server } = require('fastexpress');
 const routes = require('./routes');
 
-const app = express();
+server.use(routes);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+const port = process.env.PORT || 3000;
 
-app.use(routes);
+server.listen(port);
 
-module.exports = app.listen(3000);
-
+module.exports = server;
 ```
 
 ## Examples
@@ -120,9 +210,10 @@ module.exports = app.listen(3000);
 This is a basic example of usage of the fastexpress.
 
 - [Basic](examples/basic)
+- [Auth](examples/auth)
+- [Complete](examples/complete)
 
-
-## Fastexpress development
+## fastexpress development
 
 The tests use mysql, it need to use it.
 
@@ -134,8 +225,8 @@ With docker: `docker run --name fastexpress-mysql -e MYSQL_ROOT_PASSWORD=123 -p 
 
 ## Open Source
 
-If you have any question/bug/sugestion just create a new issue!
+If you have any question/bug/suggestion just create a new issue!
 
 ## Author
 
-David Costa
+- [David Costa](https://github.com/davidcostadev)
