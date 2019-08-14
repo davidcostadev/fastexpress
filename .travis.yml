@@ -10,7 +10,6 @@ addons:
     packages:
       - mysql-server
       - mysql-client
-dist: xenial
 node_js:
   - 8
 before_install:
