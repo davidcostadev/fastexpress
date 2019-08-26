@@ -3,7 +3,9 @@ const { ACTIONS } = require('./definitions');
 
 const serviceDefaultProps = ({ form, filters, database }) => ({
   definitions: form,
-  options: { filters },
+  options: {
+    filters: typeof filters !== 'undefined' ? { ...form, ...filters } : form,
+  },
   database,
 });
 

@@ -7,14 +7,16 @@ const { serviceDefaultProps, createResourceService } = require('./createService'
  * @param {object} Model
  * @param {object} form
  * @param {object} database
+ * @param {Object} filters
  */
-const endpoint = (Model, form, database) =>
+const endpoint = (Model, form, database, filters) =>
   createController(
     createResourceService(
       Model,
       serviceDefaultProps({
         database,
         form,
+        filters,
       }),
     ),
   );

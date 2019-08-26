@@ -13,11 +13,10 @@ const string = R.compose(
 );
 
 /**
- * Convert to number
+ * Check if this is a integer number
  *
  * @param {string} num
- *
- * @return {number}
+ * @returns {boolean}
  */
 const number = num => Number.isInteger(parseInt(num, 10));
 

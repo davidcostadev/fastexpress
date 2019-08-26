@@ -15,7 +15,7 @@ let resMock = {
 describe('Controller', () => {
   let task;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     await truncate();
     task = await TaskFactory({
       name: 'Task 01',
@@ -62,6 +62,111 @@ describe('Controller', () => {
       previousPage: null,
       totalItems: 1,
       totalPages: 1,
+    });
+  });
+
+  it('Should list task by name using custom filter', async () => {
+    let taskTwo = await TaskFactory({
+      name: "It's something to do",
+      completed: true,
+    });
+
+    taskTwo = JSON.parse(JSON.stringify(await Tasks.findByPk(taskTwo.id)));
+
+    reqMock.query = {
+      name: 'something',
+    };
+
+    await Controller.list(reqMock, resMock);
+
+    expect(resMock.json).toBeCalledWith({
+      data: [
+        {
+          completed: true,
+          createdAt: taskTwo.createdAt,
+          id: taskTwo.id,
+          name: "It's something to do",
+          updatedAt: taskTwo.updatedAt,
+        },
+      ],
+      pagination: {
+        currentPage: 1,
+        nextPage: null,
+        perPage: 100,
+        previousPage: null,
+        totalItems: 1,
+        totalPages: 1,
+      },
+    });
+  });
+
+  it('Should list task by completed without custom filter', async () => {
+    let taskTwo = await TaskFactory({
+      name: "It's something to do",
+      completed: true,
+    });
+
+    taskTwo = JSON.parse(JSON.stringify(await Tasks.findByPk(taskTwo.id)));
+
+    reqMock.query = {
+      completed: 'true',
+    };
+
+    await Controller.list(reqMock, resMock);
+
+    expect(resMock.json).toBeCalledWith({
+      data: [
+        {
+          completed: true,
+          createdAt: taskTwo.createdAt,
+          id: taskTwo.id,
+          name: "It's something to do",
+          updatedAt: taskTwo.updatedAt,
+        },
+      ],
+      pagination: {
+        currentPage: 1,
+        nextPage: null,
+        perPage: 100,
+        previousPage: null,
+        totalItems: 1,
+        totalPages: 1,
+      },
+    });
+  });
+
+  it('Should list paginate with only one item per page', async () => {
+    await TaskFactory({ name: 'Task 02', completed: true });
+    let taskThree = await TaskFactory({ name: 'Task 03', completed: true });
+    await TaskFactory({ name: 'Task 04', completed: true });
+
+    taskThree = JSON.parse(JSON.stringify(await Tasks.findByPk(taskThree.id)));
+
+    reqMock.query = {
+      page: '2',
+      limit: '1',
+    };
+
+    await Controller.list(reqMock, resMock);
+
+    expect(resMock.json).toBeCalledWith({
+      data: [
+        {
+          completed: true,
+          createdAt: taskThree.createdAt,
+          id: taskThree.id,
+          name: 'Task 03',
+          updatedAt: taskThree.updatedAt,
+        },
+      ],
+      pagination: {
+        currentPage: 2,
+        nextPage: 3,
+        perPage: 1,
+        previousPage: 1,
+        totalItems: 4,
+        totalPages: 4,
+      },
     });
   });
 

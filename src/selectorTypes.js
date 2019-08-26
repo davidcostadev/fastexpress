@@ -8,6 +8,12 @@ const stringType = {
 
 const numberType = {
   validation: validate.number,
+  /**
+   * Convert String to Integer Numbers
+   *
+   * @param {string} value
+   */
+  convert: value => parseInt(value, 10),
 };
 
 const floatType = {

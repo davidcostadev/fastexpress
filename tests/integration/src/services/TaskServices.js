@@ -1,4 +1,4 @@
-const { createService, serviceDefaultProps, validate } = require('../../../../src');
+const { createService, serviceDefaultProps, validate, stringFilter } = require('../../../../src');
 const database = require('../models');
 
 const { Tasks } = database;
@@ -17,5 +17,8 @@ module.exports = createService(
   serviceDefaultProps({
     database,
     form,
+    filters: {
+      name: stringFilter,
+    },
   }),
 );
