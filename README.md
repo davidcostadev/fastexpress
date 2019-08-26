@@ -142,28 +142,6 @@ module.exports = (sequelize, DataTypes) => {
 };
 ```
 
-### on src/resources/Tasks.js
-
-```javascript
-const { endpoint, validate } = require('fastexpress');
-const database = require('../models');
-
-const { Tasks: Model } = database;
-
-module.exports = endpoint(
-  Model,
-  {
-    name: {
-      validation: validate.string,
-    },
-    completed: {
-      validation: validate.bool,
-    },
-  },
-  database,
-);
-```
-
 ### on routers.js
 
 Create CRUD endpoint to any controller
