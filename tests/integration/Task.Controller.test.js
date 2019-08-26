@@ -209,7 +209,7 @@ describe('Controller', () => {
     reqMock.params.id = task.id;
     const body = {
       name: 'Lanche',
-      completed: true,
+      completed: 'true',
     };
     reqMock.body = body;
 
@@ -225,7 +225,7 @@ describe('Controller', () => {
     expect(response.toJSON()).toHaveProperty('name');
     expect(response.toJSON()).toHaveProperty('completed');
     expect(response.name).toEqual(body.name);
-    expect(response.completed).toEqual(body.completed);
+    expect(response.completed).toEqual(true);
   });
 
   it('delete entity', async () => {
