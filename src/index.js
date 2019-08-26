@@ -14,7 +14,7 @@ const {
   namespaceCreator,
 } = require('./routers');
 const createMiddleware = require('./authMiddleware');
-const { dateFilter } = require('./definitionsFilters');
+const { dateFilter, stringFilter } = require('./definitionsFilters');
 // eslint-disable-next-line import/no-duplicates
 const { orderToFilter } = require('./convert');
 const paginationParse = require('./pagination');
@@ -31,6 +31,7 @@ module.exports = {
   createMiddleware,
   Controller,
   dateFilter,
+  stringFilter,
   orderToFilter,
   endpoint,
   cryptPassword,

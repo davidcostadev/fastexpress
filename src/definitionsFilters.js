@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+const { string } = require('./validate');
 
 const dateFilter = {
   validation: () => true,
@@ -16,6 +17,19 @@ const dateFilter = {
   },
 };
 
+const stringFilter = {
+  validation: string,
+  /**
+   * To use `LIKE '%some thing%'`
+   *
+   * @param {string} value
+   */
+  convert: value => ({
+    [Op.like]: `%${value}%`,
+  }),
+};
+
 module.exports = {
   dateFilter,
+  stringFilter,
 };
