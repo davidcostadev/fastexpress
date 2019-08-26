@@ -17,7 +17,7 @@
     "pre-test": "cross-env-shell NODE_ENV=test 'sequelize db:create && sequelize db:migrate'"
   },
   "engines": {
-    "node": "8.16.0"
+    "node": "^8 || ^10 || ^12"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
