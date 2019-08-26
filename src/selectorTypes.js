@@ -29,6 +29,13 @@ const floatType = {
 
 const boolType = {
   validation: validate.bool,
+  /**
+   * Convert string to boolean
+   *
+   * @param {string} value
+   * @returns {boolean}
+   */
+  convert: value => value === 'true',
 };
 
 const datetimeType = {
