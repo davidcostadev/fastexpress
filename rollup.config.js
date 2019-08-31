@@ -1,9 +1,9 @@
 const uglify = require('rollup-plugin-terser').terser;
 const pkg = require('./package.json');
 
-const banner = `//  fastexpress v${pkg.version
-} - (c) ${new Date().getFullYear()} David Costa`
-  + ' - may be freely distributed under the MIT license.\n';
+const banner =
+  `//  fastexpress v${pkg.version} - (c) ${new Date().getFullYear()} David Costa` +
+  ' - may be freely distributed under the MIT license.\n';
 
 const input = './src/index.js';
 
