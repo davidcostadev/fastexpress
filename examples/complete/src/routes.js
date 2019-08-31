@@ -1,10 +1,5 @@
 const { Router } = require('express');
-const {
-  namespaceCreator,
-  namespaceIndexCreator,
-  resourceList,
-  resources,
-} = require('fastexpress');
+const { namespaceCreator, namespaceIndexCreator, resourceList, resources } = require('fastexpress');
 const Tasks = require('./controllers/Tasks');
 
 const router = Router();
@@ -14,13 +9,15 @@ const indexCreator = namespaceIndexCreator(namespace);
 
 // root helper
 router.get('/', (req, res) => {
-  res.send(indexCreator({
-    tasks: resourceList('tasks', { namespace }),
-  }));
+  res.send(
+    indexCreator({
+      tasks: resourceList('tasks', { namespace }),
+    }),
+  );
 });
 
 // enpoints
 
-resources(`${namespace('tasks')}`, { router, controller: Tasks });
+resources(namespace('tasks'), { router, controller: Tasks });
 
 module.exports = router;
