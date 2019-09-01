@@ -9,6 +9,7 @@ async function truncate() {
     }),
   );
 
+  // istanbul ignore next
   return modelsList;
 }
 
