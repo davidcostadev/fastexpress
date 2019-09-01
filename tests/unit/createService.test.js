@@ -18,8 +18,8 @@ describe('createService', () => {
     Model = 'Model';
     configs = {
       database: 'MyDatabase',
-      definitions: { one: 'one' },
-      options: { two: 'two' },
+      filters: { one: 'one' },
+      form: { two: 'two' },
     };
     req = {
       key: 'value',
@@ -41,11 +41,17 @@ describe('createService', () => {
     serviceCreated.update(req);
     serviceCreated.destroy(req);
 
-    expect(Service.create).toBeCalledWith(req, Model, configs);
-    expect(Service.list).toBeCalledWith(req, Model, configs);
-    expect(Service.get).toBeCalledWith(req, Model, configs);
-    expect(Service.update).toBeCalledWith(req, Model, configs);
-    expect(Service.destroy).toBeCalledWith(req, Model, configs);
+    const expectConfig = {
+      database: 'MyDatabase',
+      options: { filters: { one: 'one', two: 'two' } },
+      definitions: { two: 'two' },
+    };
+
+    expect(Service.create).toBeCalledWith(req, Model, expectConfig);
+    expect(Service.list).toBeCalledWith(req, Model, expectConfig);
+    expect(Service.get).toBeCalledWith(req, Model, expectConfig);
+    expect(Service.update).toBeCalledWith(req, Model, expectConfig);
+    expect(Service.destroy).toBeCalledWith(req, Model, expectConfig);
   });
 
   it('should get with custom methods', () => {
@@ -58,9 +64,20 @@ describe('createService', () => {
         model,
         configsAnother,
       );
+    const config = {
+      database: 'MyDatabase',
+      filters: {},
+      form: {},
+    };
+
+    const expectConfig = {
+      database: 'MyDatabase',
+      options: { filters: {} },
+      definitions: {},
+    };
 
     const serviceCreated = createService(Model, {
-      ...configs,
+      ...config,
       custom: {
         another,
       },
@@ -76,7 +93,38 @@ describe('createService', () => {
         three: 'three',
       },
       Model,
-      configs,
+      expectConfig,
     );
+  });
+
+  it.only('Should get deprecated warn on to inform definitions or options', () => {
+    const oldWarn = global.console.warn;
+    global.console.warn = jest.fn();
+
+    const serviceCreated = createService(Model, {
+      database: 'MyDatabase',
+      definitions: { one: 'one' },
+      options: {
+        filters: {
+          two: 'two',
+        },
+      },
+    });
+
+    serviceCreated.get(req);
+
+    expect(Service.get).toBeCalledWith(req, Model, {
+      database: 'MyDatabase',
+      definitions: { one: 'one' },
+      options: { filters: { one: 'one', two: 'two' } },
+    });
+
+    expect(global.console.warn).toBeCalledWith(
+      'Deprecated: Use just `filters` instead of `options`.',
+    );
+    expect(global.console.warn).toBeCalledWith(
+      'Deprecated: Use just `form` instead of `definitions`.',
+    );
+    global.console.warn = oldWarn;
   });
 });

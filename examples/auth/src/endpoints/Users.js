@@ -1,9 +1,4 @@
-const {
-  createController,
-  createService,
-  serviceDefaultProps,
-  validate,
-} = require('../../../../src');
+const { createController, createService, validate } = require('../../../../src');
 const database = require('../models');
 
 const { Users } = database;
@@ -20,12 +15,6 @@ const form = {
   },
 };
 
-const UserService = createService(
-  Users,
-  serviceDefaultProps({
-    database,
-    form,
-  }),
-);
+const UserService = createService(Users, { database, form });
 
 module.exports = createController(UserService);
