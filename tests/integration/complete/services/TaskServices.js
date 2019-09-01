@@ -1,5 +1,5 @@
 const { createService, stringFilter, type } = require('../../../../src');
-const database = require('../models');
+const database = require('../../models');
 
 const { Tasks } = database;
 

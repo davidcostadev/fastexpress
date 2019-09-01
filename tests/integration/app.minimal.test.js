@@ -1,7 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const routes = require('./minimal/routes');
-const { Tasks, sequelize } = require('./minimal/models');
+const { Tasks, sequelize } = require('./models');
 const TaskFactory = require('./factories/Task.Factory');
 const truncate = require('./truncate');
 

@@ -1,6 +1,6 @@
 const sequelize = require('sequelize');
-const Controller = require('./src/controllers/Tasks');
-const { Tasks } = require('./src/models');
+const Controller = require('./complete/controllers/Tasks');
+const { Tasks } = require('./models');
 const TaskFactory = require('./factories/Task.Factory');
 const { EXCEPTION_NOT_FOUND } = require('../../src/lib/errors');
 const truncate = require('./truncate');
