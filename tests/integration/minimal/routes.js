@@ -1,5 +1,5 @@
 const { Resources } = require('../../../src');
-const Tasks = require('./endpoints/Tasks');
+const Tasks = require('./resources/Tasks');
 
 const routers = new Resources({
   namespace: '/api/v1/',

@@ -1,4 +1,4 @@
-const models = require('./src/models');
+const models = require('./models');
 
 async function truncate() {
   const modelsList = await Promise.all(

@@ -1,5 +1,5 @@
 const { endpoint, validate } = require('../../../../src');
-const database = require('../models');
+const database = require('../../models');
 
 const { Tasks: Model } = database;
 

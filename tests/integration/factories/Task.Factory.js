@@ -1,5 +1,5 @@
 // import faker from "faker";
-const models = require('../src/models');
+const models = require('../models');
 
 /**
  * Generate an object which container attributes needed

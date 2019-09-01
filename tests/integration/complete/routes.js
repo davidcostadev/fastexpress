@@ -1,5 +1,10 @@
 const { Router } = require('express');
-const { namespaceCreator, namespaceIndexCreator, resourceList, resources } = require('fastexpress');
+const {
+  namespaceCreator,
+  namespaceIndexCreator,
+  resourceList,
+  resources,
+} = require('../../../src');
 const Tasks = require('./controllers/Tasks');
 
 const router = Router();
