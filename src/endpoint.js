@@ -1,5 +1,5 @@
 const createController = require('./createController');
-const { serviceDefaultProps, createResourceService } = require('./createService');
+const { createResourceService } = require('./createService');
 
 /**
  * This function will create a controller and service with Model
@@ -11,14 +11,11 @@ const { serviceDefaultProps, createResourceService } = require('./createService'
  */
 const endpoint = (Model, form, database, filters) =>
   createController(
-    createResourceService(
-      Model,
-      serviceDefaultProps({
-        database,
-        form,
-        filters,
-      }),
-    ),
+    createResourceService(Model, {
+      filters,
+      form,
+      database,
+    }),
   );
 
 module.exports = endpoint;

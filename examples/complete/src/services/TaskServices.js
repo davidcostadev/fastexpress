@@ -1,4 +1,4 @@
-const { createService, serviceDefaultProps, validate } = require('../../../../src');
+const { createService, validate } = require('../../../../src');
 const database = require('../models');
 
 const { Tasks } = database;
@@ -12,10 +12,7 @@ const form = {
   },
 };
 
-module.exports = createService(
-  Tasks,
-  serviceDefaultProps({
-    database,
-    form,
-  }),
-);
+module.exports = createService(Tasks, {
+  database,
+  form,
+});
