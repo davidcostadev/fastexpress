@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node ./src/server.js",
     "dev": "nodemon ./src/server.js --watch src",
-    "sequelize": "sequelize"
+    "db:create": "sequelize db:create",
+    "db:migrate": "sequelize db:migrate",
+    "db:seed": "sequelize db:seed:all"
   },
   "author": "David Costa <davidcostadev@gmail.com",
   "license": "MIT",
