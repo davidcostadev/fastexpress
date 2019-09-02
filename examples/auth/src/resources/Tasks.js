@@ -1,4 +1,4 @@
-const { createController, createService, validate } = require('../../../../src');
+const { endpoint, validate } = require('../../../../src');
 const database = require('../models');
 
 const { Tasks } = database;
@@ -15,9 +15,7 @@ const form = {
   },
 };
 
-const TaskService = createService(Tasks, {
+module.exports = endpoint(Tasks, {
   database,
   form,
 });
-
-module.exports = createController(TaskService);

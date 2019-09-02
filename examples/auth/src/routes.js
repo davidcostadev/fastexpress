@@ -1,7 +1,7 @@
 const { createMiddleware, Resources } = require('../../../src');
-const Users = require('./endpoints/Users');
-const Auth = require('./endpoints/Auth');
-const Tasks = require('./endpoints/Tasks');
+const Users = require('./resources/Users');
+const Auth = require('./resources/Auth');
+const Tasks = require('./resources/Tasks');
 
 const middleware = createMiddleware('secretkey');
 
