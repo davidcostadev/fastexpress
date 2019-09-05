@@ -16,13 +16,16 @@
     "lint:js": "eslint src/** tests/**",
     "lint": "npm run lint:format && npm run lint:js",
     "npm-publish": "npm run lint && npm publish",
-    "pre-test": "cross-env-shell NODE_ENV=test 'sequelize db:create && sequelize db:migrate'"
+    "pre-test": "cross-env-shell NODE_ENV=test 'sequelize db:create && sequelize db:migrate'",
+    "commit": "git-cz"
   },
   "engines": {
     "node": "^8 || ^10 || ^12"
   },
   "devDependencies": {
+    "commitizen": "^4.0.3",
     "cross-env": "^5.2.0",
+    "cz-conventional-changelog": "^3.0.2",
     "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.2.0",
     "eslint-config-prettier": "^6.0.0",
@@ -44,5 +47,10 @@
     "moment": "^2.24.0",
     "ramda": "^0.26.1",
     "sequelize": "5.14.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
