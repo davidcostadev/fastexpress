@@ -23,9 +23,9 @@
     "node": "^8 || ^10 || ^12"
   },
   "devDependencies": {
-    "commitizen": "^4.0.3",
+    "commitizen": "3.x",
     "cross-env": "^5.2.0",
-    "cz-conventional-changelog": "^3.0.2",
+    "cz-conventional-changelog": "2.x",
     "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.2.0",
     "eslint-config-prettier": "^6.0.0",
