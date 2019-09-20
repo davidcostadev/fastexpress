@@ -21,16 +21,11 @@ The main functionalities is:
 - Add secure endpoints through token usage (jwt).
 
 
-## Dependencies
-
-- `npm install --save sequelize`
-- `yarn add sequelize`
-
-
 ## Installation
 
-- `npm install --save fastexpress`
-- `yarn add fastexpress`
+- `npm install --global fastexpress`
+- `fastexpress generate [your-project-name]`
+
 
 ## Usage cases
 
