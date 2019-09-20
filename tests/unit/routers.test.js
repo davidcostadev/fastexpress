@@ -127,9 +127,9 @@ describe('routers', () => {
         controller,
       });
 
-      expect(router.get.mock.calls[0][0]).toEqual('model/');
+      expect(router.get.mock.calls[1][0]).toEqual('model/');
+      expect(router.get.mock.calls[0][0]).toEqual('model/:id');
       expect(router.post.mock.calls[0][0]).toEqual('model/');
-      expect(router.get.mock.calls[1][0]).toEqual('model/:id');
       expect(router.delete.mock.calls[0][0]).toEqual('model/:id');
       expect(router.put.mock.calls[0][0]).toEqual('model/:id');
 
@@ -139,11 +139,24 @@ describe('routers', () => {
       expect(router.delete.mock.calls[0][1]).toEqual([]);
       expect(router.put.mock.calls[0][1]).toEqual([]);
 
-      expect(router.get.mock.calls[0][2]).toEqual(controller.list);
+      expect(router.get.mock.calls[1][2]).toEqual(controller.list);
       expect(router.post.mock.calls[0][2]).toEqual(controller.create);
-      expect(router.get.mock.calls[1][2]).toEqual(controller.get);
+      expect(router.get.mock.calls[0][2]).toEqual(controller.get);
       expect(router.delete.mock.calls[0][2]).toEqual(controller.destroy);
       expect(router.put.mock.calls[0][2]).toEqual(controller.update);
+    });
+
+    it('should use only create and get actions', () => {
+      resources('model', {
+        router,
+        controller,
+        only: ['create', 'get'],
+      });
+
+      expect(router.get).toBeCalledTimes(1);
+      expect(router.post).toBeCalledTimes(1);
+      expect(router.delete).not.toBeCalled();
+      expect(router.put).not.toBeCalled();
     });
   });
 
@@ -157,9 +170,9 @@ describe('routers', () => {
         middleware,
       });
 
-      expect(router.get.mock.calls[0][0]).toEqual('model/');
+      expect(router.get.mock.calls[1][0]).toEqual('model/');
       expect(router.post.mock.calls[0][0]).toEqual('model/');
-      expect(router.get.mock.calls[1][0]).toEqual('model/:id');
+      expect(router.get.mock.calls[0][0]).toEqual('model/:id');
       expect(router.delete.mock.calls[0][0]).toEqual('model/:id');
       expect(router.put.mock.calls[0][0]).toEqual('model/:id');
 
@@ -169,9 +182,9 @@ describe('routers', () => {
       expect(router.delete.mock.calls[0][1]).toEqual(middleware);
       expect(router.put.mock.calls[0][1]).toEqual(middleware);
 
-      expect(router.get.mock.calls[0][2]).toEqual(controller.list);
+      expect(router.get.mock.calls[1][2]).toEqual(controller.list);
       expect(router.post.mock.calls[0][2]).toEqual(controller.create);
-      expect(router.get.mock.calls[1][2]).toEqual(controller.get);
+      expect(router.get.mock.calls[0][2]).toEqual(controller.get);
       expect(router.delete.mock.calls[0][2]).toEqual(controller.destroy);
       expect(router.put.mock.calls[0][2]).toEqual(controller.update);
 

@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { namespaceCreator, namespaceIndexCreator, resources, resourceList } = require('./routers');
+const { ACTIONS } = require('./definitions');
 
 const urlsIndexCreator = path =>
   path
@@ -46,13 +47,14 @@ class Resources {
    *
    * @memberOf Resources
    */
-  add(endpoint, controller, middleware = []) {
+  add(endpoint, controller, { middleware = [], only = ACTIONS } = {}) {
     this.resources.push(endpoint);
 
     resources(this.namespace(endpoint), {
       router: this.router,
       middleware,
       controller,
+      only,
     });
 
     return this;

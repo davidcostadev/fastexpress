@@ -97,7 +97,7 @@ describe('createService', () => {
     );
   });
 
-  it.only('Should get deprecated warn on to inform definitions or options', () => {
+  it('Should get deprecated warn on to inform definitions or options', () => {
     const oldWarn = global.console.warn;
     global.console.warn = jest.fn();
 
