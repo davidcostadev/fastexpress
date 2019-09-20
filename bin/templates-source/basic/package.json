@@ -1,0 +1,20 @@
+{
+  "name": "basic",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js --watch src",
+    "sequelize": "sequelize"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "fastexpress": "latest",
+    "mysql2": "^1.6.1",
+    "sequelize": "5.14.0",
+    "sequelize-cli": "^5.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.5"
+  }
+}
