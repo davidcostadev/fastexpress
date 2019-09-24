@@ -8,6 +8,6 @@
 ## Installation
 
 - `cp config/config.example.json config/config.json`
-- `yarn run sequelize db:create`
-- `yarn run sequelize db:migrate`
-- `yarn run start`
+- `npm run sequelize db:create`
+- `npm run sequelize db:migrate`
+- `npm run start`

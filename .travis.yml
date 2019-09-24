@@ -2,7 +2,6 @@ dist: xenial
 language: node_js
 services:
   - mysql
-cache: yarn
 addons:
   apt:
     sources:
@@ -18,8 +17,8 @@ before_install:
   - sudo service mysql restart
 
 before_script:
-  - yarn run lint
-  - yarn run pre-test
+  - npm run lint
+  - npm run pre-test
   - 'curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter'
   - 'chmod +x ./cc-test-reporter'
   - './cc-test-reporter before-build'
