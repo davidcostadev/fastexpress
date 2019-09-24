@@ -198,9 +198,9 @@ The tests use mysql, it need to use it.
 
 With docker: `docker run --name fastexpress-mysql -e MYSQL_ROOT_PASSWORD=123 -p 3306:3306 -d mysql:5`
 
-`yarn run pre-test`
+`npm run pre-test`
 
-`yarn run jest` or `yarn run test`
+`npm run jest` or `npm run test`
 
 ## Open Source
 

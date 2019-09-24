@@ -7,10 +7,10 @@
 ## Installation
 
 - `cp config/database.example.json config/database.json`
-- `yarn run sequelize db:create`
-- `yarn run sequelize db:migrate`
-- `yarn run sequelize db:seed:all`
-- `yarn run start`
+- `npm run sequelize db:create`
+- `npm run sequelize db:migrate`
+- `npm run sequelize db:seed:all`
+- `npm run start`
 
 ## Using with CURL
 
