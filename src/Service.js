@@ -80,13 +80,9 @@ const get = async (req, Model, configs) => {
 const create = async ({ body }, Model, { definitions }) => {
   const dataBody = selector(definitions, body);
 
-  try {
-    const entity = await Model.create(dataBody);
+  const entity = await Model.create(dataBody);
 
-    return entity;
-  } catch (e) {
-    throw e;
-  }
+  return entity;
 };
 
 /**

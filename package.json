@@ -27,20 +27,20 @@
     "node": "^8 || ^10 || ^12"
   },
   "devDependencies": {
-    "commitizen": "3.x",
-    "cross-env": "^5.2.0",
-    "cz-conventional-changelog": "2.x",
-    "eslint": "5.16.0",
-    "eslint-config-airbnb-base": "13.2.0",
+    "commitizen": "^4.0.3",
+    "cross-env": "^6.0.0",
+    "cz-conventional-changelog": "^3.0.2",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.7.1",
     "mysql2": "^1.6.5",
     "prettier": "^1.18.2",
-    "rollup": "1.19.4",
-    "rollup-plugin-terser": "5.1.1",
-    "sequelize-cli": "5.5.0",
+    "rollup": "^1.21.4",
+    "rollup-plugin-terser": "^5.1.2",
+    "sequelize-cli": "^5.5.1",
     "supertest": "^4.0.2"
   },
   "dependencies": {
@@ -51,7 +51,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "ramda": "^0.26.1",
-    "sequelize": "5.14.0",
+    "sequelize": "^5.19.0",
     "yargs": "^14.0.0"
   },
   "config": {
