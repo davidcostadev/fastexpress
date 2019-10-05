@@ -1,5 +1,7 @@
 const fs = require('fs');
+const path = require('path');
 const util = require('util');
+const Handlebars = require('handlebars');
 
 const mkdir = util.promisify(fs.mkdir);
 
@@ -147,6 +149,22 @@ const fieldsResource = fieldsBase(fieldsList => {
   };
 });
 
+const destination = dir => path.resolve('.', dir);
+
+const source = file => path.resolve(__dirname, `templates/${file}`);
+
+const copyTemplate = async (fileSource, fileDest, params = {}) => {
+  if (!Object.keys(params).length) {
+    await copyFile(source(fileSource), destination(fileDest));
+  } else {
+    const content = await readFile(source(fileSource), 'utf8');
+
+    const templateIt = Handlebars.compile(content);
+    const compiled = templateIt(params);
+    await writeFile(destination(fileDest), compiled);
+  }
+};
+
 module.exports = {
   mkdir,
   readFile,
@@ -161,4 +179,6 @@ module.exports = {
   fieldsHandler,
   fieldsSeeders,
   fieldsResource,
+  destination,
+  copyTemplate,
 };

@@ -1,40 +1,25 @@
-const path = require('path');
-const Handlebars = require('handlebars');
-const { mkdir, copyFile, readFile, writeFile } = require('./utils');
+const { mkdir, writeFile, copyTemplate, destination } = require('./utils');
 
 const newHandler = async ({ name, template }) => {
-  const destination = (dir = '') => path.resolve('.', dir.length ? `${name}/${dir}` : `${name}`);
+  await mkdir(destination(name), { recursive: true });
+  await mkdir(destination(`${name}/config`), { recursive: true });
+  await mkdir(destination(`${name}/src`), { recursive: true });
+  await mkdir(destination(`${name}/src/migrations`), { recursive: true });
+  await mkdir(destination(`${name}/src/models`), { recursive: true });
+  await mkdir(destination(`${name}/src/resources`), { recursive: true });
+  await mkdir(destination(`${name}/src/seeders`), { recursive: true });
 
-  const source = file => path.resolve(__dirname, `templates/${template}/${file}`);
-
-  const copyTemplate = async (fileSource, params = {}) => {
-    if (!Object.keys(params).length) {
-      await copyFile(source(fileSource), destination(fileSource));
-    } else {
-      const content = await readFile(source(fileSource), 'utf8');
-
-      const templateIt = Handlebars.compile(content);
-      const compiled = templateIt(params);
-      await writeFile(destination(fileSource), compiled);
-    }
-  };
-
-  await mkdir(destination(), { recursive: true });
-  await mkdir(destination('config'), { recursive: true });
-  await mkdir(destination('src'), { recursive: true });
-  await mkdir(destination('src/migrations'), { recursive: true });
-  await mkdir(destination('src/models'), { recursive: true });
-  await mkdir(destination('src/resources'), { recursive: true });
-  await mkdir(destination('src/seeders'), { recursive: true });
-
-  await copyTemplate('.sequelizerc');
-  await writeFile(destination('.gitignore'), 'node_modules\n');
-  await copyTemplate('package.json');
-  await copyTemplate('README.md');
-  await copyTemplate('config/example.database.json');
-  await copyTemplate('src/models/index.js');
-  await copyTemplate('src/routes.js');
-  await copyTemplate('src/server.js');
+  await copyTemplate(`${template}/.sequelizerc`, `${name}/.sequelizerc`);
+  await writeFile(destination(`${name}/.gitignore`), 'node_modules\n');
+  await copyTemplate(`${template}/package.json`, `${name}/package.json`);
+  await copyTemplate(`${template}/README.md`, `${name}/README.md`);
+  await copyTemplate(
+    `${template}/config/example.database.json`,
+    `${name}/config/example.database.json`,
+  );
+  await copyTemplate(`${template}/src/models/index.js`, `${name}/src/models/index.js`);
+  await copyTemplate(`${template}/src/routes.js`, `${name}/src/routes.js`);
+  await copyTemplate(`${template}/src/server.js`, `${name}/src/server.js`);
 
   // eslint-disable-next-line no-console
   console.log(`Generate completed
