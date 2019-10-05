@@ -37,47 +37,55 @@ function fieldsHandler(args) {
 }
 
 const getType = type => {
-  switch (type) {
-    case 'integer':
-    case 'number':
-      return 'number';
-    case 'boolean':
-      return 'bool';
-    case 'string':
-    case 'text':
-    default:
-      return 'string';
-  }
+  const isNumber = () => 'number';
+  const isBoolean = () => 'bool';
+  const isText = () => 'string';
+
+  const types = {
+    number: isNumber,
+    integer: isNumber,
+    boolean: isBoolean,
+    text: isText,
+    string: isText,
+    default: isText,
+  };
+
+  return (types[type] || types.default)();
 };
 
 const getSequelizeType = type => {
-  switch (type) {
-    case 'integer':
-    case 'number':
-      return 'INTEGER';
-    case 'boolean':
-      return 'BOOLEAN';
-    case 'text':
-      return 'TEXT';
-    case 'string':
-    default:
-      return 'STRING';
-  }
+  const isNumber = () => 'INTEGER';
+  const isBoolean = () => 'BOOLEAN';
+  const isText = () => 'TEXT';
+  const isChar = () => 'STRING';
+
+  const types = {
+    number: isNumber,
+    integer: isNumber,
+    boolean: isBoolean,
+    text: isText,
+    string: isChar,
+    default: isChar,
+  };
+
+  return (types[type] || types.default)();
 };
 
 const getSeedType = type => {
-  switch (type) {
-    case 'integer':
-    case 'number':
-      return 'random.number()';
-    case 'boolean':
-      return 'random.boolean()';
-    case 'text':
-      return 'lorem.sentences()';
-    case 'string':
-    default:
-      return 'lorem.words()';
-  }
+  const isNumber = () => 'random.number()';
+  const isBoolean = () => 'random.boolean()';
+  const isText = () => 'lorem.sentences()';
+  const isChar = () => 'lorem.words()';
+  const types = {
+    number: isNumber,
+    integer: isNumber,
+    boolean: isBoolean,
+    text: isText,
+    string: isChar,
+    default: isChar,
+  };
+
+  return (types[type] || types.default)();
 };
 
 function fieldsMigration(fieldsList) {
@@ -162,6 +170,9 @@ module.exports = {
   writeFile,
   copyFile,
   handlerError,
+  getType,
+  getSeedType,
+  getSequelizeType,
   fieldsModel,
   fieldsMigration,
   fieldsHandler,
