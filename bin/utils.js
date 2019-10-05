@@ -88,41 +88,7 @@ const getSeedType = type => {
   return (types[type] || types.default)();
 };
 
-function fieldsMigration(fieldsList) {
-  if (!fieldsList.length) {
-    return {
-      fields: '{}',
-    };
-  }
-
-  const fields = fieldsList
-    .map(field => field.split(':'))
-    .map(([name, type]) => `${name}: Sequelize.${getSequelizeType(type)}`)
-    .join(',\n    ');
-
-  return {
-    fields: `${fields},`,
-  };
-}
-
-function fieldsModel(fieldsList) {
-  if (!fieldsList.length) {
-    return {
-      fields: '{}',
-    };
-  }
-
-  const fields = fieldsList
-    .map(field => field.split(':'))
-    .map(([name, type]) => `      ${name}: DataTypes.${getSequelizeType(type)}`)
-    .join(',\n');
-
-  return {
-    fields: `{\n${fields}\n    }`,
-  };
-}
-
-function fieldsSeeders(fieldsList) {
+const fieldsBase = fn => fieldsList => {
   if (!fieldsList.length) {
     return {
       dependencies: '',
@@ -130,8 +96,33 @@ function fieldsSeeders(fieldsList) {
     };
   }
 
+  const fields = fieldsList.map(field => field.split(':'));
+
+  return fn(fields);
+};
+
+const fieldsMigration = fieldsBase(fieldsList => {
   const fields = fieldsList
-    .map(field => field.split(':'))
+    .map(([name, type]) => `${name}: Sequelize.${getSequelizeType(type)}`)
+    .join(',\n    ');
+
+  return {
+    fields: `${fields},`,
+  };
+});
+
+const fieldsModel = fieldsBase(fieldsList => {
+  const fields = fieldsList
+    .map(([name, type]) => `      ${name}: DataTypes.${getSequelizeType(type)}`)
+    .join(',\n');
+
+  return {
+    fields: `{\n${fields}\n    }`,
+  };
+});
+
+const fieldsSeeders = fieldsBase(fieldsList => {
+  const fields = fieldsList
     .map(([name, type]) => `${name}: faker.${getSeedType(type)}`)
     .join(',\n        ');
 
@@ -139,18 +130,10 @@ function fieldsSeeders(fieldsList) {
     dependencies: "const faker = require('faker');\n\n",
     fields: `${fields},\n        `,
   };
-}
+});
 
-function fieldsResource(fieldsList) {
-  if (!fieldsList.length) {
-    return {
-      dependencies: '',
-      fields: '{}',
-    };
-  }
-
+const fieldsResource = fieldsBase(fieldsList => {
   const fields = fieldsList
-    .map(field => field.split(':'))
     .map(
       ([name, type]) => `    ${name}: {
       validation: validate.${getType(type)},
@@ -162,7 +145,7 @@ function fieldsResource(fieldsList) {
     dependencies: ', validate',
     fields: `{\n${fields}\n  }`,
   };
-}
+});
 
 module.exports = {
   mkdir,
