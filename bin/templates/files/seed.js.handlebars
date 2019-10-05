@@ -1,0 +1,14 @@
+{{{dependencies}}}module.exports = {
+  up: async queryInterface => {
+    await queryInterface.bulkInsert('{{name}}', [
+      {
+        {{fields}}createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]);
+  },
+
+  down: queryInterface => {
+    queryInterface.bulkDelete('{{name}}');
+  },
+};
