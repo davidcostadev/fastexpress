@@ -1,4 +1,74 @@
-const { getType, getSeedType, getSequelizeType } = require('../../bin/utils');
+const {
+  getType,
+  getSeedType,
+  getSequelizeType,
+  fieldsMigration,
+  fieldsResource,
+  fieldsModel,
+  fieldsSeeders,
+  fieldsHandler,
+} = require('../../bin/utils');
+
+describe('fieldsHandler', () => {
+  expect(fieldsHandler({})).toEqual(null);
+  expect(
+    fieldsHandler({
+      _: ['resource', 'isPaid:boolean', 'age:number'],
+      attributes: 'name:string',
+    }),
+  ).toEqual(['name:string', 'isPaid:boolean', 'age:number']);
+});
+
+describe('fieldsSeeders', () => {
+  expect(fieldsSeeders([])).toEqual({
+    dependencies: '',
+    fields: '{}',
+  });
+  expect(fieldsSeeders(['name:string'])).toEqual({
+    dependencies: `const faker = require('faker');
+
+`,
+    fields: `name: faker.lorem.words(),
+        `,
+  });
+});
+
+describe('fieldsMigration', () => {
+  expect(fieldsMigration([])).toEqual({
+    dependencies: '',
+    fields: '{}',
+  });
+  expect(fieldsMigration(['name:string'])).toEqual({
+    fields: 'name: Sequelize.STRING,',
+  });
+});
+
+describe('fieldsModel', () => {
+  expect(fieldsModel([])).toEqual({
+    dependencies: '',
+    fields: '{}',
+  });
+  expect(fieldsModel(['name:string'])).toEqual({
+    fields: `{
+      name: DataTypes.STRING
+    }`,
+  });
+});
+
+describe('fieldsResource', () => {
+  expect(fieldsResource([])).toEqual({
+    dependencies: '',
+    fields: '{}',
+  });
+  expect(fieldsResource(['name:string'])).toEqual({
+    dependencies: ', validate',
+    fields: `{
+    name: {
+      validation: validate.string,
+    }
+  }`,
+  });
+});
 
 describe('getType', () => {
   it('should return correct type', () => {
