@@ -13,7 +13,7 @@ const copyFile = util.promisify(fs.copyFile);
 
 const handlerError = fn => async (...args) => {
   try {
-    fn(...args);
+    await fn(...args);
   } catch (error) {
     switch (error.errno) {
       case -17:

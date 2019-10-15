@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 const {
   getType,
   getSeedType,
@@ -7,9 +8,40 @@ const {
   fieldsModel,
   fieldsSeeders,
   fieldsHandler,
+  handlerError,
 } = require('../../bin/utils');
 
-describe('fieldsHandler', () => {
+describe('handlerError', () => {
+  it('Should handlerError console error -17', async () => {
+    const simulateError = async () => {
+      throw { errno: -17, message: 'Some message' };
+    };
+    const oldError = global.console.error;
+    global.console.error = jest.fn();
+
+    await handlerError(simulateError)({});
+
+    expect(global.console.error).toBeCalledWith('Some message');
+
+    global.console.error = oldError;
+  });
+
+  it('Should handlerError console the error as default', async () => {
+    const simulateError = async () => {
+      throw new Error('Some message');
+    };
+    const oldError = global.console.error;
+    global.console.error = jest.fn();
+
+    await handlerError(simulateError)({});
+
+    expect(global.console.error).toBeCalledWith(new Error('Some message'));
+
+    global.console.error = oldError;
+  });
+});
+
+it('fieldsHandler', () => {
   expect(fieldsHandler({})).toEqual(null);
   expect(
     fieldsHandler({
@@ -19,7 +51,7 @@ describe('fieldsHandler', () => {
   ).toEqual(['name:string', 'isPaid:boolean', 'age:number']);
 });
 
-describe('fieldsSeeders', () => {
+it('fieldsSeeders', () => {
   expect(fieldsSeeders([])).toEqual({
     dependencies: '',
     fields: '{}',
@@ -33,7 +65,7 @@ describe('fieldsSeeders', () => {
   });
 });
 
-describe('fieldsMigration', () => {
+it('fieldsMigration', () => {
   expect(fieldsMigration([])).toEqual({
     dependencies: '',
     fields: '{}',
@@ -43,7 +75,7 @@ describe('fieldsMigration', () => {
   });
 });
 
-describe('fieldsModel', () => {
+it('fieldsModel', () => {
   expect(fieldsModel([])).toEqual({
     dependencies: '',
     fields: '{}',
@@ -55,7 +87,7 @@ describe('fieldsModel', () => {
   });
 });
 
-describe('fieldsResource', () => {
+it('fieldsResource', () => {
   expect(fieldsResource([])).toEqual({
     dependencies: '',
     fields: '{}',
