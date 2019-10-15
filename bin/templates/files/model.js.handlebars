@@ -1,0 +1,9 @@
+module.exports = (sequelize, DataTypes) => {
+  const {{nameSingularised}} = sequelize.define(
+    '{{namePluralized}}',
+    {{fields}},
+    {},
+  );
+  {{nameSingularised}}.associate = () => {};
+  return {{nameSingularised}};
+};

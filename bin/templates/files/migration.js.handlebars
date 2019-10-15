@@ -1,0 +1,8 @@
+const { migrationActions } = require('fastexpress');
+
+module.exports = {
+  up: migrationActions.createTable('{{name}}', Sequelize => ({
+    {{fields}}
+  })),
+  down: migrationActions.dropTable('{{name}}'),
+};

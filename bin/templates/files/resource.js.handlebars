@@ -1,0 +1,10 @@
+const { endpoint{{dependencies}} } = require('fastexpress');
+const database = require('../models');
+
+const { {{name}}: Model } = database;
+
+module.exports = endpoint(
+  Model,
+  {{fields}},
+  database,
+);

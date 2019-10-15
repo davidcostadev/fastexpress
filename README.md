@@ -24,118 +24,15 @@ The main functionalities is:
 ## Installation
 
 - `npm install --global fastexpress`
-- `fastexpress generate [your-project-name]`
+- `fastexpress new [your-project-name]`
+- `cd your-project-name`
 
 
 ## Usage cases
 
-### Structure Recommended
+On root of you project
 
-```
-config/database.json
-src/resources/{Name}.js
-src/models/{Name}.js
-src/migrations/...
-src/seeders/...
-src/routers.js
-src/server.js
-.sequelizerc
-```
-
-### on .sequelierc
-
-```javascript
-const path = require('path');
-
-module.exports = {
-  config: path.resolve('config', 'database.json'),
-  'models-path': path.resolve('src', 'models'),
-  'seeders-path': path.resolve('src', 'seeders'),
-  'migrations-path': path.resolve('src', 'migrations'),
-};
-```
-
-### on src/resources/Tasks.js
-
-```javascript
-const { endpoint, validate } = require('fastexpress');
-const database = require('../models');
-
-const { Tasks: Model } = database;
-
-module.exports = endpoint(
-  Model,
-  {
-    name: {
-      validation: validate.string,
-    },
-    completed: {
-      validation: validate.bool,
-    },
-  },
-  database,
-);
-```
-
-### on src/models/index.js
-
-```javascript
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const configs = require('../../config/database.json');
-
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-
-const config = configs[env];
-const db = {};
-let sequelize;
-
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
-
-fs.readdirSync(__dirname)
-  .filter(file => file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js')
-  .forEach(file => {
-    const model = sequelize.import(path.join(__dirname, file));
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
-module.exports = db;
-```
-
-### on src/models/Tasks.js
-
-```javascript
-module.exports = (sequelize, DataTypes) => {
-  const Tasks = sequelize.define(
-    'Tasks',
-    {
-      name: DataTypes.STRING,
-      completed: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-    },
-    {},
-  );
-  Tasks.associate = () => {};
-  return Tasks;
-};
-```
+- `fastexpress resource [name] --attributes name:string check:boolean age:number`
 
 ### on routers.js
 
@@ -143,16 +40,21 @@ Create CRUD endpoint to any controller
 
 ```javascript
 const { Resources } = require('fastexpress');
-const Tasks = require('./resources/Tasks');
+const ResourceName = require('./resources/ResourceName');
 
 const routers = new Resources({
   namespace: '/api/v1/',
 })
-  .add('tasks', Tasks)
+  .add('resourceName', ResourceName)
   .getRouters();
 
 module.exports = routers;
 ```
+
+### Using
+
+- `npm run dev`
+
 
 #### Basic Endpoints
 
@@ -161,26 +63,12 @@ module.exports = routers;
 
 #### Resources
 
-- `[get]` /api/v1/tasks - to list tasks
-- `[post]` /api/v1/tasks - to add a new task
-- `[get]` /api/v1/tasks/:id - to get a one task
-- `[delete]` /api/v1/tasks/:id - to delete a task
-- `[put]` /api/v1/tasks/:id - to edit a task
+- `[get]` /api/v1/resourceName - to list resource 
+- `[post]` /api/v1/resourceName - to add a new entity
+- `[get]` /api/v1/resourceName/:id - to get a one entity
+- `[delete]` /api/v1/resourceName/:id - to delete a entity
+- `[put]` /api/v1/resourceName/:id - to edit a entity
 
-## On server.js
-
-```javascript
-const { server } = require('fastexpress');
-const routes = require('./routes');
-
-server.use(routes);
-
-const port = process.env.PORT || 3000;
-
-server.listen(port);
-
-module.exports = server;
-```
 
 ## Examples
 
