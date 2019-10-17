@@ -1,4 +1,5 @@
 const kebabcase = require('lodash.kebabcase');
+const snakecase = require('lodash.snakecase');
 const { mkdir, writeFile, copyTemplate, destination } = require('./utils');
 
 const newHandler = async ({ name, template }) => {
@@ -17,6 +18,7 @@ const newHandler = async ({ name, template }) => {
   await copyTemplate(
     `${template}/config/example.database.json`,
     `${name}/config/example.database.json`,
+    { name: snakecase(name) },
   );
   await copyTemplate(`${template}/src/models/index.js`, `${name}/src/models/index.js`);
   await copyTemplate(`${template}/src/routes.js`, `${name}/src/routes.js`);
