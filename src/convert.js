@@ -1,5 +1,9 @@
 const orderToFilter = val => {
-  const fields = val.split(',').map(a => a.split('.'));
+  let value = val;
+  if (typeof val !== 'string') {
+    value = val.toString();
+  }
+  const fields = value.split(',').map(a => a.split('.'));
 
   return fields;
 };

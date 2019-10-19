@@ -5,7 +5,12 @@ const dateFilter = {
   validation: () => true,
   convert: val => {
     if (val.indexOf(',') > -1) {
-      const parts = val.split(',');
+      let value = val;
+      if (typeof val !== 'string') {
+        value = val.toString();
+      }
+
+      const parts = value.split(',');
       const [start, end] = parts;
       return {
         [Op.gte]: start,
