@@ -1,23 +1,29 @@
-const selector = (definitions, query = {}) => {
-  const select = {};
+const R = require('ramda');
 
-  Object.keys(definitions).forEach(key => {
-    if (typeof query[key] !== 'undefined') {
-      if (definitions[key].validation(query[key])) {
-        if (typeof definitions[key].convert !== 'undefined') {
-          select[key] = definitions[key].convert(query[key], key);
-        } else {
-          select[key] = query[key];
-        }
-      } else if (typeof definitions[key].default !== 'undefined') {
-        select[key] = definitions[key].default;
+const convertIt = (definition, key, value) =>
+  R.has('convert', definition) ? definition.convert(value, key) : value;
+
+const selector = (definitions, query = {}) =>
+  R.toPairs(definitions).reduce((acc, [key, definition]) => {
+    let newValue;
+    if (R.has(key, query)) {
+      const value = R.prop(key, query);
+
+      if (definition.validation(value)) {
+        newValue = convertIt(definition, key, value);
+      } else if (R.has('default', definition)) {
+        newValue = definition.default;
       }
-    } else if (typeof definitions[key].default !== 'undefined') {
-      select[key] = definitions[key].default;
+    } else if (R.has('default', definition)) {
+      newValue = definition.default;
     }
-  });
 
-  return select;
-};
+    return newValue
+      ? {
+          ...acc,
+          [key]: newValue,
+        }
+      : acc;
+  }, {});
 
 module.exports = selector;
