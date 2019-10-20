@@ -1,5 +1,5 @@
 {
-  "name": "basic",
+  "name": "basic_template",
   "version": "1.0.0",
   "main": "src/server.js",
   "scripts": {
