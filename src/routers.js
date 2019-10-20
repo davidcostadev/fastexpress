@@ -1,36 +1,19 @@
 const { ACTIONS } = require('./definitions');
+const routeCreator = require('./routeCreator');
 
 /**
  * This function create all endpoint of resources
+ *
+ * @deprecated
  *
  * @param {string} prefix
  * @param {object} object { router, middleware, controller }
  */
 const resources = (prefix, { router, middleware, controller, only = ACTIONS } = {}) => {
-  // eslint-disable-next-line no-param-reassign
-  middleware = typeof middleware !== 'undefined' ? middleware : [];
+  // eslint-disable-next-line no-console
+  console.warn('Deprecated: Use `routeCreator` instead of `resources`.');
 
-  only.forEach(action => {
-    switch (action) {
-      case 'create':
-        router.post(`${prefix}/`, middleware, controller.create);
-        break;
-      case 'list':
-        router.get(`${prefix}/`, middleware, controller.list);
-        break;
-      case 'get':
-        router.get(`${prefix}/:id`, middleware, controller.get);
-        break;
-      case 'destroy':
-        router.delete(`${prefix}/:id`, middleware, controller.destroy);
-        break;
-      case 'update':
-        router.put(`${prefix}/:id`, middleware, controller.update);
-        break;
-      default:
-        throw new Error(`Invalid action '${action}'`);
-    }
-  });
+  routeCreator(prefix, { router, middleware, controller, only });
 };
 
 /**
