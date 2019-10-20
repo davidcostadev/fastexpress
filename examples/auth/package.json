@@ -1,5 +1,5 @@
 {
-  "name": "fast-express-example-auth",
+  "name": "fastexpress-example-auth",
   "version": "1.0.0",
   "description": "Auth usage of fastexpress",
   "main": "server.js",

@@ -1,5 +1,5 @@
 {
-  "name": "fast-express-example-basic",
+  "name": "fastexpress-example-basic",
   "version": "1.0.0",
   "description": "A basic usage of fastexpress",
   "main": "server.js",
