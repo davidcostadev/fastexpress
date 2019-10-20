@@ -1,3 +1,4 @@
+const getAllowedActions = require('./lib/getAllowedActions');
 const { ACTIONS } = require('./definitions');
 const routeCreator = require('./routeCreator');
 
@@ -90,16 +91,30 @@ const resourceWithAuth = (
  * @param {string} url
  * @param {object} [{ custom = [], namespace = defaultNamespace }={}]
  */
-const resourceList = (url, { custom = [], namespace = defaultNamespace } = {}) => [
-  ...[
-    controller => `[get] ${controller}`,
-    controller => `[post] ${controller}`,
-    controller => `[get] ${controller}/:id`,
-    controller => `[delete] ${controller}/:id`,
-    controller => `[put] ${controller}/:id`,
-  ].map(method => method(namespace(url))),
-  ...custom,
-];
+const resourceList = (resource, { custom = [], namespace = defaultNamespace } = {}) => {
+  const endpointsActions = {
+    create: controller => `[post] ${controller}`,
+    get: controller => `[get] ${controller}/:id`,
+    list: controller => `[get] ${controller}`,
+    destroy: controller => `[delete] ${controller}/:id`,
+    update: controller => `[put] ${controller}/:id`,
+  };
+
+  let url;
+  let allowedActions;
+  if (typeof resource === 'string') {
+    url = resource;
+    allowedActions = ACTIONS;
+  } else {
+    url = resource.endpoint;
+    allowedActions = getAllowedActions(resource.except, resource.only);
+  }
+
+  return [
+    ...allowedActions.map(action => endpointsActions[action]).map(method => method(namespace(url))),
+    ...custom,
+  ];
+};
 
 module.exports = {
   resources,

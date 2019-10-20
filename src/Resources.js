@@ -49,7 +49,7 @@ class Resources {
    * @memberOf Resources
    */
   add(endpoint, controller, { middleware = [], except = [], only = ACTIONS } = {}) {
-    this.resources.push(endpoint);
+    this.resources.push({ endpoint, except, only });
 
     routeCreator(this.namespace(endpoint), {
       router: this.router,
@@ -64,9 +64,9 @@ class Resources {
 
   setIndexResponse() {
     const indexResponse = this.resources.reduce(
-      (acc, cur) => ({
+      (acc, resource) => ({
         ...acc,
-        [cur]: resourceList(cur, { namespace: this.namespace }),
+        [resource.endpoint]: resourceList(resource, { namespace: this.namespace }),
       }),
       {},
     );

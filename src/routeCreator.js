@@ -1,5 +1,5 @@
-const { without } = require('ramda');
 const { ACTIONS } = require('./definitions');
+const getAllowedActions = require('./lib/getAllowedActions');
 
 /**
  * This function create all endpoint of resources
@@ -14,7 +14,7 @@ function routeCreator(
   // eslint-disable-next-line no-param-reassign
   middleware = typeof middleware !== 'undefined' ? middleware : [];
 
-  const allowedActions = without(except, only);
+  const allowedActions = getAllowedActions(except, only);
 
   allowedActions.forEach(action => {
     switch (action) {

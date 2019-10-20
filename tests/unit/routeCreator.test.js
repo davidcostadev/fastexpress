@@ -36,9 +36,9 @@ describe('routeCreator', () => {
       controller,
     });
 
-    expect(router.get.mock.calls[1][0]).toEqual('model/');
-    expect(router.get.mock.calls[0][0]).toEqual('model/:id');
+    expect(router.get.mock.calls[0][0]).toEqual('model/');
     expect(router.post.mock.calls[0][0]).toEqual('model/');
+    expect(router.get.mock.calls[1][0]).toEqual('model/:id');
     expect(router.delete.mock.calls[0][0]).toEqual('model/:id');
     expect(router.put.mock.calls[0][0]).toEqual('model/:id');
 
@@ -48,9 +48,9 @@ describe('routeCreator', () => {
     expect(router.delete.mock.calls[0][1]).toEqual([]);
     expect(router.put.mock.calls[0][1]).toEqual([]);
 
-    expect(router.get.mock.calls[1][2]).toEqual(controller.list);
+    expect(router.get.mock.calls[0][2]).toEqual(controller.list);
+    expect(router.get.mock.calls[1][2]).toEqual(controller.get);
     expect(router.post.mock.calls[0][2]).toEqual(controller.create);
-    expect(router.get.mock.calls[0][2]).toEqual(controller.get);
     expect(router.delete.mock.calls[0][2]).toEqual(controller.destroy);
     expect(router.put.mock.calls[0][2]).toEqual(controller.update);
   });
