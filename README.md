@@ -8,6 +8,7 @@
 [![GitHub license](https://img.shields.io/github/license/davidcostadev/fastexpress.svg)](https://github.com/davidcostadev/fastexpress/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/fastexpress.svg)](https://www.npmjs.com/package/fastexpress)
 [![Open Source Helpers](https://www.codetriage.com/davidcostadev/fastexpress/badges/users.svg)](https://www.codetriage.com/davidcostadev/fastexpress)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 ---
 
@@ -62,7 +63,7 @@ const routers = new Resources({
 - `[get]` /api
 - `[get]` /api/v1
 
-#### Resources
+#### Resources Endpoints
 
 - `[get]` /api/v1/[resourceName] - to list resource 
 - `[post]` /api/v1/[resourceName] - to add a new entity
