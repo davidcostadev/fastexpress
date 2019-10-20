@@ -1,4 +1,4 @@
-const Resources = require('../src/Resources');
+const Resources = require('../../src/Resources');
 
 jest.mock('express', () => {
   const endpoints = [];
