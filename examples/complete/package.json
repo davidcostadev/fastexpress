@@ -12,10 +12,10 @@
   "license": "MIT",
   "dependencies": {
     "mysql2": "^1.6.1",
-    "sequelize": "^5.3.0",
+    "sequelize": "^5.21.1",
     "sequelize-cli": "^5.2.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.5"
+    "nodemon": "^1.19.4"
   }
 }
