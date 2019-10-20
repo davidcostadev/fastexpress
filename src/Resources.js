@@ -64,7 +64,7 @@ class Resources {
     const indexResponse = this.resources.reduce(
       (acc, cur) => ({
         ...acc,
-        [cur]: resourceList('tasks', { namespace: this.namespace }),
+        [cur]: resourceList(cur, { namespace: this.namespace }),
       }),
       {},
     );
