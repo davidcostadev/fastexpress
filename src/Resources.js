@@ -1,5 +1,6 @@
 const { Router } = require('express');
-const { namespaceCreator, namespaceIndexCreator, resources, resourceList } = require('./routers');
+const { namespaceCreator, namespaceIndexCreator, resourceList } = require('./routers');
+const routeCreator = require('./routeCreator');
 const { ACTIONS } = require('./definitions');
 
 const urlsIndexCreator = path =>
@@ -47,14 +48,15 @@ class Resources {
    *
    * @memberOf Resources
    */
-  add(endpoint, controller, { middleware = [], only = ACTIONS } = {}) {
-    this.resources.push(endpoint);
+  add(endpoint, controller, { middleware = [], except = [], only = ACTIONS } = {}) {
+    this.resources.push({ endpoint, except, only });
 
-    resources(this.namespace(endpoint), {
+    routeCreator(this.namespace(endpoint), {
       router: this.router,
       middleware,
       controller,
       only,
+      except,
     });
 
     return this;
@@ -62,9 +64,9 @@ class Resources {
 
   setIndexResponse() {
     const indexResponse = this.resources.reduce(
-      (acc, cur) => ({
+      (acc, resource) => ({
         ...acc,
-        [cur]: resourceList(cur, { namespace: this.namespace }),
+        [resource.endpoint]: resourceList(resource, { namespace: this.namespace }),
       }),
       {},
     );
