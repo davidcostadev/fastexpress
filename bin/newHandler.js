@@ -13,7 +13,9 @@ const newHandler = async ({ name, template }) => {
 
   await copyTemplate(`${template}/.sequelizerc`, `${name}/.sequelizerc`);
   await writeFile(destination(`${name}/.gitignore`), 'node_modules\n');
-  await copyTemplate(`${template}/package.json`, `${name}/package.json`);
+  await copyTemplate(`${template}/package.json.handlebars`, `${name}/package.json`, {
+    name: kebabcase(name),
+  });
   await copyTemplate(`${template}/README.md`, `${name}/README.md`, { name: kebabcase(name) });
   await copyTemplate(
     `${template}/config/example.database.json`,
