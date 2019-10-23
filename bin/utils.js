@@ -1,8 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
+const childProcess = require('child_process');
 const Handlebars = require('handlebars');
 
+const exec = util.promisify(childProcess.exec);
 const mkdir = util.promisify(fs.mkdir);
 
 const readFile = util.promisify(fs.readFile);
@@ -181,4 +183,5 @@ module.exports = {
   fieldsResource,
   destination,
   copyTemplate,
+  exec,
 };

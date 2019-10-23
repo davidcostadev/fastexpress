@@ -1,5 +1,5 @@
-const { mkdir, writeFile, copyTemplate, destination } = require('./utils');
-const { exec } = require('child_process');
+const { mkdir, writeFile, copyTemplate, destination, exec } = require('./utils');
+
 const newHandler = async ({ name, template }) => {
   await mkdir(destination(name), { recursive: true });
   await mkdir(destination(`${name}/config`), { recursive: true });
@@ -20,21 +20,14 @@ const newHandler = async ({ name, template }) => {
   await copyTemplate(`${template}/src/models/index.js`, `${name}/src/models/index.js`);
   await copyTemplate(`${template}/src/routes.js`, `${name}/src/routes.js`);
   await copyTemplate(`${template}/src/server.js`, `${name}/src/server.js`);
-  await exec(`git init ${name}`, (err, stdout, stderr) => {
-    if (err) {
-      console.log('node error on git command');
-      return;
-    }
-    console.log(`${stdout}`);
-    if (stderr) {
-      console.log(`${stderr}`);
-    }
-    console.log(`Generate completed
+  await exec(`git init ${name}`);
+  await exec(`cd ${name} && git add -A && git commit -m "initial commit"`);
+
+  console.log(`Generate completed
 Run these commands to start
 cd ./${name}
 npm install or yarn
 npm run dev`);
-  });
   // eslint-disable-next-line no-console
 };
 
