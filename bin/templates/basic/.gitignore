@@ -1,5 +1,3 @@
-config/config.example.json
+config/database.json
 node_modules
-tests/reports/
-tests/screenshots
-tests/videos
+

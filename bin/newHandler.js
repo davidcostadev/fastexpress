@@ -1,3 +1,5 @@
+const kebabcase = require('lodash.kebabcase');
+const snakecase = require('lodash.snakecase');
 const { mkdir, writeFile, copyTemplate, destination, exec } = require('./utils');
 
 const newHandler = async ({ name, template }) => {
@@ -11,11 +13,14 @@ const newHandler = async ({ name, template }) => {
 
   await copyTemplate(`${template}/.sequelizerc`, `${name}/.sequelizerc`);
   await writeFile(destination(`${name}/.gitignore`), 'node_modules\n');
-  await copyTemplate(`${template}/package.json`, `${name}/package.json`);
-  await copyTemplate(`${template}/README.md`, `${name}/README.md`);
+  await copyTemplate(`${template}/package.json.handlebars`, `${name}/package.json`, {
+    name: kebabcase(name),
+  });
+  await copyTemplate(`${template}/README.md`, `${name}/README.md`, { name: kebabcase(name) });
   await copyTemplate(
     `${template}/config/example.database.json`,
     `${name}/config/example.database.json`,
+    { name: snakecase(name) },
   );
   await copyTemplate(`${template}/src/models/index.js`, `${name}/src/models/index.js`);
   await copyTemplate(`${template}/src/routes.js`, `${name}/src/routes.js`);

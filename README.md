@@ -3,11 +3,12 @@
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 [![Build Status](https://travis-ci.org/davidcostadev/fastexpress.svg?branch=master)](https://travis-ci.org/davidcostadev/fastexpress)
 [![CircleCI](https://circleci.com/gh/davidcostadev/fastexpress.svg?style=svg)](https://circleci.com/gh/davidcostadev/fastexpress)
-[![Maintainability](https://api.codeclimate.com/v1/badges/b045a34c8cb425bf67f1/maintainability)](https://codeclimate.com/github/withmoney/withmoney-api/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/b045a34c8cb425bf67f1/test_coverage)](https://codeclimate.com/github/withmoney/withmoney-api/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fbdb850163130e5fbde8/maintainability)](https://codeclimate.com/github/davidcostadev/fastexpress/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/fbdb850163130e5fbde8/test_coverage)](https://codeclimate.com/github/davidcostadev/fastexpress/test_coverage)
 [![GitHub license](https://img.shields.io/github/license/davidcostadev/fastexpress.svg)](https://github.com/davidcostadev/fastexpress/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/fastexpress.svg)](https://www.npmjs.com/package/fastexpress)
 [![Open Source Helpers](https://www.codetriage.com/davidcostadev/fastexpress/badges/users.svg)](https://www.codetriage.com/davidcostadev/fastexpress)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 ---
 
@@ -26,32 +27,33 @@ The main functionalities is:
 - `npm install --global fastexpress`
 - `fastexpress new [your-project-name]`
 - `cd your-project-name`
+- `npm install` or `yarn`
+- `cp config/example.database.json config/database.json`
+- `npm run sequelize db:create`
+
+## Generate a resource
+
+On root of your project
+
+- `fastexpress resource [resourceName] --attributes name:string check:boolean age:number`
+- `npm run sequelize db:migrate`
+- `npm run sequelize db:seed:all` # __(optional)__
 
 
-## Usage cases
-
-On root of you project
-
-- `fastexpress resource [name] --attributes name:string check:boolean age:number`
-
-### on routers.js
-
-Create CRUD endpoint to any controller
+After that, you just need import and add the resource on Router. Like this on **src/routers.js** file:
 
 ```javascript
 const { Resources } = require('fastexpress');
-const ResourceName = require('./resources/ResourceName');
+const [ResourceName] = require('./resources/[ResourceName]');
 
 const routers = new Resources({
   namespace: '/api/v1/',
 })
-  .add('resourceName', ResourceName)
+  .add('[resourceName]', [ResourceName])
   .getRouters();
-
-module.exports = routers;
 ```
 
-### Using
+### Development
 
 - `npm run dev`
 
@@ -61,13 +63,13 @@ module.exports = routers;
 - `[get]` /api
 - `[get]` /api/v1
 
-#### Resources
+#### Resources Endpoints
 
-- `[get]` /api/v1/resourceName - to list resource 
-- `[post]` /api/v1/resourceName - to add a new entity
-- `[get]` /api/v1/resourceName/:id - to get a one entity
-- `[delete]` /api/v1/resourceName/:id - to delete a entity
-- `[put]` /api/v1/resourceName/:id - to edit a entity
+- `[get]` /api/v1/[resourceName] - to list resource 
+- `[post]` /api/v1/[resourceName] - to add a new entity
+- `[get]` /api/v1/[resourceName]/:id - to get a one entity
+- `[delete]` /api/v1/[resourceName]/:id - to delete a entity
+- `[put]` /api/v1/[resourceName]/:id - to edit a entity
 
 
 ## Examples
