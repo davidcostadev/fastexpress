@@ -1,6 +1,6 @@
 const kebabcase = require('lodash.kebabcase');
 const snakecase = require('lodash.snakecase');
-const { mkdir, writeFile, copyTemplate, destination } = require('./utils');
+const { mkdir, writeFile, copyTemplate, destination, exec } = require('./utils');
 
 const newHandler = async ({ name, template }) => {
   await mkdir(destination(name), { recursive: true });
@@ -25,14 +25,15 @@ const newHandler = async ({ name, template }) => {
   await copyTemplate(`${template}/src/models/index.js`, `${name}/src/models/index.js`);
   await copyTemplate(`${template}/src/routes.js`, `${name}/src/routes.js`);
   await copyTemplate(`${template}/src/server.js`, `${name}/src/server.js`);
+  await exec(`git init ${name}`);
+  await exec(`cd ${name} && git add -A && git commit -m "initial commit"`);
 
-  // eslint-disable-next-line no-console
   console.log(`Generate completed
 Run these commands to start
 cd ./${name}
-git init
 npm install or yarn
 npm run dev`);
+  // eslint-disable-next-line no-console
 };
 
 module.exports = newHandler;
