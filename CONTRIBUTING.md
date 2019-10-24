@@ -93,7 +93,7 @@ Then push and send your pull request. Happy hacking and thank you for contributi
 
 # Coding guidelines
 
-Have a look at our [.eslintrc.js](https://github.com/davidcosta/fastexpress/blob/master/.eslintrc.js) file for the specifics, [.prettierrc](https://github.com/davidcosta/fastexpress/blob/master/.prettierrc) and [.editorconfig](https://github.com/davidcosta/fastexpress/blob/master/.editorconfig). As part of the test process, all files will be linted, and your PR will **not** be accepted if it does not pass linting.
+Have a look at our [.eslintrc.js](https://github.com/davidcostadev/fastexpress/blob/master/.eslintrc.js) file for the specifics, [.prettierrc](https://github.com/davidcostadev/fastexpress/blob/master/.prettierrc) and [.editorconfig](https://github.com/davidcostadev/fastexpress/blob/master/.editorconfig). As part of the test process, all files will be linted, and your PR will **not** be accepted if it does not pass linting.
 
 I recommend to you use plugins to show all the errors messages on you editor/IDE.
 
