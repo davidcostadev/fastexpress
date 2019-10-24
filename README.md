@@ -80,7 +80,7 @@ This is a basic example of usage of the fastexpress.
 
 ## fastexpress development
 
-[CONTRIBUTING.md](https://github.com/davidcosta/fastexpress/blob/master/CONTRIBUTING.md)
+[CONTRIBUTING.md](https://github.com/davidcostadev/fastexpress/blob/master/CONTRIBUTING.md)
 
 ## Open Source
 
