@@ -6,11 +6,8 @@ const Handlebars = require('handlebars');
 
 const exec = util.promisify(childProcess.exec);
 const mkdir = util.promisify(fs.mkdir);
-
 const readFile = util.promisify(fs.readFile);
-
 const writeFile = util.promisify(fs.writeFile);
-
 const copyFile = util.promisify(fs.copyFile);
 
 const handlerError = fn => async (...args) => {
@@ -34,7 +31,7 @@ function fieldsHandler(args) {
 
   args._.shift();
   const validFields = args._.filter(field =>
-    field.match(/^[a-z]+:(string|text|boolean|number|integer)$/i),
+    field.match(/^[_a-z0-9]+:(string|text|boolean|number|integer|date|datetime)$/i),
   );
 
   return [args.attributes, ...validFields];
@@ -44,12 +41,15 @@ const getType = type => {
   const isNumber = () => 'number';
   const isBoolean = () => 'bool';
   const isText = () => 'string';
+  const isDatetime = () => 'datetime';
 
   const types = {
     number: isNumber,
     integer: isNumber,
     boolean: isBoolean,
     text: isText,
+    date: isDatetime,
+    datetime: isDatetime,
     string: isText,
     default: isText,
   };
@@ -62,6 +62,7 @@ const getSequelizeType = type => {
   const isBoolean = () => 'BOOLEAN';
   const isText = () => 'TEXT';
   const isChar = () => 'STRING';
+  const isDatetime = () => 'DATE';
 
   const types = {
     number: isNumber,
@@ -69,6 +70,8 @@ const getSequelizeType = type => {
     boolean: isBoolean,
     text: isText,
     string: isChar,
+    date: isDatetime,
+    datetime: isDatetime,
     default: isChar,
   };
 
@@ -80,11 +83,15 @@ const getSeedType = type => {
   const isBoolean = () => 'random.boolean()';
   const isText = () => 'lorem.sentences()';
   const isChar = () => 'lorem.words()';
+  const isDatetime = () => 'date.past()';
+
   const types = {
     number: isNumber,
     integer: isNumber,
     boolean: isBoolean,
     text: isText,
+    date: isDatetime,
+    datetime: isDatetime,
     string: isChar,
     default: isChar,
   };

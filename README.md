@@ -34,7 +34,7 @@ The main functionalities is:
 
 On root of your project
 
-- `fastexpress resource [resourceName] --attributes name:string check:boolean age:number`
+- `fastexpress resource [resourceName] --attributes title:string check:boolean birthday:date`
 - `npm run sequelize db:migrate`
 - `npm run sequelize db:seed:all` # **(optional)**
 
