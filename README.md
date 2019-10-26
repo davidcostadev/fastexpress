@@ -38,6 +38,14 @@ On root of your project
 - `npm run sequelize db:migrate`
 - `npm run sequelize db:seed:all` # **(optional)**
 
+### Attributes
+
+- string
+- number or integer
+- text
+- boolean
+- date or datetime
+
 After that, you just need import and add the resource on Router. Like this on **src/routers.js** file:
 
 ```javascript
