@@ -21,7 +21,6 @@ The main functionalities is:
 - Add rich integration with templates, allowing filters and joins.
 - Add secure endpoints through token usage (jwt).
 
-
 ## Installation
 
 - `npm install --global fastexpress`
@@ -37,16 +36,7 @@ On root of your project
 
 - `fastexpress resource [resourceName] --attributes title:string check:boolean birthday:date`
 - `npm run sequelize db:migrate`
-- `npm run sequelize db:seed:all` # __(optional)__
-
-### Attributes
-
-- string
-- number or integer
-- text
-- boolean
-- date or datetime
-
+- `npm run sequelize db:seed:all` # **(optional)**
 
 After that, you just need import and add the resource on Router. Like this on **src/routers.js** file:
 
@@ -65,7 +55,6 @@ const routers = new Resources({
 
 - `npm run dev`
 
-
 #### Basic Endpoints
 
 - `[get]` /api
@@ -73,12 +62,11 @@ const routers = new Resources({
 
 #### Resources Endpoints
 
-- `[get]` /api/v1/[resourceName] - to list resource 
+- `[get]` /api/v1/[resourceName] - to list resource
 - `[post]` /api/v1/[resourceName] - to add a new entity
 - `[get]` /api/v1/[resourceName]/:id - to get a one entity
 - `[delete]` /api/v1/[resourceName]/:id - to delete a entity
 - `[put]` /api/v1/[resourceName]/:id - to edit a entity
-
 
 ## Examples
 
@@ -92,15 +80,11 @@ This is a basic example of usage of the fastexpress.
 
 ## fastexpress development
 
-The tests use mysql, it need to use it.
-
-With docker: `docker run --name fastexpress-mysql -e MYSQL_ROOT_PASSWORD=123 -p 3306:3306 -d mysql:5`
-
-`npm run pre-test`
-
-`npm run jest` or `npm run test`
+[CONTRIBUTING.md](https://github.com/davidcostadev/fastexpress/blob/master/CONTRIBUTING.md)
 
 ## Open Source
+
+We uses the [MIT](https://github.com/davidcosta/fastexpress/blob/master/LICENSE) license.
 
 If you have any question/bug/suggestion just create a new issue!
 
