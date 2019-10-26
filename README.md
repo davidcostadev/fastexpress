@@ -35,9 +35,17 @@ The main functionalities is:
 
 On root of your project
 
-- `fastexpress resource [resourceName] --attributes name:string check:boolean age:number`
+- `fastexpress resource [resourceName] --attributes title:string check:boolean birthday:date`
 - `npm run sequelize db:migrate`
 - `npm run sequelize db:seed:all` # __(optional)__
+
+### Attributes
+
+- string
+- number or integer
+- text
+- boolean
+- date or datetime
 
 
 After that, you just need import and add the resource on Router. Like this on **src/routers.js** file:

@@ -24,7 +24,9 @@ const resourceCommand = {
       })
       .option('attributes', {
         alias: 't',
-        describe: 'To specify fields of resources',
+        describe:
+          'To specify fields of resource, you can use string, text, number, boolean and date ' +
+          'fields',
         demandOption: true,
       }),
 };
