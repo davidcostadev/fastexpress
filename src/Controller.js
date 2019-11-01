@@ -9,10 +9,16 @@ const { EXCEPTION_NOT_FOUND } = require('./lib/errors');
 const defaultResponse = async (req, res, service) => {
   try {
     res.json(await service(req));
-  } catch (e) {
-    res.status(500).json({
-      error: e.message,
-    });
+  } catch (error) {
+    if (typeof error.name !== 'undefined' && error.name === 'SequelizeValidationError') {
+      res.status(422).json({
+        error: error.message,
+      });
+    } else {
+      res.status(500).json({
+        error: error.message,
+      });
+    }
   }
 };
 
