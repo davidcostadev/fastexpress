@@ -12,7 +12,7 @@ const newHandler = async ({ name, template }) => {
   await mkdir(destination(`${name}/src/seeders`), { recursive: true });
 
   await copyTemplate(`${template}/.sequelizerc`, `${name}/.sequelizerc`);
-  await copyTemplate(`${template}/.gitignore`, `${name}/.gitignore`);
+  await copyTemplate(`${template}/.gitignore.template`, `${name}/.gitignore`);
   await copyTemplate(`${template}/package.json.handlebars`, `${name}/package.json`, {
     name: kebabcase(name),
   });
