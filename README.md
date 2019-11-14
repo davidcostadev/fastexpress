@@ -12,7 +12,7 @@
 
 ---
 
-fastexpress is a library designed to speed up the development of APIs with express. It's has a list of functionalities to create APIs with a small amount of lines of code, with possibility to customize it.
+fastexpress is a library designed to speed up the development of APIs with express and sequelize. It's has a list of functionalities to create APIs with a small amount of lines of code, with possibility to customize it.
 
 The main functionalities is:
 
