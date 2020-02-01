@@ -7,10 +7,7 @@ const R = require('ramda');
  *
  * @return {string}
  */
-const string = R.compose(
-  Boolean,
-  R.length,
-);
+const string = R.compose(Boolean, R.length);
 
 /**
  * Check if this is a integer number

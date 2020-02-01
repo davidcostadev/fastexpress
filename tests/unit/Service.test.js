@@ -117,7 +117,10 @@ describe('Service', () => {
           {
             limit: 10,
             offset: 10,
-            order: [['id', 'ASC'], ['name', 'DESC']],
+            order: [
+              ['id', 'ASC'],
+              ['name', 'DESC'],
+            ],
             where: { id: 1 },
             include: [
               {

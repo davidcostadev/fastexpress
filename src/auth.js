@@ -1,11 +1,5 @@
 const bcrypt = require('bcrypt');
 
-const listDefaultOptions = {
-  where: {},
-  filter: null,
-  aliasDatabase: {},
-};
-
 const getModelAlias = (aliasDatabase, db) => model => {
   const aliasList = Object.keys(aliasDatabase);
 
@@ -36,7 +30,6 @@ const cryptPassword = bcryptSalt => user => {
 };
 
 module.exports = {
-  listDefaultOptions,
   getModelAlias,
   cryptPassword,
 };

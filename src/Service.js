@@ -52,7 +52,10 @@ const list = async (req, Model, configs) => {
 const get = async (req, Model, configs) => {
   const { id } = req.params;
 
-  const select = selectWithBatch(req, configs)({
+  const select = selectWithBatch(
+    req,
+    configs,
+  )({
     where: { id },
   });
 
