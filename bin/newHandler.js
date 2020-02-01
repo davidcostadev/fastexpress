@@ -23,7 +23,7 @@ const newHandler = async ({ name, template }) => {
     `${name}/config/example.database.json`,
     { name: snakecase(name) },
   );
-  await copyTemplate(`${template}/src/models/index.js`, `${name}/src/models/index.js`);
+  await copyTemplate(`base/src/models/index.js`, `${name}/src/models/index.js`);
   await copyTemplate(`${template}/src/routes.js`, `${name}/src/routes.js`);
   await copyTemplate(`${template}/src/server.js`, `${name}/src/server.js`);
   if (template === 'auth') {
