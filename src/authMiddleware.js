@@ -36,11 +36,14 @@ const checkAuth = jwtEncryption => (req, res, next) => {
   }
 };
 
+// eslint-disable-next-line consistent-return
 const onlyUser = (req, res, next) => {
-  let filter = 'UserId';
+  const filter = 'UserId';
 
-  if (req.route.path === '/api/v1/users/') {
-    filter = 'id';
+  if (req.route.path.includes('users/:id') && res.user.id.toString() !== req.params.id) {
+    return res.status(500).send({
+      message: 'No permission',
+    });
   }
 
   req.query = {
