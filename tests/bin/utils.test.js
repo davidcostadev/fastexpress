@@ -45,10 +45,10 @@ it('fieldsHandler', () => {
   expect(fieldsHandler({})).toEqual(null);
   expect(
     fieldsHandler({
-      _: ['resource', 'isPaid:boolean', 'age:number'],
+      _: ['resource', 'isPaid:boolean', 'age:number', 'requestAt:datetime'],
       attributes: 'name:string',
     }),
-  ).toEqual(['name:string', 'isPaid:boolean', 'age:number']);
+  ).toEqual(['name:string', 'isPaid:boolean', 'age:number', 'requestAt:datetime']);
 });
 
 it('fieldsSeeders', () => {
@@ -102,6 +102,21 @@ it('fieldsResource', () => {
   });
 });
 
+it('fieldsResource with datetime', () => {
+  expect(fieldsResource([])).toEqual({
+    dependencies: '',
+    fields: '{}',
+  });
+  expect(fieldsResource(['requestAt:datetime'])).toEqual({
+    dependencies: ', validate',
+    fields: `{
+    requestAt: {
+      validation: validate.datetime,
+    }
+  }`,
+  });
+});
+
 describe('getType', () => {
   it('should return correct type', () => {
     expect(getType('')).toBe('string');
@@ -110,6 +125,7 @@ describe('getType', () => {
     expect(getType('string')).toBe('string');
     expect(getType('text')).toBe('string');
     expect(getType('boolean')).toBe('bool');
+    expect(getType('datetime')).toBe('datetime');
   });
 });
 
@@ -121,6 +137,7 @@ describe('getSequelizeType', () => {
     expect(getSequelizeType('string')).toBe('STRING');
     expect(getSequelizeType('text')).toBe('TEXT');
     expect(getSequelizeType('boolean')).toBe('BOOLEAN');
+    expect(getSequelizeType('datetime')).toBe('DATE');
   });
 });
 
@@ -132,5 +149,6 @@ describe('getSeedType', () => {
     expect(getSeedType('string')).toBe('lorem.words()');
     expect(getSeedType('text')).toBe('lorem.sentences()');
     expect(getSeedType('boolean')).toBe('random.boolean()');
+    expect(getSeedType('datetime')).toBe('date.past()');
   });
 });

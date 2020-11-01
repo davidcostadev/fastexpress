@@ -157,11 +157,13 @@ const fieldsResource = fieldsBase(fieldsList => {
     fields: `{\n${fields}\n  }`,
   };
 });
-
+/* istanbul ignore next */
 const destination = dir => path.resolve('.', dir);
 
+/* istanbul ignore next */
 const source = file => path.resolve(__dirname, `templates/${file}`);
 
+/* istanbul ignore next */
 const copyTemplate = async (fileSource, fileDest, params = {}) => {
   if (!Object.keys(params).length) {
     await copyFile(source(fileSource), destination(fileDest));
